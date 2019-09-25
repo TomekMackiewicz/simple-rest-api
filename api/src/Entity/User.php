@@ -6,9 +6,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *   fields={"email"},
+ *   message="validation.unique.email"
+ * )
  */
 class User
 {
@@ -20,8 +25,21 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="validation.not_blank")
+     * @ORM\Column(type="string", length=32)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Type(
+     *   type="string",
+     *   message="validation.type.string"
+     * )
+     * @Assert\Length(
+     *   min=2,
+     *   max=32,
+     *   minMessage="validation.min_length {{ limit }}",
+     *   maxMessage="validation.max_length {{ limit }}"
+     * )
      */
     private $name;
 

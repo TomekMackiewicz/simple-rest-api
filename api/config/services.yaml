@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    locale: 'en'
+    base_url: '%env(resolve:BASE_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -23,5 +25,20 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+#    sensio_framework_extra.view.listener:
+#        alias: Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener
+#
+#    App\Controller\ExceptionController:
+#        arguments:
+#            $exceptionCodes: '@fos_rest.exception.codes_map'
+#            
+#    App\Controller\UserController:
+#        arguments:
+#            $formFactory: '@fos_user.registration.form.factory'
+#            $userManager: '@fos_user.user_manager'
+#            $dispatcher: '@event_dispatcher'
+#            
+#    event.jwt_created_listener:
+#        class: App\Event\Listener\JWTCreatedListener
+#        tags:
+#            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
