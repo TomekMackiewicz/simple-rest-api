@@ -21,7 +21,6 @@ use FOS\UserBundle\Event\FormEvent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Entity\User;
-//use App\Form\UserType;
 
 /**
  * @Route("/api/v1/users")

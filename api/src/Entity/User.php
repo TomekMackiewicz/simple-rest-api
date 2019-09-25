@@ -5,46 +5,33 @@ declare (strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="users")
  * @UniqueEntity(
  *   fields={"email"},
  *   message="validation.unique.email"
  * )
  */
-class User
+class User extends BaseUser
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="integer")
      * 
      * @Assert\NotBlank(
      *   message="validation.not_blank"
      * )
-     * @Assert\Type(
-     *   type="string",
-     *   message="validation.type.string"
-     * )
-     * @Assert\Length(
-     *   min=2,
-     *   max=32,
-     *   minMessage="validation.min_length {{ limit }}",
-     *   maxMessage="validation.max_length {{ limit }}"
-     * )
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="integer")
      */
     private $age;
 
@@ -243,21 +230,14 @@ class User
      */
     private $traveling;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getAge(): ?int
