@@ -21,32 +21,59 @@ class EducationStatusRepository extends ServiceEntityRepository
         parent::__construct($registry, EducationStatus::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * EducationStatuses for pagination
+     * 
+     * @param int $size
+     * @param string $sort
+     * @param string $order
+     * @param int $offset
+     * @param array $filters
+     * @return EducationStatus[]
+     */
+    public function findEducationStatuses(int $size, string $sort, string $order, int $offset, array $filters)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('e')->from('App:EducationStatus', 'c');
+        
+        if (!empty($filters) && $filters['label']) {
+            $qb->andWhere('e.label LIKE :name')
+                ->setParameter(":label", '%'.$filters['label'].'%');
+        }
+        if (!empty($sort) && !empty($order)) {
+           $qb->orderBy('e.'.$sort, $order);
+        }
+        if (!empty($size)) {
+           $qb->setMaxResults($size); 
+        }
+        if (!empty($offset)) {
+           $qb->setFirstResult($offset);
+        }            
+        
+        return $qb->getQuery()->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
+    
+    /**
+     * @return integer
+     */
+    public function countEducationStatuses()
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleScalarResult();        
+    }    
+    /**
+     * Find EducationStatuses with given id's
+     * @param array $ids
+     * @return array
+     */
+    public function findEducationStatusesByIds(array $ids)
+    {
+        return $this->createQueryBuilder('e')
+            ->where("e.id IN(:ids)")
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();        
     }
-    */
 }

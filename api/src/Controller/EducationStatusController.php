@@ -8,18 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\UserBundle\Form\Factory\FormFactory;
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
-use FOS\RestBundle\View\View;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Entity\EducationStatus;
 use App\Form\EducationStatusType;
 
@@ -83,6 +73,7 @@ class EducationStatusController extends AbstractFOSRestController
 
     /**
      * @Rest\Post("")
+     * @param Request $request
      * @return Response
      */
     public function postAction(Request $request)
@@ -93,12 +84,68 @@ class EducationStatusController extends AbstractFOSRestController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($educationStatus);
             $this->em->flush();
+
             return $this->handleView(
                 $this->view('educationStatus.added', Response::HTTP_CREATED)
             );
         }
+
         return $this->handleView(
             $this->view($form->getErrors(true), Response::HTTP_BAD_REQUEST)
+        );
+    }
+
+    /**
+     * @Rest\Patch("/{id}")
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function patchAction(Request $request, int $id)
+    {
+        $data = $request->request->all();        
+        $educationStatus = $this->repository->find($id);
+        if (!$educationStatus) {
+            return $this->handleView(
+                $this->view(null, Response::HTTP_NO_CONTENT)
+            );
+        }
+        $form = $this->createForm(EducationStatusType::class, $educationStatus);
+        $form->submit($data);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($educationStatus);
+            $this->em->flush();
+
+            return $this->handleView(
+                $this->view('education-status.edited', Response::HTTP_OK)
+            );
+        }
+
+        return $this->handleView(
+            $this->view($form->getErrors(true), Response::HTTP_BAD_REQUEST)
+        );
+    }
+
+    /**
+     * @Rest\Delete("")
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAction(Request $request)
+    {
+        $educationStatuses = $this->repository->findEducationStatusesByIds($request->request->all());
+        if (!$educationStatuses) {
+            return $this->handleView(
+                $this->view(null, Response::HTTP_NO_CONTENT)
+            );
+        }
+        foreach ($educationStatuses as $educationStatus) {
+            $this->em->remove($educationStatus);
+            $this->em->flush();
+        }
+
+        return $this->handleView(
+            $this->view('categories.deleted', Response::HTTP_OK)
         );
     }
 }
