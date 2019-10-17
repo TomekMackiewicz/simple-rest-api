@@ -1,21 +1,67 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<mat-sidenav-container *ngIf="isLoggedIn">
+    <mat-sidenav class="dark-toolbar" #sidenav mode="side" [(opened)]="sidenavOpened">
+        <mat-toolbar class="dark-toolbar">
+            DP
+        </mat-toolbar>
+        <mat-nav-list>
+            <app-menu-list-item *ngFor="let item of navItems" [item]="item">
+            </app-menu-list-item>           
+        </mat-nav-list>       
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar class="dark-toolbar">
+            <button mat-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="fill-space"></span>
+            <button mat-button>Session expires in: 
+<!--                <app-session-tracker></app-session-tracker>-->
+            </button>
+            <button mat-icon-button (click)="useLanguage('en')">en</button>
+            <button mat-icon-button (click)="useLanguage('pl')">pl</button>            
+            <button mat-icon-button [matMenuTriggerFor]="userMenu">
+                <mat-icon>person_outline</mat-icon>
+            </button>
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item routerLink="/admin/profile" routerLinkActive="active">
+                    <mat-icon>person_outline</mat-icon>
+                    <span>Profile</span>
+                </button>
+                <button mat-menu-item routerLink="/logout" routerLinkActive="active">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>           
+        </mat-toolbar>
+        <main>
+<!--            <app-loader></app-loader>
+            <alert></alert>-->
+            <ng-container *ngTemplateOutlet="template"></ng-container>
+        </main>
+    </mat-sidenav-content>   
+</mat-sidenav-container>
 
-<router-outlet></router-outlet>
+<div fxLayout="column" *ngIf="!isLoggedIn">
+    <mat-toolbar>
+        <a mat-button routerLink="/about" routerLinkActive="active">About</a>
+        <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
+        <span class="fill-space"></span>                
+        <a mat-button routerLink="/login" routerLinkActive="active">
+            {{ 'ui.login' }}
+        </a>
+        <a mat-button routerLink="/register" routerLinkActive="active">
+            {{ 'ui.register' }}
+        </a>
+        <button mat-icon-button (click)="useLanguage('en')">en</button>
+        <button mat-icon-button (click)="useLanguage('pl')">pl</button>
+    </mat-toolbar>
+    <main>
+<!--        <app-loader></app-loader>
+        <alert></alert>-->
+        <ng-container *ngTemplateOutlet="template"></ng-container>
+    </main>
+</div>
+
+<ng-template #template>
+    <router-outlet></router-outlet>
+</ng-template>
