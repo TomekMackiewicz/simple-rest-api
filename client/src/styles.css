@@ -1,1 +1,167 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    height: 100vh;
+}
+
+main {
+    padding: 16px;
+}
+
+.dark-toolbar {
+    background: #424242;
+    color: #fff;
+}
+
+mat-sidenav {
+    width: 250px;
+}
+
+.mat-sidenav-container {
+    height: 100vh;
+}
+
+.fill-space {
+    flex: 1 1 auto;
+}
+
+.route-icon {
+    padding-right: 8px;
+    color: gray;
+}
+
+.nav-chevron {
+    display: inline-flex;
+    vertical-align: middle;    
+}
+
+table {
+    width: 100%;
+}
+
+.progress-overlay {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(245,245,245,0.7);
+    z-index: 99999;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    margin:0 auto;
+    transform: translate(-50%,-50%);
+}
+    
+.alert {
+    position:relative;
+    padding:.75rem 1.25rem;
+    margin-bottom:1rem;
+    border:1px solid transparent;
+    border-radius:.25rem;
+}
+
+.alert-dismissible {
+    padding-right:4rem; 
+    cursor: pointer;
+}
+
+.alert-dismissible .close {
+    position:absolute;
+    top:0;
+    right:0;
+    padding:.75rem 1.25rem;
+}
+
+.alert-success {
+    color:#155724;
+    background-color:#d4edda;
+    border-color:#c3e6cb
+}
+
+.alert-info {
+    color:#0c5460;
+    background-color:#d1ecf1;
+    border-color:#bee5eb
+}
+
+.alert-warning {
+    color:#856404;
+    background-color:#fff3cd;
+    border-color:#ffeeba
+}
+
+.alert-danger {
+    color:#721c24;
+    background-color:#f8d7da;
+    border-color:#f5c6cb
+}
+
+.table-toolbar {
+    background: #fff;
+}
+
+.table-toolbar .mat-form-field-label-wrapper, .mat-toolbar .mat-form-field-autofill-control, .mat-toolbar .mat-select-value-text {
+    font-size:14px;
+}
+
+.table-toolbar .mat-form-field-label {
+    top: 2em;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.mat-list-base .mat-list-item {
+    color: #fff;
+}
+
+.mat-list-base .mat-list-item:hover {
+    background: #000 !important;
+}
+
+.submenu-item > .mat-list-item {
+    font-size: 14px;
+    height: 36px !important;
+}
+
+.submenu-item > .active {
+    background: #000 !important;
+}
+
+.dts-no-select {
+    user-select: none; }
+
+.dts-select-box {
+    background: rgba(125, 218, 252, 0.3);
+    border: 2px solid currentColor;
+    contain: layout;
+    transform: translateZ(0);
+    box-sizing: border-box;
+    color: #7ddafc;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1; 
+}
+
+.dts-select-box.dts-removing {
+    background: rgba(125, 218, 252, 0.3);
+    border: 2px solid #7ddafc; 
+}
+
+.dts-select-container:not(.dts-custom) .dts-select-item.selected {
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.1); 
+}
