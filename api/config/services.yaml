@@ -44,8 +44,6 @@ services:
         tags:
             - { name: form.type, alias: app_user }
             
-#
-#    App\Controller\ExceptionController:
-#        arguments:
-#            $exceptionCodes: '@fos_rest.exception.codes_map'
-#
+    App\Controller\ExceptionController:
+        arguments:
+            $exceptionCodes: '@fos_rest.exception.codes_map'

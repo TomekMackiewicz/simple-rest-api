@@ -13,6 +13,6 @@ fos_rest:
         view_response_listener: 'force'
         formats:
             json: true
-#    exception:
-#        enabled: true
-#        exception_controller: 'App\Controller\ExceptionController::showAction'
+    exception:
+        enabled: true
+        exception_controller: 'App\Controller\ExceptionController::showAction'
