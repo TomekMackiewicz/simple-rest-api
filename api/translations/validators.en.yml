@@ -27,4 +27,8 @@ fos_group:
     name:
         already_used: 'The name is already used.'
 validation:
-    not_blank: 'Field cannot be blank'
+    invalid_date_format: 'Invalid date format. Correct format: yyyy-mm-dd'
+    not_blank: 'Field cannot be blank.'
+    min_length: 'Value is too short. Min length: {{ limit }} characters.'
+    max_length: 'Value is too long. Max length: {{ limit }} characters.'
+    invalid_choice: 'Choose a valid option.'
