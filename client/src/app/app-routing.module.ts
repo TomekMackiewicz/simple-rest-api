@@ -1,10 +1,36 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { EducationStatusListComponent } from './education-status/education-status-list.component';
+import { EducationStatusAddComponent } from './education-status/education-status-add.component';
+import { EducationStatusEditComponent } from './education-status/education-status-edit.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+    { 
+        path: 'admin',
+        children: [
+            {
+                path: 'education-status', 
+                children: [
+                    {
+                        path: 'list', 
+                        component: EducationStatusListComponent                
+                    },
+                    {
+                        path: 'add', 
+                        component: EducationStatusAddComponent
+                    },
+                    {
+                        path: 'edit', 
+                        component: EducationStatusEditComponent
+                    }
+                ]                
+            }
+        ]
+    }
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }
