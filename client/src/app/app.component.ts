@@ -12,7 +12,6 @@ export class AppComponent implements AfterViewInit {
     @ViewChild('sidenav', {static: false}) sidenav: ElementRef;
     isLoggedIn: boolean = true;
     title = 'client';
-    sidenavOpened: boolean = true;
     navItems: NavItem[] = NAV_ITEMS;
 
     constructor(
@@ -21,5 +20,10 @@ export class AppComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.navService.sidenav = this.sidenav;
+    }
+
+    isLargeScreen() {
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        return width > 720 ? true : false;
     }
 }

@@ -1,5 +1,5 @@
 <mat-sidenav-container *ngIf="isLoggedIn">
-    <mat-sidenav class="dark-toolbar" #sidenav mode="side" [(opened)]="sidenavOpened">
+    <mat-sidenav class="dark-toolbar" #sidenav [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()">
         <mat-toolbar class="dark-toolbar">
             DP
         </mat-toolbar>
