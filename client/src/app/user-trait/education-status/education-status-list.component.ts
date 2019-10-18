@@ -43,7 +43,7 @@ export class EducationStatusListComponent implements AfterViewInit {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.getUserTraits();
     }
-
+    
     getUserTraits() {
         merge(this.sort.sortChange, this.paginator.page).pipe(
             startWith({}),
@@ -75,12 +75,6 @@ export class EducationStatusListComponent implements AfterViewInit {
         });
     }
 
-    isAllSelected() {
-        const numSelected = this.selection.selected.length;
-        const numRows = this.data.length;
-        return numSelected === numRows;
-    }
-
     editTrait(id: number) {
         this.openEditDialog(id);
     }
@@ -103,5 +97,30 @@ export class EducationStatusListComponent implements AfterViewInit {
                 }
             }
         );
+    }
+
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.data.length;
+        return numSelected === numRows;
+    }
+
+    masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.data.forEach(row => this.selection.select(row));
+    }
+
+    applyFilter() {
+        //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        this.getUserTraits();
+        this.ref.detectChanges();
+    }
+
+    resetFilter() {
+        this.filterForm.reset();
+        //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        this.getUserTraits();
+        this.ref.detectChanges();
     }
 }
