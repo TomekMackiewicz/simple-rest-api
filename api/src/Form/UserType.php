@@ -7,23 +7,50 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('age')
+            ->add('dateOfBirth', DateType::class, [
+                'widget' => 'single_text',
+                'invalid_message' => 'validation.invalid_date_format'
+            ])
             ->add('location')
             ->add('about')
-            ->add('relationshipStatus')
-            ->add('sexualOrientation')
-            ->add('work')
-            ->add('education')
-            ->add('kids')
-            ->add('language')
-            ->add('secondaryLanguages')
-            ->add('zodiac')
+            ->add('relationshipStatus', ChoiceType::class, [
+                'choices' => User::RELATIONSHIP_STATUSES,
+                'invalid_message' => 'validation.invalid_choice'
+            ])
+            ->add('sexualOrientation', ChoiceType::class, [
+                'choices' => User::SEXUAL_ORINTATIONS,
+                'invalid_message' => 'validation.invalid_choice'
+            ])
+            ->add('work', ChoiceType::class, [
+                'choices' => User::EMPLOYMENT_STATUSES,
+                'invalid_message' => 'validation.invalid_choice'
+            ])
+            ->add('education', ChoiceType::class, [
+                'choices' => User::EDUCATION_STATUSES,
+                'invalid_message' => 'validation.invalid_choice'
+            ])
+            ->add('kids', ChoiceType::class, [
+                'choices' => User::BOOLEAN_CHOICE,
+                'invalid_message' => 'validation.invalid_choice'
+            ])
+            ->add('language', ChoiceType::class, [
+                'choices' => User::LANGUAGES,
+                'invalid_message' => 'validation.invalid_choice'
+            ])
+            ->add('secondaryLanguages', ChoiceType::class, [
+                'choices' => User::LANGUAGES,
+                'invalid_message' => 'validation.invalid_choice',
+                'expanded' => false,
+                'multiple' => true
+            ])
             ->add('personality')
             ->add('friends')
             ->add('animals')

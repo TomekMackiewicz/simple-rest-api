@@ -11,7 +11,7 @@ import { NAV_ITEMS } from './menu-list-item/const/nav-items';
 export class AppComponent implements AfterViewInit {
     @ViewChild('sidenav', {static: false}) sidenav: ElementRef;
     isLoggedIn: boolean = true;
-    title = 'client';
+    title: string = 'client';
     navItems: NavItem[] = NAV_ITEMS;
 
     constructor(

@@ -7,18 +7,272 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
- * @UniqueEntity(
- *   fields={"email"},
- *   message="validation.unique.email"
- * )
  */
 class User extends BaseUser
 {
+    const RELATIONSHIP_STATUSES = [
+        "single", 
+        "in a relationship",
+        "engaged",
+        "married",
+        "it's complicated",
+        "in an open relationship",
+        "widowed",
+        "separated",
+        "divorced"
+    ];
+
+    const SEXUAL_ORINTATIONS = [
+        "asexual",
+        "bisexual",
+        "heterosexual",
+        "homosexual"
+    ];
+
+    const EMPLOYMENT_STATUSES = [
+        "unemployed",
+        "employee",
+        "worker",
+        "self-employed",
+        "independent contractor",
+        "freelance",
+        "zero hours contract",
+        "gig economy",
+        'apprentice'
+    ];
+
+    const EDUCATION_STATUSES = [
+        "undergraduate",
+        "graduate"
+    ];
+
+    const BOOLEAN_CHOICE = [
+        "yes",
+        "no"
+    ];
+
+    const LANGUAGES = [
+        'ab' => 'Abkhazian',
+        'aa' => 'Afar',
+        'af' => 'Afrikaans',
+        'ak' => 'Akan',
+        'sq' => 'Albanian',
+        'am' => 'Amharic',
+        'ar' => 'Arabic',
+        'an' => 'Aragonese',
+        'hy' => 'Armenian',
+        'as' => 'Assamese',
+        'av' => 'Avaric',
+        'ae' => 'Avestan',
+        'ay' => 'Aymara',
+        'az' => 'Azerbaijani',
+        'bm' => 'Bambara',
+        'ba' => 'Bashkir',
+        'eu' => 'Basque',
+        'be' => 'Belarusian',
+        'bn' => 'Bengali',
+        'bh' => 'Bihari languages',
+        'bi' => 'Bislama',
+        'bs' => 'Bosnian',
+        'br' => 'Breton',
+        'bg' => 'Bulgarian',
+        'my' => 'Burmese',
+        'ca' => 'Catalan, Valencian',
+        'km' => 'Central Khmer',
+        'ch' => 'Chamorro',
+        'ce' => 'Chechen',
+        'ny' => 'Chichewa, Chewa, Nyanja',
+        'zh' => 'Chinese',
+        'cu' => 'Church Slavonic, Old Bulgarian, Old Church Slavonic',
+        'cv' => 'Chuvash',
+        'kw' => 'Cornish',
+        'co' => 'Corsican',
+        'cr' => 'Cree',
+        'hr' => 'Croatian',
+        'cs' => 'Czech',
+        'da' => 'Danish',
+        'dv' => 'Divehi, Dhivehi, Maldivian',
+        'nl' => 'Dutch, Flemish',
+        'dz' => 'Dzongkha',
+        'en' => 'English',
+        'eo' => 'Esperanto',
+        'et' => 'Estonian',
+        'ee' => 'Ewe',
+        'fo' => 'Faroese',
+        'fj' => 'Fijian',
+        'fi' => 'Finnish',
+        'fr' => 'French',
+        'ff' => 'Fulah',
+        'gd' => 'Gaelic, Scottish Gaelic',
+        'gl' => 'Galician',
+        'lg' => 'Ganda',
+        'ka' => 'Georgian',
+        'de' => 'German',
+        'ki' => 'Gikuyu, Kikuyu',
+        'el' => 'Greek (Modern)',
+        'kl' => 'Greenlandic, Kalaallisut',
+        'gn' => 'Guarani',
+        'gu' => 'Gujarati',
+        'ht' => 'Haitian, Haitian Creole',
+        'ha' => 'Hausa',
+        'he' => 'Hebrew',
+        'hz' => 'Herero',
+        'hi' => 'Hindi',
+        'ho' => 'Hiri Motu',
+        'hu' => 'Hungarian',
+        'is' => 'Icelandic',
+        'io' => 'Ido',
+        'ig' => 'Igbo',
+        'id' => 'Indonesian',
+        'ia' => 'Interlingua (International Auxiliary Language Association)',
+        'ie' => 'Interlingue',
+        'iu' => 'Inuktitut',
+        'ik' => 'Inupiaq',
+        'ga' => 'Irish',
+        'it' => 'Italian',
+        'ja' => 'Japanese',
+        'jv' => 'Javanese',
+        'kn' => 'Kannada',
+        'kr' => 'Kanuri',
+        'ks' => 'Kashmiri',
+        'kk' => 'Kazakh',
+        'rw' => 'Kinyarwanda',
+        'kv' => 'Komi',
+        'kg' => 'Kongo',
+        'ko' => 'Korean',
+        'kj' => 'Kwanyama, Kuanyama',
+        'ku' => 'Kurdish',
+        'ky' => 'Kyrgyz',
+        'lo' => 'Lao',
+        'la' => 'Latin',
+        'lv' => 'Latvian',
+        'lb' => 'Letzeburgesch, Luxembourgish',
+        'li' => 'Limburgish, Limburgan, Limburger',
+        'ln' => 'Lingala',
+        'lt' => 'Lithuanian',
+        'lu' => 'Luba-Katanga',
+        'mk' => 'Macedonian',
+        'mg' => 'Malagasy',
+        'ms' => 'Malay',
+        'ml' => 'Malayalam',
+        'mt' => 'Maltese',
+        'gv' => 'Manx',
+        'mi' => 'Maori',
+        'mr' => 'Marathi',
+        'mh' => 'Marshallese',
+        'ro' => 'Moldovan, Moldavian, Romanian',
+        'mn' => 'Mongolian',
+        'na' => 'Nauru',
+        'nv' => 'Navajo, Navaho',
+        'nd' => 'Northern Ndebele',
+        'ng' => 'Ndonga',
+        'ne' => 'Nepali',
+        'se' => 'Northern Sami',
+        'no' => 'Norwegian',
+        'nb' => 'Norwegian Bokm?l',
+        'nn' => 'Norwegian Nynorsk',
+        'ii' => 'Nuosu, Sichuan Yi',
+        'oc' => 'Occitan (post 1500)',
+        'oj' => 'Ojibwa',
+        'or' => 'Oriya',
+        'om' => 'Oromo',
+        'os' => 'Ossetian, Ossetic',
+        'pi' => 'Pali',
+        'pa' => 'Panjabi, Punjabi',
+        'ps' => 'Pashto, Pushto',
+        'fa' => 'Persian',
+        'pl' => 'Polish',
+        'pt' => 'Portuguese',
+        'qu' => 'Quechua',
+        'rm' => 'Romansh',
+        'rn' => 'Rundi',
+        'ru' => 'Russian',
+        'sm' => 'Samoan',
+        'sg' => 'Sango',
+        'sa' => 'Sanskrit',
+        'sc' => 'Sardinian',
+        'sr' => 'Serbian',
+        'sn' => 'Shona',
+        'sd' => 'Sindhi',
+        'si' => 'Sinhala, Sinhalese',
+        'sk' => 'Slovak',
+        'sl' => 'Slovenian',
+        'so' => 'Somali',
+        'st' => 'Sotho, Southern',
+        'nr' => 'South Ndebele',
+        'es' => 'Spanish, Castilian',
+        'su' => 'Sundanese',
+        'sw' => 'Swahili',
+        'ss' => 'Swati',
+        'sv' => 'Swedish',
+        'tl' => 'Tagalog',
+        'ty' => 'Tahitian',
+        'tg' => 'Tajik',
+        'ta' => 'Tamil',
+        'tt' => 'Tatar',
+        'te' => 'Telugu',
+        'th' => 'Thai',
+        'bo' => 'Tibetan',
+        'ti' => 'Tigrinya',
+        'to' => 'Tonga (Tonga Islands)',
+        'ts' => 'Tsonga',
+        'tn' => 'Tswana',
+        'tr' => 'Turkish',
+        'tk' => 'Turkmen',
+        'tw' => 'Twi',
+        'ug' => 'Uighur, Uyghur',
+        'uk' => 'Ukrainian',
+        'ur' => 'Urdu',
+        'uz' => 'Uzbek',
+        've' => 'Venda',
+        'vi' => 'Vietnamese',
+        'vo' => 'Volap_k',
+        'wa' => 'Walloon',
+        'cy' => 'Welsh',
+        'fy' => 'Western Frisian',
+        'wo' => 'Wolof',
+        'xh' => 'Xhosa',
+        'yi' => 'Yiddish',
+        'yo' => 'Yoruba',
+        'za' => 'Zhuang, Chuang',
+        'zu' => 'Zulu'
+    ];
+
+    const PERSONALITIES = [
+        "helpful",
+        "adventurous",
+        "calm",
+        "careless",
+        "joyful",
+        "demanding",
+        "extroverted",
+        "honest",
+        "generous",
+        "witty",
+        "introverted",
+        "tolerant",
+        "full of beans",
+        "solitary",
+        "nervous",
+        "imperious",
+        "quiet",
+        "restrained",
+        "sensitive",
+        "shy",
+        "sociable",
+        "spontaneous",
+        "stubborn",
+        "suspicious",
+        "prudent",
+        "lofty",
+        "thoughtful",
+        "friendly"
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -27,66 +281,137 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date")
      * 
      * @Assert\NotBlank(
      *   message="validation.not_blank"
      * )
+     * @Assert\Date(
+     *   message="validation.invalid_date_format"
+     * )
      */
-    private $age;
+    private $dateOfBirth;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Length(
+     *   min=3,
+     *   max=255,
+     *   minMessage="validation.min_length",
+     *   maxMessage="validation.max_length"
+     * )
      */
     private $location;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Assert\Length(
+     *   max=1000,
+     *   maxMessage="validation.max_length"
+     * )
      */
     private $about;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Choice(
+     *   choices=User::RELATIONSHIP_STATUSES, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $relationshipStatus;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Choice(
+     *   choices=User::SEXUAL_ORINTATIONS, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $sexualOrientation;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Choice(
+     *   choices=User::EMPLOYMENT_STATUSES, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $work;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Choice(
+     *   choices=User::EDUCATION_STATUSES, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $education;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Choice(
+     *   choices=User::BOOLEAN_CHOICE, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $kids;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *   message="validation.not_blank"
+     * )
+     * @Assert\Choice(
+     *   choices=User::LANGUAGES, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $language;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Assert\Choice(
+     *   choices=User::LANGUAGES, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $secondaryLanguages;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $zodiac;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Assert\Choice(
+     *   choices=User::PERSONALITIES, 
+     *   message="validation.invalid_choice"
+     * )
      */
     private $personality;
 
@@ -240,14 +565,14 @@ class User extends BaseUser
         return $this->id;
     }
 
-    public function getAge(): ?int
+    public function getDateOfBirth(): ?int
     {
-        return $this->age;
+        return $this->dateOfBirth;
     }
 
-    public function setAge(int $age): self
+    public function setDateOfBirth(int $dateOfBirth): self
     {
-        $this->age = $age;
+        $this->dateOfBirth = $dateOfBirth;
 
         return $this;
     }
@@ -356,18 +681,6 @@ class User extends BaseUser
     public function setSecondaryLanguages(?string $secondaryLanguages): self
     {
         $this->secondaryLanguages = $secondaryLanguages;
-
-        return $this;
-    }
-
-    public function getZodiac(): ?string
-    {
-        return $this->zodiac;
-    }
-
-    public function setZodiac(?string $zodiac): self
-    {
-        $this->zodiac = $zodiac;
 
         return $this;
     }
