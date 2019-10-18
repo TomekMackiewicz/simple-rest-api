@@ -17,7 +17,7 @@ export class UserTraitService {
     ) {}
 
     getUserTrait(id: number, path: string): Observable<UserTrait> {     
-        return this.httpClient.get<UserTrait>(BASE_URL+'/'+path+'/'+id)
+        return this.httpClient.get<UserTrait>(BASE_URL+path+'/'+id)
             .pipe(retry(1), catchError(this.handleError));
     }
 
@@ -38,10 +38,10 @@ export class UserTraitService {
 //            .pipe(catchError(this.handleError));
 //    }
 //    
-//    updateGame(game: Game): Observable<string> {
-//        return this.httpClient.patch<string>(BASE_URL+'/games/'+game.id, game, HTTP_OPTIONS)
-//            .pipe(catchError(this.handleError));
-//    }
+    updateTrait(trait: UserTrait, path: string): Observable<any> {
+        return this.httpClient.patch<any>(BASE_URL+path+'/'+trait.id, trait, {headers: HEADERS})
+            .pipe(catchError(this.handleError));
+    }
 //       
 //    deleteGames(ids: Array<number>): Observable<string> {            
 //        return this.httpClient.request<string>('delete', BASE_URL+'/games', { body: ids })

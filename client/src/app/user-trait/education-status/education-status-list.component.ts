@@ -6,17 +6,11 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { UserTrait } from '../model/user-trait';
 import { UserTraitService } from '../service/user-trait.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { EditDialogComponent } from './edit-dialog.component';
+
 @Component({
     selector: 'app-education-status-list',
     templateUrl: './education-status-list.component.html',
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed', style({height: '0px', minHeight: '0'})),
-            state('expanded', style({height: '*'})),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ])
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EducationStatusListComponent implements AfterViewInit {
@@ -37,10 +31,10 @@ export class EducationStatusListComponent implements AfterViewInit {
     @ViewChild(MatSort, {static: false}) sort: MatSort;
 
     constructor(
+        public dialog: MatDialog,
         //private router: Router,
         private userTraitService: UserTraitService,
         //private alertService: AlertService,
-        //public dialog: MatDialog,
         private fb: FormBuilder,
         private ref: ChangeDetectorRef
     ) {}
@@ -85,5 +79,29 @@ export class EducationStatusListComponent implements AfterViewInit {
         const numSelected = this.selection.selected.length;
         const numRows = this.data.length;
         return numSelected === numRows;
+    }
+
+    editTrait(id: number) {
+        this.openEditDialog(id);
+    }
+
+    openEditDialog(id: number): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            id: id,
+            title: 'edit'
+        };        
+        const dialogRef = this.dialog.open(EditDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+            data => {
+                if (data === true) {
+                    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+                    this.getUserTraits();
+                    this.ref.detectChanges();
+                }
+            }
+        );
     }
 }

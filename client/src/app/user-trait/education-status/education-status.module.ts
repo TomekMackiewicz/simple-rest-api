@@ -20,7 +20,7 @@ import {
     MatSortModule,
 //    MatProgressSpinnerModule,
 //    MatProgressBarModule,
-//    MatDialogModule,
+    MatDialogModule,
     MatCardModule,
     MatExpansionModule,
     MatFormFieldModule,
@@ -31,13 +31,16 @@ import { EducationStatusListComponent } from './education-status-list.component'
 import { EducationStatusAddComponent } from './education-status-add.component';
 import { EducationStatusEditComponent } from './education-status-edit.component';
 
+import { EditDialogComponent } from './edit-dialog.component';
+
 import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 
 @NgModule({
     declarations: [
         EducationStatusListComponent,
         EducationStatusAddComponent,
-        EducationStatusEditComponent
+        EducationStatusEditComponent,
+        EditDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -52,6 +55,7 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
         MatListModule,
         MatIconModule,
         MatButtonModule,
+        MatDialogModule,
         MatCardModule,
         MatExpansionModule,
         MatFormFieldModule,
@@ -68,7 +72,8 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
             }
 })
     ],
-    providers: [DatePipe]
+    providers: [DatePipe],
+    entryComponents: [EditDialogComponent]
 })
 export class EducationStatusModule { }
 
