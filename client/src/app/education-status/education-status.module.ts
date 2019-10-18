@@ -22,6 +22,8 @@ import { EducationStatusListComponent } from './education-status-list.component'
 import { EducationStatusAddComponent } from './education-status-add.component';
 import { EducationStatusEditComponent } from './education-status-edit.component';
 
+import { ApplicationPipesModule } from '../pipes/application-pipes.module';
+
 @NgModule({
   declarations: [
     EducationStatusListComponent,
@@ -37,7 +39,8 @@ import { EducationStatusEditComponent } from './education-status-edit.component'
     MatMenuModule,
     MatListModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    ApplicationPipesModule
   ],
   providers: []
 })
