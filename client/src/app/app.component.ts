@@ -5,8 +5,7 @@ import { NAV_ITEMS } from './menu-list-item/const/nav-items';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    templateUrl: './app.component.html'
 })
 export class AppComponent implements AfterViewInit {
     @ViewChild('sidenav', {static: false}) sidenav: ElementRef;
@@ -22,6 +21,7 @@ export class AppComponent implements AfterViewInit {
         this.navService.sidenav = this.sidenav;
     }
 
+    // TODO: DRY!
     isLargeScreen() {
         const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         return width > 720 ? true : false;

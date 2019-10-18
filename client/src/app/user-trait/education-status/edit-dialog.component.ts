@@ -1,6 +1,5 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { UserTrait } from '../model/user-trait';
 import { UserTraitService } from '../service/user-trait.service';
