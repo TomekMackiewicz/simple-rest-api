@@ -33,8 +33,8 @@
             <mat-toolbar class="table-toolbar">
                 <span class="fill-space"></span>
                 <div fxLayout="row" fxLayoutGap="16px">
-                    <button mat-flat-button color="warn" (click)=deleteGames() [disabled]="selection.selected.length < 1">
-                        {{ 'delete all' | translate | capitalizeFirst }}
+                    <button mat-flat-button color="warn" (click)=deleteTraits() [disabled]="selection.selected.length < 1">
+                        {{ 'delete' | translate | capitalizeFirst }}
                     </button>
                 </div>
             </mat-toolbar>

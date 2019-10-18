@@ -42,11 +42,11 @@ export class UserTraitService {
         return this.httpClient.patch<any>(BASE_URL+path+'/'+trait.id, trait, {headers: HEADERS})
             .pipe(catchError(this.handleError));
     }
-//       
-//    deleteGames(ids: Array<number>): Observable<string> {            
-//        return this.httpClient.request<string>('delete', BASE_URL+'/games', { body: ids })
-//            .pipe(catchError(this.handleError));
-//    }
+       
+    deleteTraits(ids: Array<number>, path: string): Observable<string> {            
+        return this.httpClient.request<string>('delete', BASE_URL+path, { body: ids })
+            .pipe(catchError(this.handleError));
+    }
 
     private handleError(error: HttpErrorResponse) {
         let errorMessage = '';

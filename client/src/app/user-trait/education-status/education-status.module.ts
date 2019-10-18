@@ -32,6 +32,7 @@ import { EducationStatusAddComponent } from './education-status-add.component';
 import { EducationStatusEditComponent } from './education-status-edit.component';
 
 import { EditDialogComponent } from './edit-dialog.component';
+import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 
@@ -40,7 +41,8 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
         EducationStatusListComponent,
         EducationStatusAddComponent,
         EducationStatusEditComponent,
-        EditDialogComponent
+        EditDialogComponent,
+        ConfirmDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -73,7 +75,7 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 })
     ],
     providers: [DatePipe],
-    entryComponents: [EditDialogComponent]
+    entryComponents: [EditDialogComponent, ConfirmDialogComponent]
 })
 export class EducationStatusModule { }
 

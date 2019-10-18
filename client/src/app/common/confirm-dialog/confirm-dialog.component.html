@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{ 'delete.confirm.title' | translate | capitalizeFirst }}</h2>
+
+<mat-dialog-content>
+    {{ 'delete.confirm.description' | translate | capitalizeFirst }}
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-warn" (click)="confirm()">
+        {{ 'confirm' | translate | capitalizeFirst }}
+    </button>
+    <span class="fill-space"></span>
+    <button class="mat-raised-button" (click)="cancel()" cdkFocusInitial>
+        {{ 'cancel' | translate | capitalizeFirst }}
+    </button>
+</mat-dialog-actions>

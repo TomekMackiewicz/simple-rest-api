@@ -7,6 +7,7 @@ import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/mate
 import { UserTrait } from '../model/user-trait';
 import { UserTraitService } from '../service/user-trait.service';
 import { EditDialogComponent } from './edit-dialog.component';
+import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'app-education-status-list',
@@ -94,6 +95,41 @@ export class EducationStatusListComponent implements AfterViewInit {
                     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
                     this.getUserTraits();
                     this.ref.detectChanges();
+                }
+            }
+        );
+    }
+
+    deleteTraits() {
+        this.openConfirmDeleteDialog();
+    }
+
+    openConfirmDeleteDialog(): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            title: 'delete.confirm.title',
+            description: 'delete.confirm.description'
+        };        
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+       
+        dialogRef.afterClosed().subscribe(
+            data => {
+                if (data === true) {
+                    var ids = this.selection.selected.map(({ id }) => id);
+                    this.userTraitService.deleteTraits(ids, '/education-status').subscribe(
+                        success => {
+                            //this.alertService.success(success, true);
+                            this.getUserTraits();
+                            this.selection.clear();
+                            this.ref.detectChanges();
+                        },
+                        error => {
+                            console.log(error);
+                            //this.alertService.error(error, true);
+                        }
+                    );
                 }
             }
         );
