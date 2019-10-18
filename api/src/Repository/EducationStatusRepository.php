@@ -34,10 +34,10 @@ class EducationStatusRepository extends ServiceEntityRepository
     public function findEducationStatuses(int $size, string $sort, string $order, int $offset, array $filters)
     {
         $qb = $this->_em->createQueryBuilder();
-        $qb->select('e')->from('App:EducationStatus', 'c');
+        $qb->select('e')->from('App:EducationStatus', 'e');
         
         if (!empty($filters) && $filters['label']) {
-            $qb->andWhere('e.label LIKE :name')
+            $qb->andWhere('e.label LIKE :label')
                 ->setParameter(":label", '%'.$filters['label'].'%');
         }
         if (!empty($sort) && !empty($order)) {

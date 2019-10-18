@@ -6,6 +6,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common'
 import { 
     MatSidenavModule, 
     MatCheckboxModule, 
@@ -16,6 +17,7 @@ import {
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
 //    MatProgressSpinnerModule,
 //    MatProgressBarModule,
 //    MatDialogModule,
@@ -55,6 +57,7 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
         MatFormFieldModule,
         MatTableModule,
         MatPaginatorModule,
+        MatSortModule,
         MatInputModule,
         ApplicationPipesModule,
         TranslateModule.forRoot({
@@ -65,7 +68,7 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
             }
 })
     ],
-    providers: []
+    providers: [DatePipe]
 })
 export class EducationStatusModule { }
 

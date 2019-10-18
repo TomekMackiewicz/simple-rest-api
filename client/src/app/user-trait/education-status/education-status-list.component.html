@@ -41,7 +41,7 @@
                     </button>
                 </div>
             </mat-toolbar>
-            <table mat-table [dataSource]="data" matSort matSortActive="date" matSortDisableClear matSortDirection="desc">
+            <table mat-table [dataSource]="data" matSort matSortActive="label" matSortDisableClear matSortDirection="desc">
                 <ng-container matColumnDef="select">
                     <th mat-header-cell *matHeaderCellDef>
                         <mat-checkbox (change)="$event ? masterToggle() : null"

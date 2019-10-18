@@ -41,33 +41,45 @@ class EducationStatusController extends AbstractFOSRestController
      */
     public function getAction(int $id)
     {
-        $user = $this->repository->findOneBy(['id' => $id]);
-        if (!$user) {
+        $educationStatus = $this->repository->findOneBy(['id' => $id]);
+        if (!$educationStatus) {
             return $this->handleView(
                 $this->view(null, Response::HTTP_NO_CONTENT)
             );
         }
 
         return $this->handleView(
-            $this->view($user, Response::HTTP_OK)
+            $this->view($educationStatus, Response::HTTP_OK)
         );
     }
 
     /**
      * @Rest\Get("")
+     * @param Request
      * @return Response
      */
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
-        $users = $this->repository->findAll();  
-        if (!$users) {
+        $page = (int) $request->query->get('page');
+        $size = (int) $request->query->get('size');
+        $sort = $request->query->get('sort');
+        $order = $request->query->get('order');
+        $offset = (int) ($page-1) * $size;
+        $filters = json_decode($request->query->get('filters'), true);
+        $educationStatuses = 
+            $this->repository->findEducationStatuses($size, $sort, $order, $offset, $filters);
+  
+        if (!$educationStatuses) {
             return $this->handleView(
                 $this->view(null, Response::HTTP_NO_CONTENT)
             );
         }
 
+        $response['traits'] = $educationStatuses;
+        $response['total_count'] = $this->repository->countEducationStatuses();
+
         return $this->handleView(
-            $this->view($users, Response::HTTP_OK)
+            $this->view($response, Response::HTTP_OK)
         );
     }
 
