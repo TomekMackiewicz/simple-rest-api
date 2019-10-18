@@ -1,3 +1,71 @@
-<p>
-  education-status works!
-</p>
+<div fxLayout="column" fxLayoutGap="16px">
+    <mat-card>
+        <mat-card-title>
+            {{ 'education.status' | translate | capitalizeFirst }}
+        </mat-card-title>
+        <mat-card-content>
+            <mat-expansion-panel (opened)="filterPanelOpenState = false" (closed)="filterPanelOpenState = true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ 'filter' | translate | capitalizeFirst }}
+                    </mat-panel-title>
+                    <mat-panel-description *ngIf="filterPanelOpenState">
+                        {{ 'expand.to.filter' | translate | capitalizeFirst }}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+                        <div fxLayout.gt-md="row" fxLayout.lt-lg="column" fxLayoutAlign.gt-md="space-between start" fxLayoutAlign.lt-lg="space-between stretch">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'label' | translate | capitalizeFirst }}</mat-label>
+                                <input matInput formControlName="label" placeholder="{{ 'label' | translate | capitalizeFirst }}">
+                            </mat-form-field> 
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="16px">
+                            <button mat-flat-button type="submit" color="primary">
+                                {{ 'filter' | translate | capitalizeFirst }}
+                            </button>
+                            <button mat-flat-button type="button" color="accent" (click)=resetFilter()>
+                                {{ 'filter.clear' | translate | capitalizeFirst }}
+                            </button>
+                        </div>
+                    </form>
+            </mat-expansion-panel>            
+            <mat-toolbar class="table-toolbar">
+                <span class="fill-space"></span>
+                <div fxLayout="row" fxLayoutGap="16px">
+                    <button mat-flat-button color="primary" (click)=redirectToEditPage() [disabled]="selection.selected.length != 1">
+                        {{ 'edit' | translate | capitalizeFirst }}
+                    </button>
+                    <button mat-flat-button color="warn" (click)=deleteGames() [disabled]="selection.selected.length < 1">
+                        {{ 'delete' | translate | capitalizeFirst }}
+                    </button>
+                </div>
+            </mat-toolbar>
+            <table mat-table [dataSource]="data" matSort matSortActive="date" matSortDisableClear matSortDirection="desc">
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                                      [checked]="selection.hasValue() && isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      (change)="$event ? selection.toggle(row) : null"
+                                      [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>
+                        {{ 'label' | translate | capitalizeFirst }}
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{ row.label }}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="resultsLength" [pageSizeOptions]="[20, 50, 100, 500]" showFirstLastButtons></mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -8,19 +8,21 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { 
     MatSidenavModule, 
-//    MatCheckboxModule, 
+    MatCheckboxModule, 
     MatToolbarModule, 
     MatButtonModule, 
     MatIconModule, 
     MatMenuModule,
     MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
 //    MatProgressSpinnerModule,
 //    MatProgressBarModule,
 //    MatDialogModule,
     MatCardModule,
     MatExpansionModule,
-//    MatFormFieldModule,
-//    MatInputModule
+    MatFormFieldModule,
+    MatInputModule
 } from '@angular/material';
 
 import { EducationStatusListComponent } from './education-status-list.component';
@@ -38,8 +40,11 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
         FlexLayoutModule,
         MatSidenavModule,
+        MatCheckboxModule,
         MatToolbarModule,
         MatMenuModule,
         MatListModule,
@@ -47,6 +52,10 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
         MatButtonModule,
         MatCardModule,
         MatExpansionModule,
+        MatFormFieldModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatInputModule,
         ApplicationPipesModule,
         TranslateModule.forRoot({
             loader: {
