@@ -19,7 +19,7 @@ import {
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 
-import { EducationStatusModule } from './education-status/education-status.module';
+import { EducationStatusModule } from './user-trait/education-status/education-status.module';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './menu-list-item/navigation.component';
