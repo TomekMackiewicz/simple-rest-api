@@ -80,8 +80,17 @@ export class EducationStatusListComponent implements AfterViewInit {
         this.openEditDialog(id);
     }
 
+    // TODO: DRY!
+    isLargeScreen() {
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        return width > 720 ? true : false;
+    }
+
     openEditDialog(id: number): void {
         const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
+        //dialogConfig.panelClass = '';
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
