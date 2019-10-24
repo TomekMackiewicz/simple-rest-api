@@ -15,7 +15,7 @@ import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dial
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EducationStatusListComponent implements AfterViewInit {
-    displayedColumns: string[] = ['select', 'label', 'actions'];
+    displayedColumns: string[] = ['select', 'label'];
     expandedElement: UserTrait | null;
     data: UserTrait[] = [];
     selection = new SelectionModel<UserTrait>(true, []);
