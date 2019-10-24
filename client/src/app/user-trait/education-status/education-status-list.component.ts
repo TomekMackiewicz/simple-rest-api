@@ -6,7 +6,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { UserTrait } from '../model/user-trait';
 import { UserTraitService } from '../service/user-trait.service';
-import { EditDialogComponent } from './edit-dialog.component';
+import { EditDialogComponent } from '../../common/edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -95,7 +95,8 @@ export class EducationStatusListComponent implements AfterViewInit {
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
             id: id,
-            title: 'edit'
+            title: 'edit',
+            path: '/education-status'
         };        
         const dialogRef = this.dialog.open(EditDialogComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(

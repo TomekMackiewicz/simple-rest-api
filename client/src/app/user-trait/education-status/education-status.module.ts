@@ -28,10 +28,8 @@ import {
 } from '@angular/material';
 
 import { EducationStatusListComponent } from './education-status-list.component';
-import { EducationStatusAddComponent } from './education-status-add.component';
-import { EducationStatusEditComponent } from './education-status-edit.component';
 
-import { EditDialogComponent } from './edit-dialog.component';
+import { EditDialogComponent } from '../../common/edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
@@ -39,8 +37,6 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 @NgModule({
     declarations: [
         EducationStatusListComponent,
-        EducationStatusAddComponent,
-        EducationStatusEditComponent,
         EditDialogComponent,
         ConfirmDialogComponent
     ],

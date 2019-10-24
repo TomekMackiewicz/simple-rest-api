@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { UserTrait } from '../model/user-trait';
-import { UserTraitService } from '../service/user-trait.service';
+import { UserTrait } from '../../user-trait/model/user-trait';
+import { UserTraitService } from '../../user-trait/service/user-trait.service';
 
 @Component({
     selector: 'edit-dialog',
@@ -12,6 +12,7 @@ import { UserTraitService } from '../service/user-trait.service';
 export class EditDialogComponent implements OnInit {
     id: number;
     title: string;
+    path: string;
     userTrait: UserTrait;
     traitForm = this.fb.group({
         id: [''],
@@ -26,10 +27,11 @@ export class EditDialogComponent implements OnInit {
     ) {
         this.id = data.id;
         this.title = data.title;
+        this.path = data.path;
     }
 
     ngOnInit(): void {
-        this.userTraitService.getUserTrait(this.id, '/education-status').subscribe(
+        this.userTraitService.getUserTrait(this.id, this.path).subscribe(
             userTrait => {
                 this.userTrait = userTrait;
                 this.traitForm.setValue(this.userTrait);
@@ -45,7 +47,7 @@ export class EditDialogComponent implements OnInit {
     }
 
     updateTrait() {
-        return this.userTraitService.updateTrait(this.traitForm.value, '/education-status').subscribe(
+        return this.userTraitService.updateTrait(this.traitForm.value, this.path).subscribe(
             success => {
                 console.log(success);
                 this.dialogRef.close(true);
