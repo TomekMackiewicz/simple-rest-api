@@ -29,6 +29,7 @@ import {
 
 import { EducationStatusListComponent } from './education-status-list.component';
 
+import { AddDialogComponent } from '../../common/add-dialog/add-dialog.component';
 import { EditDialogComponent } from '../../common/edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
@@ -37,6 +38,7 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 @NgModule({
     declarations: [
         EducationStatusListComponent,
+        AddDialogComponent,
         EditDialogComponent,
         ConfirmDialogComponent
     ],
@@ -71,7 +73,7 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 })
     ],
     providers: [DatePipe],
-    entryComponents: [EditDialogComponent, ConfirmDialogComponent]
+    entryComponents: [AddDialogComponent, EditDialogComponent, ConfirmDialogComponent]
 })
 export class EducationStatusModule { }
 

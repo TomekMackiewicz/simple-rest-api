@@ -6,6 +6,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { UserTrait } from '../model/user-trait';
 import { UserTraitService } from '../service/user-trait.service';
+import { AddDialogComponent } from '../../common/add-dialog/add-dialog.component';
 import { EditDialogComponent } from '../../common/edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
@@ -76,10 +77,6 @@ export class EducationStatusListComponent implements AfterViewInit {
         });
     }
 
-    editTrait(id: number) {
-        this.openEditDialog(id);
-    }
-
     // TODO: DRY!
     isLargeScreen() {
         const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -95,10 +92,31 @@ export class EducationStatusListComponent implements AfterViewInit {
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
             id: id,
-            title: 'edit',
             path: '/education-status'
         };        
         const dialogRef = this.dialog.open(EditDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+            data => {
+                if (data === true) {
+                    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+                    this.getUserTraits();
+                    this.ref.detectChanges();
+                }
+            }
+        );
+    }
+
+    openAddDialog(): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
+        //dialogConfig.panelClass = '';
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            path: '/education-status'
+        };        
+        const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
             data => {
                 if (data === true) {

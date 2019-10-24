@@ -33,11 +33,11 @@ export class UserTraitService {
             .pipe(retry(1), catchError(this.handleError));   
     }
 
-//    addGame(game: Game): Observable<string> {
-//        return this.httpClient.post<string>(BASE_URL+'/games', game, HTTP_OPTIONS)
-//            .pipe(catchError(this.handleError));
-//    }
-//    
+    addUserTrait(trait: UserTrait, path: string): Observable<string> {
+        return this.httpClient.post<string>(BASE_URL+path, trait, {headers: HEADERS})
+            .pipe(catchError(this.handleError));
+    }
+    
     updateTrait(trait: UserTrait, path: string): Observable<any> {
         return this.httpClient.patch<any>(BASE_URL+path+'/'+trait.id, trait, {headers: HEADERS})
             .pipe(catchError(this.handleError));

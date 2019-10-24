@@ -2,7 +2,7 @@
     <mat-card-header>
         <mat-card-title fxLayout="row" fxLayoutGap="16px" fxLayoutAlign=" center">
             <span>{{ 'education.status' | translate | capitalizeFirst }}</span>
-            <button mat-stroked-button color="primary" (click)="addTrait()">New</button>
+            <button mat-flat-button color="primary" (click)="openAddDialog()">New</button>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -34,7 +34,7 @@
                 <td mat-cell *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                     </mat-checkbox>
-                    <button mat-button color="primary" (click)="editTrait(row.id)" [disabled]="!selection.isSelected(row)">Edit</button>
+                    <button mat-button color="primary" (click)="openEditDialog(row.id)" [disabled]="!selection.isSelected(row)">Edit</button>
                 </td>
             </ng-container>
             <ng-container matColumnDef="label">

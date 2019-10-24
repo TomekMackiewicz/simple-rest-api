@@ -1,0 +1,29 @@
+<form [formGroup]="traitForm" (ngSubmit)="addTrait()" fxLayout="column" fxLayoutAlign="none">
+    <mat-dialog-content>
+        <div fxLayout="column" fxLayoutGap="16px">
+            <mat-card>
+                <mat-card-title>
+                    {{ 'add' | translate | capitalizeFirst }}
+                </mat-card-title>
+                <mat-card-content>
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>{{ 'label' | translate | capitalizeFirst }}</mat-label>
+                        <input matInput placeholder="{{ 'label' | translate | capitalizeFirst }}" formControlName="label" required>
+                        <mat-error *ngIf="traitForm.get('label').hasError('required')">
+                            {{ 'validation.required' | translate | capitalizeFirst }}
+                        </mat-error>
+                    </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button class="mat-raised-button mat-warn" type="submit" [disabled]="!traitForm.valid">
+            {{ 'confirm' | translate | capitalizeFirst }}
+        </button>
+        <span class="fill-space"></span>
+        <button type="button" class="mat-raised-button" (click)="cancel()" cdkFocusInitial>
+            {{ 'cancel' | translate | capitalizeFirst }}
+        </button>
+    </mat-dialog-actions>
+</form>
