@@ -24,7 +24,8 @@ import {
     MatCardModule,
     MatExpansionModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
 } from '@angular/material';
 
 import { EducationStatusListComponent } from './education-status-list.component';
@@ -63,6 +64,7 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
         MatPaginatorModule,
         MatSortModule,
         MatInputModule,
+        MatSnackBarModule,
         ApplicationPipesModule,
         TranslateModule.forRoot({
             loader: {

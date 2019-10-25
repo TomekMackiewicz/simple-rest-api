@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
 import { UserTrait } from '../../user-trait/model/user-trait';
 import { UserTraitService } from '../../user-trait/service/user-trait.service';
 
@@ -22,7 +22,8 @@ export class EditDialogComponent implements OnInit {
         public dialogRef: MatDialogRef<EditDialogComponent>, 
         @Inject(MAT_DIALOG_DATA) data: any,
         private fb: FormBuilder,
-        private userTraitService: UserTraitService
+        private userTraitService: UserTraitService,
+        private snackBar: MatSnackBar
     ) {
         this.id = data.id;
         this.path = data.path;
@@ -47,15 +48,20 @@ export class EditDialogComponent implements OnInit {
     updateTrait() {
         return this.userTraitService.updateTrait(this.traitForm.value, this.path).subscribe(
             success => {
-                console.log(success);
                 this.dialogRef.close(true);
-                //this.alertService.success(success, true);
+                this.openSnackBar(success, 'success-notification-overlay');
             },
             error => {
-                console.log(error);
-                //this.alertService.error(error, true);
+                this.openSnackBar(error, 'error-notification-overlay');
             }
         );
     }
-     
+
+    openSnackBar(message: string, state: string) {
+        this.snackBar.open(message, 'Close', {
+            duration: 600000,
+            verticalPosition: 'top',
+            panelClass: [state]
+        });
+    }     
 }

@@ -164,3 +164,38 @@ table {
         padding-bottom: 16px;
     }
 }
+
+.success-notification-overlay,
+.info-notification-overlay,
+.warning-notification-overlay,
+.error-notification-overlay,
+.default-notification-overlay {
+    border-left: 4px solid;
+}
+
+.success-notification-overlay,
+.info-notification-overlay,
+.warning-notification-overlay,
+.error-notification-overlay,
+.default-notification-overlay::before {
+    font-family: "Material Icons";
+    font-size: 24px;
+    white-space: pre;
+}
+
+.success-notification-overlay {
+    border-left-color: green;
+}
+
+.success-notification-overlay::before {
+    content: "\e86c  ";
+    color: green;
+    float: left;
+    margin-top: 6px; /* dirty hack */    
+}
+
+/* Dirty hack! */
+.mat-simple-snackbar-action {
+    margin: 0 !important;
+}
+
