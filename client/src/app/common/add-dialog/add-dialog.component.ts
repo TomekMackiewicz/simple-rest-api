@@ -44,7 +44,7 @@ export class AddDialogComponent {
 
     openSnackBar(message: string, state: string) {
         this.snackBar.open(message, 'Close', {
-            duration: 600000,
+            duration: 5000,
             verticalPosition: 'top',
             panelClass: [state]
         });

@@ -171,6 +171,7 @@ table {
 .error-notification-overlay,
 .default-notification-overlay {
     border-left: 4px solid;
+    padding: 22px 16px 14px 16px !important;
 }
 
 .success-notification-overlay,
@@ -191,11 +192,24 @@ table {
     content: "\e86c  ";
     color: green;
     float: left;
-    margin-top: 6px; /* dirty hack */    
 }
 
-/* Dirty hack! */
-.mat-simple-snackbar-action {
-    margin: 0 !important;
+.error-notification-overlay {
+    border-left-color: red;
 }
 
+.error-notification-overlay::before {
+    content: "\e000  ";
+    color: red;
+    float: left;
+}
+
+.warning-notification-overlay {
+    border-left-color: yellow;
+}
+
+.warning-notification-overlay::before {
+    content: "\e002  ";
+    color: yellow;
+    float: left;
+}
