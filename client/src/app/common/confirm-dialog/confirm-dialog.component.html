@@ -5,11 +5,11 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button class="mat-raised-button mat-warn" (click)="confirm()">
+    <button mat-stroked-button type="button" color="warn" (click)="confirm()">
         {{ 'confirm' | translate | capitalizeFirst }}
     </button>
     <span class="fill-space"></span>
-    <button class="mat-raised-button" (click)="cancel()" cdkFocusInitial>
+    <button mat-stroked-button (click)="cancel()" cdkFocusInitial>
         {{ 'cancel' | translate | capitalizeFirst }}
     </button>
 </mat-dialog-actions>

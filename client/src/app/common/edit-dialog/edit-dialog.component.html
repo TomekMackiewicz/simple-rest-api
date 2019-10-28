@@ -19,11 +19,11 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button class="mat-raised-button mat-warn" type="submit" [disabled]="!traitForm.valid">
+        <button mat-stroked-button type="submit" color="primary" [disabled]="!traitForm.valid">
             {{ 'confirm' | translate | capitalizeFirst }}
         </button>
         <span class="fill-space"></span>
-        <button type="button" class="mat-raised-button" (click)="cancel()" cdkFocusInitial>
+        <button mat-stroked-button type="button" color="warn" (click)="cancel()" cdkFocusInitial>
             {{ 'cancel' | translate | capitalizeFirst }}
         </button>
     </mat-dialog-actions>
