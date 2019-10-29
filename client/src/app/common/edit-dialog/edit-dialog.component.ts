@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
 import { UserTrait } from '../../user-trait/model/user-trait';
@@ -9,7 +9,7 @@ import { UserTraitService } from '../../user-trait/service/user-trait.service';
     templateUrl: './edit-dialog.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditDialogComponent implements OnInit {
+export class EditDialogComponent {
     id: number;
     path: string;
     userTrait: UserTrait;
@@ -26,10 +26,7 @@ export class EditDialogComponent implements OnInit {
         private snackBar: MatSnackBar
     ) {
         this.id = data.id;
-        this.path = data.path;
-    }
-
-    ngOnInit(): void {
+        this.path = data.path
         this.userTraitService.getUserTrait(this.id, this.path).subscribe(
             userTrait => {
                 this.userTrait = userTrait;

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EducationStatusListComponent } from './user-trait/education-status/education-status-list.component';
 
 const routes: Routes = [
@@ -14,6 +15,10 @@ const routes: Routes = [
                         component: EducationStatusListComponent                
                     }
                 ]                
+            },
+            {
+                path: 'dashboard', 
+                component: DashboardComponent             
             }
         ]
     }

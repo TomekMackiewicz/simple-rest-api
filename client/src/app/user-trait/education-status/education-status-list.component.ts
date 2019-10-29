@@ -21,9 +21,7 @@ export class EducationStatusListComponent implements AfterViewInit {
     data: UserTrait[] = [];
     selection = new SelectionModel<UserTrait>(true, []);
     resultsLength = 0;
-    isLoadingResults = true;
     isRateLimitReached = false;
-    
     filterForm = this.fb.group({
         label: ['']
     });
@@ -44,13 +42,13 @@ export class EducationStatusListComponent implements AfterViewInit {
     ngAfterViewInit() {       
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.getUserTraits();
+        this.ref.detectChanges();
     }
     
     getUserTraits() {
         merge(this.sort.sortChange, this.paginator.page).pipe(
             startWith({}),
             switchMap(() => {
-                this.isLoadingResults = true;
                 return this.userTraitService.getUserTraits(
                     this.sort.active, 
                     this.sort.direction, 
@@ -61,13 +59,11 @@ export class EducationStatusListComponent implements AfterViewInit {
                 );
             }),
             map(data => {
-                this.isLoadingResults = false;
                 this.isRateLimitReached = false;
                 this.resultsLength = data.total_count;
                 return data.traits;
             }),
             catchError(() => {
-                this.isLoadingResults = false;
                 this.isRateLimitReached = true;
                 return observableOf([]);
             })

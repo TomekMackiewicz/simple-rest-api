@@ -1,0 +1,14 @@
+<!--<div *ngIf="isLoading | async" class="progress-overlay">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>-->
+
+<div *ngIf="isLoading | async; else route" class="progress-overlay">
+    <mat-progress-spinner class="spinner" mode="indeterminate">
+    </mat-progress-spinner>
+</div>
+<ng-template #route>
+    <div *ngIf="routeChanged" class="progress-overlay">
+        <mat-progress-spinner class="spinner" mode="indeterminate">
+        </mat-progress-spinner>
+    </div>
+</ng-template>
