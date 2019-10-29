@@ -1,8 +1,9 @@
-import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
 import { UserTrait } from '../../user-trait/model/user-trait';
 import { UserTraitService } from '../../user-trait/service/user-trait.service';
+import { handleError } from '../../common/functions/error.functions';
 
 @Component({
     selector: 'edit-dialog',
@@ -23,7 +24,8 @@ export class EditDialogComponent {
         @Inject(MAT_DIALOG_DATA) data: any,
         private fb: FormBuilder,
         private userTraitService: UserTraitService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private ref: ChangeDetectorRef
     ) {
         this.id = data.id;
         this.path = data.path
@@ -33,7 +35,11 @@ export class EditDialogComponent {
                 this.traitForm.setValue(this.userTrait);
             },
             error => {
-                console.log(error);
+                let errors = handleError(error, this.traitForm);
+                if (typeof errors.message !== 'undefined') {
+                    this.openSnackBar(errors.message, 'error-notification-overlay');
+                }
+                this.ref.detectChanges();
             }
         );
     }
@@ -49,7 +55,11 @@ export class EditDialogComponent {
                 this.openSnackBar(success, 'success-notification-overlay');
             },
             error => {
-                this.openSnackBar(error, 'error-notification-overlay');
+                let errors = handleError(error, this.traitForm);
+                if (errors !== null && typeof errors.message !== 'undefined') {
+                    this.openSnackBar(errors.message, 'error-notification-overlay');
+                }
+                this.ref.detectChanges();
             }
         );
     }
