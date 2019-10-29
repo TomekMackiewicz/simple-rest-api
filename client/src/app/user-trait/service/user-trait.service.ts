@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { UserTrait, UserTraits } from '../model/user-trait';
 import { HEADERS, BASE_URL } from '../../const/http';
+import { ErrorService } from '../../common/services/error.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserTraitService {
-            
+
     constructor(
         private httpClient: HttpClient,
-        public datepipe: DatePipe
+        public datepipe: DatePipe,
+        private errorService: ErrorService
     ) {}
 
     getUserTrait(id: number, path: string): Observable<UserTrait> {     
         return this.httpClient.get<UserTrait>(BASE_URL+path+'/'+id)
-            .pipe(retry(1), catchError(this.handleError));
+            .pipe(retry(3), catchError(this.errorService.prepareError));
     }
 
     getUserTraits(sort: string, order: string, page: number, size: number, filters: any, path: string): Observable<UserTraits> {  
@@ -30,36 +32,22 @@ export class UserTraitService {
             .set('filters', JSON.stringify(filters))
             .set('path', path);
         return this.httpClient.get<UserTraits>(BASE_URL+path, {headers: HEADERS, params: params})
-            .pipe(retry(1), catchError(this.handleError));   
+            .pipe(retry(3), catchError(this.errorService.prepareError));   
     }
 
     addUserTrait(trait: UserTrait, path: string): Observable<string> {
         return this.httpClient.post<string>(BASE_URL+path, trait, {headers: HEADERS})
-            .pipe(catchError(this.handleError));
+            .pipe(retry(3), catchError(this.errorService.prepareError));
     }
     
     updateTrait(trait: UserTrait, path: string): Observable<any> {
         return this.httpClient.patch<any>(BASE_URL+path+'/'+trait.id, trait, {headers: HEADERS})
-            .pipe(catchError(this.handleError));
+            .pipe(retry(3), catchError(this.errorService.prepareError));
     }
        
     deleteTraits(ids: Array<number>, path: string): Observable<string> {            
         return this.httpClient.request<string>('delete', BASE_URL+path, { body: ids })
-            .pipe(catchError(this.handleError));
+            .pipe(retry(3), catchError(this.errorService.prepareError));
     }
 
-    private handleError(error: HttpErrorResponse) {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-            // A client-side or network error occurred.
-            errorMessage = error.error.message;
-        } else {
-            // The backend returned an unsuccessful response code.
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
-        console.log(errorMessage);
-
-        return throwError(errorMessage);
-    };
-                 
 }

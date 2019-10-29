@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { UserTrait } from '../../user-trait/model/user-trait';
 import { UserTraitService } from '../../user-trait/service/user-trait.service';
+import { ErrorService } from '../../common/services/error.service';
 
 @Component({
     selector: 'edit-dialog',
@@ -22,7 +23,9 @@ export class EditDialogComponent implements OnInit {
         public dialogRef: MatDialogRef<EditDialogComponent>, 
         @Inject(MAT_DIALOG_DATA) data: any,
         private fb: FormBuilder,
-        private userTraitService: UserTraitService
+        private userTraitService: UserTraitService,
+        private errorService: ErrorService,
+        private ref: ChangeDetectorRef
     ) {
         this.id = data.id;
         this.path = data.path;
@@ -34,8 +37,9 @@ export class EditDialogComponent implements OnInit {
                 this.userTrait = userTrait;
                 this.traitForm.setValue(this.userTrait);
             },
-            error => {
-                console.log(error);
+            errors => {
+                this.errorService.handleError(errors, this.traitForm);
+                this.ref.detectChanges();
             }
         );
     }
@@ -47,13 +51,11 @@ export class EditDialogComponent implements OnInit {
     updateTrait() {
         return this.userTraitService.updateTrait(this.traitForm.value, this.path).subscribe(
             success => {
-                console.log(success);
                 this.dialogRef.close(true);
-                //this.alertService.success(success, true);
             },
-            error => {
-                console.log(error);
-                //this.alertService.error(error, true);
+            errors => {
+                this.errorService.handleError(errors, this.traitForm);
+                this.ref.detectChanges();
             }
         );
     }

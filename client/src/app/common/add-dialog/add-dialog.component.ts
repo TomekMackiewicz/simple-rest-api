@@ -1,8 +1,9 @@
-import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { UserTrait } from '../../user-trait/model/user-trait';
 import { UserTraitService } from '../../user-trait/service/user-trait.service';
+import { ErrorService } from '../../common/services/error.service';
 
 @Component({
     selector: 'add-dialog',
@@ -20,7 +21,9 @@ export class AddDialogComponent {
         public dialogRef: MatDialogRef<AddDialogComponent>, 
         @Inject(MAT_DIALOG_DATA) data: any,
         private fb: FormBuilder,
-        private userTraitService: UserTraitService
+        private userTraitService: UserTraitService,
+        private errorService: ErrorService,
+        private ref: ChangeDetectorRef
     ) {
         this.path = data.path;
     }
@@ -32,13 +35,11 @@ export class AddDialogComponent {
     addTrait() {
         return this.userTraitService.addUserTrait(this.traitForm.value, this.path).subscribe(
             success => {
-                console.log(success);
                 this.dialogRef.close(true);
-                //this.alertService.success(success, true);
             },
-            error => {
-                console.log(error);
-                //this.alertService.error(error, true);
+            errors => {
+                this.errorService.handleError(errors, this.traitForm);
+                this.ref.detectChanges();
             }
         );
     }

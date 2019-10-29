@@ -13,6 +13,15 @@
                         <mat-error *ngIf="traitForm.get('label').hasError('required')">
                             {{ 'validation.required' | translate | capitalizeFirst }}
                         </mat-error>
+                        <mat-error *ngIf="traitForm.get('label').hasError('validation.unique')">
+                            {{ 'validation.unique' | translate | capitalizeFirst }}
+                        </mat-error>
+                        <mat-error *ngIf="traitForm.get('label').hasError('validation.min_length')">
+                            {{ 'validation.min_length' | translate | capitalizeFirst }}
+                        </mat-error>
+                        <mat-error *ngIf="traitForm.get('label').hasError('validation.max_length')">
+                            {{ 'validation.max_length' | translate | capitalizeFirst }}
+                        </mat-error>
                     </mat-form-field>
                 </mat-card-content>
             </mat-card>
