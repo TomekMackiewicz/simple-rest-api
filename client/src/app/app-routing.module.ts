@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './common/guards/auth.guard';
+import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EducationStatusListComponent } from './user-trait/education-status/education-status-list.component';
 
 const routes: Routes = [
+    {
+        path: 'login', 
+        component: LoginComponent,
+        canActivate: [AuthGuard]
+    },
     { 
         path: 'admin',
         children: [

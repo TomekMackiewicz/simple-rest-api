@@ -134,6 +134,7 @@ class UserController extends AbstractFOSRestController
             FOSUserEvents::REGISTRATION_COMPLETED,
             new FilterUserResponseEvent($user, $request, $response)
         );
+
         return $response;
     }
 }

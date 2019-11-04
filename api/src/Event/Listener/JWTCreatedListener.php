@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Event\Listener;
+
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 
 class JWTCreatedListener
