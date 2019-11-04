@@ -18,8 +18,8 @@ export class AddDialogComponent {
     });
 
     constructor(
-        public dialogRef: MatDialogRef<AddDialogComponent>, 
         @Inject(MAT_DIALOG_DATA) data: any,
+        public dialogRef: MatDialogRef<AddDialogComponent>, 
         private fb: FormBuilder,
         private userTraitService: UserTraitService,
         private snackBar: MatSnackBar,
@@ -28,7 +28,7 @@ export class AddDialogComponent {
         this.path = data.path;
     }
 
-    cancel() {
+    cancel(): void {
         this.dialogRef.close(false);
     }
 
@@ -48,7 +48,7 @@ export class AddDialogComponent {
         );
     }
 
-    openSnackBar(message: string, state: string) {
+    openSnackBar(message: string, state: string): void {
         this.snackBar.open(message, 'Close', {
             duration: 5000,
             verticalPosition: 'top',

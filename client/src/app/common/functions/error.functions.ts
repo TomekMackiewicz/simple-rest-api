@@ -36,10 +36,14 @@ export function prepareError(errorResponse: HttpErrorResponse) {
 
 export function handleError(errors: any, form: any)
 {
+    if (form === null) {
+        return errors;
+    }
+
     // Form errors
     if (typeof errors.formErrors !== 'undefined' && Object.keys(errors.formErrors).length > 0) {
         Object.entries(errors.formErrors).forEach(([key, value]) => {
-            Object.entries(value).forEach(([key2, value2]) => {
+            Object.entries(value).forEach(([key2, value2]) => { // TODO: rename
                 form.controls[key].setErrors({[value2]: true});
             });
         });

@@ -27,7 +27,7 @@
                 <th mat-header-cell *matHeaderCellDef>
                     <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
                     </mat-checkbox>
-                    <button mat-button color="warn" (click)=deleteTraits() [disabled]="selection.selected.length < 1">
+                    <button mat-button color="warn" (click)=openConfirmDeleteDialog() [disabled]="selection.selected.length < 1">
                         {{ 'delete' | translate | capitalizeFirst }}
                     </button>
                 </th>

@@ -83,7 +83,6 @@ export class EducationStatusListComponent implements AfterViewInit {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
         dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
-        //dialogConfig.panelClass = '';
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
@@ -106,7 +105,6 @@ export class EducationStatusListComponent implements AfterViewInit {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
         dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
-        //dialogConfig.panelClass = '';
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
@@ -124,36 +122,24 @@ export class EducationStatusListComponent implements AfterViewInit {
         );
     }
 
-    deleteTraits() {
-        this.openConfirmDeleteDialog();
-    }
-
     openConfirmDeleteDialog(): void {
         const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
             title: 'delete.confirm.title',
-            description: 'delete.confirm.description'
+            description: 'delete.confirm.description',
+            path: '/education-status',
+            ids: this.selection.selected.map(({ id }) => id)
         };        
         const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
-       
         dialogRef.afterClosed().subscribe(
             data => {
                 if (data === true) {
-                    var ids = this.selection.selected.map(({ id }) => id);
-                    this.userTraitService.deleteTraits(ids, '/education-status').subscribe(
-                        success => {
-                            //this.alertService.success(success, true);
-                            this.getUserTraits();
-                            this.selection.clear();
-                            this.ref.detectChanges();
-                        },
-                        error => {
-                            console.log(error);
-                            //this.alertService.error(error, true);
-                        }
-                    );
+                    this.getUserTraits();
+                    this.ref.detectChanges();
                 }
             }
         );
@@ -172,14 +158,14 @@ export class EducationStatusListComponent implements AfterViewInit {
     }
 
     applyFilter() {
-        //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0); // TODO
         this.getUserTraits();
         this.ref.detectChanges();
     }
 
     resetFilter() {
         this.filterForm.reset();
-        //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0); // TODO
         this.getUserTraits();
         this.ref.detectChanges();
     }
