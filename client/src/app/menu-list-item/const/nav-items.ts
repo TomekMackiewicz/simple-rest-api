@@ -5,6 +5,11 @@ export const NAV_ITEMS = [
         route: 'admin/dashboard'
     },
     {
+        displayName: 'post',
+        iconName: 'notes',
+        route: 'admin/post'
+    },
+    {
         displayName: 'user traits',
         iconName: 'fingerprint',
         children: [

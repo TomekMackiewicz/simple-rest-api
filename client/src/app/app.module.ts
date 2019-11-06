@@ -1,20 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { 
     MatSidenavModule, 
-//    MatCheckboxModule, 
     MatToolbarModule, 
     MatButtonModule, 
     MatIconModule, 
     MatMenuModule,
     MatListModule,
     MatProgressSpinnerModule,
-//    MatProgressBarModule,
-//    MatDialogModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule
@@ -23,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { EducationStatusModule } from './user-trait/education-status/education-status.module';
+import { PostModule } from './post/post.module';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './menu-list-item/navigation.component';
@@ -68,6 +66,7 @@ import { ApplicationPipesModule } from './pipes/application-pipes.module';
         MatInputModule,
         DashboardModule,
         EducationStatusModule,
+        PostModule,
         ApplicationPipesModule,
         TranslateModule.forRoot({
             loader: {
