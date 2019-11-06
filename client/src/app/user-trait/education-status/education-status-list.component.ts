@@ -27,6 +27,20 @@ export class EducationStatusListComponent implements AfterViewInit {
     });
     filterPanelOpenState = true;
 
+    formTemplate = [
+      {
+        "type": "input",
+        "name": "label",
+        "label": "label",
+        "errors": [
+            'required',
+            'validation.unique',
+            'validation.min_length',
+            'validation.max_length'
+        ]
+      }
+    ];
+
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: false}) sort: MatSort;
 
@@ -87,7 +101,8 @@ export class EducationStatusListComponent implements AfterViewInit {
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
             id: id,
-            path: '/education-status'
+            path: '/education-status',
+            formTemplate: this.formTemplate
         };        
         const dialogRef = this.dialog.open(EditDialogComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
@@ -108,7 +123,8 @@ export class EducationStatusListComponent implements AfterViewInit {
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
-            path: '/education-status'
+            path: '/education-status',
+            formTemplate: this.formTemplate
         };        
         const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(

@@ -1,5 +1,5 @@
-import { Component, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
 import { UserTrait } from '../../user-trait/model/user-trait';
 import { UserTraitService } from '../../user-trait/service/user-trait.service';
@@ -10,12 +10,11 @@ import { handleError } from '../../common/functions/error.functions';
     templateUrl: './add-dialog.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddDialogComponent {
+export class AddDialogComponent implements OnInit {
     path: string;
     userTrait: UserTrait;
-    traitForm = this.fb.group({
-        label: ['', Validators.required]
-    });
+    traitForm: any;
+    formTemplate: any;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) data: any,
@@ -26,6 +25,15 @@ export class AddDialogComponent {
         private ref: ChangeDetectorRef
     ) {
         this.path = data.path;
+        this.formTemplate = data.formTemplate;
+    }
+
+    ngOnInit() {
+        let group = {}; 
+        this.formTemplate.forEach(input_template => {
+            group[input_template.label] = new FormControl('');  
+        });
+        this.traitForm = this.fb.group(group);
     }
 
     cancel(): void {

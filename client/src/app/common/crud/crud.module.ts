@@ -1,13 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';//
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';//
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpClient, HttpClientModule } from '@angular/common/http';//
-import { ReactiveFormsModule } from '@angular/forms';//
-import { DatePipe } from '@angular/common'
-import { //
+import { 
     MatSidenavModule, 
     MatCheckboxModule, 
     MatToolbarModule, 
@@ -25,21 +23,22 @@ import { //
     MatInputModule,
     MatSnackBarModule
 } from '@angular/material';
-import { CrudModule } from '../../common/crud/crud.module';
+import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 
-import { EducationStatusListComponent } from './education-status-list.component';
-
-import { ApplicationPipesModule } from '../../pipes/application-pipes.module';//
+import { AddDialogComponent } from '../../common/add-dialog/add-dialog.component';
+import { EditDialogComponent } from '../../common/edit-dialog/edit-dialog.component';
+import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
     declarations: [
-        EducationStatusListComponent
+        AddDialogComponent,
+        EditDialogComponent,
+        ConfirmDialogComponent
     ],
     imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
+        CommonModule,
         ReactiveFormsModule,
-        HttpClientModule,
+        ApplicationPipesModule,
         FlexLayoutModule,
         MatSidenavModule,
         MatCheckboxModule,
@@ -57,8 +56,6 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';//
         MatSortModule,
         MatInputModule,
         MatSnackBarModule,
-        ApplicationPipesModule,
-        CrudModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -67,9 +64,10 @@ import { ApplicationPipesModule } from '../../pipes/application-pipes.module';//
             }
         })
     ],
-    providers: [DatePipe]
+    providers: [],
+    entryComponents: [AddDialogComponent, EditDialogComponent, ConfirmDialogComponent]
 })
-export class EducationStatusModule { }
+export class CrudModule { }
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
