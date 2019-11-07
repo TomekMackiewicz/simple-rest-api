@@ -1,6 +1,6 @@
-<h1>Rest Api Basis</h1>
+<h1>Simple Rest Api</h1>
 <p>Simple Symfony 4+ & Angular 8+ app which may serve as a starting point to build more advanced REST API.</p>
-<h3>Still in progress, not finished!</h3>
+<h3>Still in development!</h3>
 <ul>
     <li>FOS User integration (login, register, change password, view user account)</li>
     <li>User roles (admin, editor, regular user etc)</li>
