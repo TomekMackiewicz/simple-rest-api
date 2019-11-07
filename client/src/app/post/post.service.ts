@@ -3,8 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Post, Posts } from './post';
-import { HEADERS, BASE_URL } from '../const/http';
+import { HEADERS } from '../const/http';
 import { prepareError } from '../common/functions/error.functions';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -14,9 +15,9 @@ export class PostService {
     constructor(
         private httpClient: HttpClient
     ) {}
-
+// TODO: remove path
     getPost(id: number, path: string): Observable<Post> {     
-        return this.httpClient.get<Post>(BASE_URL+path+'/'+id)
+        return this.httpClient.get<Post>(environment.base_url+path+'/'+id)
             .pipe(catchError(prepareError));
     }
 
@@ -28,22 +29,22 @@ export class PostService {
             .set('size', size.toString())
             .set('filters', JSON.stringify(filters))
             .set('path', path);
-        return this.httpClient.get<Posts>(BASE_URL+path, {headers: HEADERS, params: params})
+        return this.httpClient.get<Posts>(environment.base_url+path, {headers: HEADERS, params: params})
             .pipe(catchError(prepareError));   
     }
 
     addPost(post: Post, path: string): Observable<string> {
-        return this.httpClient.post<string>(BASE_URL+path, post, {headers: HEADERS})
+        return this.httpClient.post<string>(environment.base_url+path, post, {headers: HEADERS})
             .pipe(catchError(prepareError));
     }
 
     updatePost(post: Post, path: string): Observable<any> {
-        return this.httpClient.patch<any>(BASE_URL+path+'/'+post.id, post, {headers: HEADERS})
+        return this.httpClient.patch<any>(environment.base_url+path+'/'+post.id, post, {headers: HEADERS})
             .pipe(catchError(prepareError));
     }
        
     deletePosts(ids: Array<number>, path: string): Observable<string> {            
-        return this.httpClient.request<string>('delete', BASE_URL+path, { body: ids })
+        return this.httpClient.request<string>('delete', environment.base_url+path, { body: ids })
             .pipe(catchError(prepareError));
     }
 

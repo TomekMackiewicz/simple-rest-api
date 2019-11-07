@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import * as decode from 'jwt-decode';
 import { Router } from '@angular/router';
-import { BASE_URL } from '../../const/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -22,7 +22,7 @@ export class AuthenticationService {
     ) {};
        
     login(username: string, password: string) { 
-        return this.http.post<any>(BASE_URL+'/login_check', {
+        return this.http.post<any>(environment.base_url+'/login_check', {
             username: username, 
             password: password
         }).subscribe(
