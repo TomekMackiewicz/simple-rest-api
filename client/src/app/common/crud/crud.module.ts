@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatQuillModule } from '@webacad/ng-mat-quill';
 import { 
     MatSidenavModule, 
     MatCheckboxModule, 
@@ -56,6 +57,7 @@ import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dial
         MatSortModule,
         MatInputModule,
         MatSnackBarModule,
+        MatQuillModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

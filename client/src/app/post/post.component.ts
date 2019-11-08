@@ -120,8 +120,9 @@ export class PostComponent implements AfterViewInit {
 
     openAddDialog(): void {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
-        dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.width = this.isLargeScreen() ? '66%' : '100%';
+        dialogConfig.minWidth = this.isLargeScreen() ? '66%' : '100%';
+        dialogConfig.height = '80%';
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
