@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router, 
          Event, 
@@ -11,8 +11,7 @@ import { LoaderService } from './loader.service';
 
 @Component({
     selector: 'app-loader',
-    templateUrl: './loader.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './loader.component.html'
 })
 export class LoaderComponent {
     isLoading: BehaviorSubject<boolean> = this.loaderService.isLoading;
@@ -20,22 +19,19 @@ export class LoaderComponent {
     
     constructor(
         private loaderService: LoaderService,
-        private router: Router,
-        private ref: ChangeDetectorRef
+        private router: Router
     ) {
         this.router.events.subscribe((event: Event) => {
             switch (true) {
                 case event instanceof NavigationStart: {
                     this.routeChanged = true;
-                    this.ref.detectChanges();
                     break;
                 }
                 case event instanceof NavigationEnd:
                 case event instanceof NavigationCancel:
                 case event instanceof NavigationError: {
                     setTimeout(() => { 
-                        this.routeChanged = false;
-                        this.ref.detectChanges(); 
+                        this.routeChanged = false; 
                     }, 200);
                     break;
                 }
