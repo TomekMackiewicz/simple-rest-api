@@ -19,8 +19,8 @@
 <h2>Installation</h2>
 <ol>
     <li>Clone or download repository</li>
-    <li>In api directory run <code>composer install</code></li>
-    <li>In client directory run <code>npm install</code></li>
+    <li>From api directory run <code>composer install</code></li>
+    <li>From client directory run <code>npm install</code></li>
     <li>Adjust base_url & admin_url in client/src/environment.ts</li>
     <li>Create <code>.env.local</code> file in api directory, copy the content from <code>.env</code> file and adjust DATABASE_URL</li>
     <li>From api folder run <code>php bin/console doctrine:database:create</code></li>
