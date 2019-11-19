@@ -5,7 +5,10 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EducationStatusListComponent } from './user-trait/education-status/education-status-list.component';
 import { PostComponent } from './post/post.component';
-
+import { CategoryListComponent } from './post/category/list/category-list.component';
+import { CategoryAddComponent } from './post/category/add/category-add.component';
+import { CategoryEditComponent } from './post/category/edit/category-edit.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 const routes: Routes = [
     {
         path: 'login',
@@ -32,6 +35,35 @@ const routes: Routes = [
                 }             
             },
             {
+                path: 'category', 
+                children: [
+                    {
+                        path: '', 
+                        component: CategoryListComponent,
+                        canActivate: [AuthGuard],
+                        data: {
+                            expectedRole: 'ROLE_ADMIN'
+                        }             
+                    },
+                    {
+                        path: 'add', 
+                        component: CategoryAddComponent,
+                        canActivate: [AuthGuard],
+                        data: {
+                            expectedRole: 'ROLE_ADMIN'
+                        }             
+                    },
+                    {
+                        path: 'edit/:id', 
+                        component: CategoryEditComponent,
+                        canActivate: [AuthGuard],
+                        data: {
+                            expectedRole: 'ROLE_ADMIN'
+                        }             
+                    }
+                ]             
+            },
+            {
                 path: 'education-status', 
                 children: [
                     {
@@ -42,6 +74,10 @@ const routes: Routes = [
             },
 
         ]
+    },
+    { 
+        path: '**', 
+        component: NotfoundComponent 
     }
 ];
 

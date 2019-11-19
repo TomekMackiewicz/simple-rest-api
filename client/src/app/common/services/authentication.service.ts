@@ -30,7 +30,7 @@ export class AuthenticationService {
                 var token: any = decode(data.token);
                 if (token) {             
                     localStorage.setItem('token', data.token);
-                    localStorage.setItem('currentUsername', token.username);
+                    localStorage.setItem('currentUsername', token.username); // TODO: set user object
                     localStorage.setItem('userId', token.userId);
                     localStorage.setItem('userRole', token.roles[0]);                    
                     this.getUsername(localStorage.getItem('currentUsername'));

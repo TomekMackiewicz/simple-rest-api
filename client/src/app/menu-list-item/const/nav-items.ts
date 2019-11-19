@@ -5,9 +5,20 @@ export const NAV_ITEMS = [
         route: 'admin/dashboard'
     },
     {
-        displayName: 'post',
+        displayName: 'posts',
         iconName: 'notes',
-        route: 'admin/post'
+        children: [
+            {
+                displayName: 'posts',
+                iconName: 'notes',
+                route: 'admin/post',
+            },
+            {
+                displayName: 'categories',
+                iconName: 'list',
+                route: 'admin/category',
+            }
+        ]
     },
     {
         displayName: 'user traits',

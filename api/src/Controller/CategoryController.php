@@ -40,8 +40,9 @@ class CategoryController extends AbstractFOSRestController
      * @return Response
      */
     public function getAction(int $id)
-    {
+    {        
         $category = $this->repository->findOneBy(['id' => $id]);
+
         if (!$category) {
             return $this->handleView(
                 $this->view(null, Response::HTTP_NO_CONTENT)
@@ -75,7 +76,7 @@ class CategoryController extends AbstractFOSRestController
         }
 
         $response['categories'] = $categories;
-        $response['total_count'] = $this->repository->countCategories();
+        $response['count'] = $this->repository->countCategories();
 
         return $this->handleView(
             $this->view($response, Response::HTTP_OK)
