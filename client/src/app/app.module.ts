@@ -39,13 +39,15 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ApplicationPipesModule } from './pipes/application-pipes.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavigationComponent,
         LoaderComponent,
-        LoginComponent
+        LoginComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,
