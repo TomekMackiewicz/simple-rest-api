@@ -1,84 +1,66 @@
 import { Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder } from '@angular/forms';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
-import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
-import { Post } from './post';
-import { PostService } from './post.service';
-import { AddDialogComponent } from '../common/add-dialog/add-dialog.component';
-import { EditDialogComponent } from '../common/edit-dialog/edit-dialog.component';
-import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { MatPaginator, MatSort, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
+import { Category } from '../category';
+import { CategoryService } from '../category.service';
+import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-dialog.component';
+import { handleError } from '../../../common/functions/error.functions';
 
 @Component({
-    selector: 'app-post',
-    templateUrl: './post.component.html',
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PostComponent implements AfterViewInit {
-    displayedColumns: string[] = ['select', 'title', 'body'];
-    expandedElement: Post | null;
-    data: Post[] = [];
-    selection = new SelectionModel<Post>(true, []);
+export class CategoryListComponent implements AfterViewInit {
+    displayedColumns: string[] = ['select', 'name', 'actions'];
+    expandedElement: Category | null;
+    data: Category[] = [];
+    selection = new SelectionModel<Category>(true, []);
     resultsLength = 0;
     isRateLimitReached = false;
     filterForm = this.fb.group({
-        title: ['']
+        name: ['']
     });
     filterPanelOpenState = true;
-
-    formTemplate = [
-      {
-        "type": "input",
-        "name": "title",
-        "label": "title",
-        "errors": [
-            'required'
-        ]
-      },
-      {
-        "type": "textarea",
-        "name": "body",
-        "label": "body",
-        "errors": [
-            'required'
-        ]
-      }
-    ];
 
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: false}) sort: MatSort;
 
     constructor(
-        public dialog: MatDialog,
-        private postService: PostService,
+        private router: Router,
+        private dialog: MatDialog,
+        private categoryService: CategoryService,
         private fb: FormBuilder,
-        private ref: ChangeDetectorRef
+        private ref: ChangeDetectorRef,
+        private snackBar: MatSnackBar
     ) {}
 
     ngAfterViewInit() {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-        this.getPosts();
+        this.getCategories();
         this.ref.detectChanges();
     }
 
-    getPosts() {
+    getCategories() {
         merge(this.sort.sortChange, this.paginator.page).pipe(
             startWith({}),
             switchMap(() => {
-                return this.postService.getPosts(
+                return this.categoryService.getCategories(
                     this.sort.active, 
                     this.sort.direction, 
                     this.paginator.pageIndex+1, 
                     this.paginator.pageSize,
-                    this.filterForm.value,
-                    '/post'
+                    this.filterForm.value
                 );
             }),
             map(data => {
                 this.isRateLimitReached = false;
                 this.resultsLength = data.count;
-                return data.posts;
+                return data.categories;
             }),
             catchError(() => {
                 this.isRateLimitReached = true;
@@ -89,79 +71,61 @@ export class PostComponent implements AfterViewInit {
             this.ref.detectChanges();
         });
     }
-
-    // TODO: DRY!
-    isLargeScreen() {
-        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        return width > 720 ? true : false;
+    
+    add() {
+        this.router.navigate(['/admin/category/add']);
     }
-
-    openEditDialog(id: number): void {
+    
+    edit(id: number) {
+        this.router.navigate(['/admin/category/edit/'+id]);
+    }
+    
+    delete(id?: number) {
+        let ids: number[] = id ? [id] : this.selection.selected.map(({ id }) => id);
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
         dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
-            id: id,
-            path: '/post'
-        };        
-        const dialogRef = this.dialog.open(EditDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(
-            data => {
-                if (data === true) {
-                    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-                    this.getPosts();
-                    this.ref.detectChanges();
-                }
-            }
-        );
-    }
-
-    openAddDialog(): void {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = this.isLargeScreen() ? '66%' : '100%';
-        dialogConfig.minWidth = this.isLargeScreen() ? '66%' : '100%';
-        dialogConfig.height = '80%';
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-            path: '/post',
-            formTemplate: this.formTemplate
-        };        
-        const dialogRef = this.dialog.open(AddDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(
-            data => {
-                if (data === true) {
-                    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-                    this.getPosts();
-                    this.ref.detectChanges();
-                }
-            }
-        );
-    }
-
-    openConfirmDeleteDialog(): void {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
-        dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-            title: 'delete.confirm.title',
-            description: 'delete.confirm.description',
-            path: '/post',
-            ids: this.selection.selected.map(({ id }) => id)
+            title: 'delete.confirm.title'
         };        
         const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(
             data => {
                 if (data === true) {
-                    this.getPosts();
-                    this.ref.detectChanges();
+                    this.categoryService.deleteCategories(ids).subscribe(
+                        success => {
+                            this.getCategories();
+                            this.selection.clear();
+                            this.openSnackBar(success, 'success-notification-overlay');
+                            this.ref.detectChanges();
+                        },
+                        error => {
+                            let errors = handleError(error);
+                            if (errors !== null && typeof errors.message !== 'undefined') {
+                                this.openSnackBar(errors.message, 'error-notification-overlay');
+                            }
+                            this.ref.detectChanges();
+                        }
+                    );
                 }
             }
         );
+    }
+
+    openSnackBar(message: string, state: string): void {
+        this.snackBar.open(message, 'Close', {
+            duration: 5000,
+            verticalPosition: 'top',
+            panelClass: [state]
+        });
+    } 
+
+    // TODO: DRY!
+    isLargeScreen() {
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        return width > 720 ? true : false;
     }
 
     isAllSelected() {
@@ -178,14 +142,14 @@ export class PostComponent implements AfterViewInit {
 
     applyFilter() {
         //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0); // TODO
-        this.getPosts();
+        this.getCategories();
         this.ref.detectChanges();
     }
 
     resetFilter() {
         this.filterForm.reset();
         //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0); // TODO
-        this.getPosts();
+        this.getCategories();
         this.ref.detectChanges();
     }
 }
