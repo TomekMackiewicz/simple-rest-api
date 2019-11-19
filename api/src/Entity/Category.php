@@ -33,6 +33,18 @@ class Category
      * @Assert\NotBlank(message = "validation.required")
      */
     private $name;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="date_created", type="datetime", nullable=true)
+     */
+    private $dateCreated;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="date_edited", type="datetime", nullable=true)
+     */
+    private $dateEdited;
     
     /**
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="categories")
@@ -69,7 +81,43 @@ class Category
 
         return $this;
     }
-    
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateCreated(): ?\DateTimeInterface
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * @param \DateTimeInterface $dateCreated
+     * @return \self
+     */
+    public function setDateCreated(\DateTimeInterface $dateCreated): self
+    {
+        $this->dateCreated = $dateCreated;
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateEdited(): ?\DateTimeInterface
+    {
+        return $this->dateEdited;
+    }
+
+    /**
+     * @param \DateTimeInterface $dateEdited
+     * @return \self
+     */
+    public function setDateEdited(\DateTimeInterface $dateEdited): self
+    {
+        $this->dateEdited = $dateEdited;
+        return $this;
+    }
+
     /**
      * @return Collection
      */

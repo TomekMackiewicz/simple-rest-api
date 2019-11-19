@@ -5,7 +5,6 @@
         </mat-card-title>
         <mat-card-content>
             <form [formGroup]="categoryForm" (ngSubmit)="addCategory()" fxLayout="column" fxLayoutAlign="none">
-
                 <mat-form-field appearance="outline">
                     <mat-label>{{ 'name' | translate | capitalizeFirst }}</mat-label>
                     <input matInput placeholder="{{ 'name' | translate | capitalizeFirst }}" formControlName="name" required>
@@ -16,7 +15,6 @@
                         {{ 'validation.unique' | translate | capitalizeFirst }}
                     </mat-error>
                 </mat-form-field>
-
                 <button mat-raised-button type="submit" [disabled]="!categoryForm.valid">
                     {{ 'add' | translate | capitalizeFirst }}
                 </button>

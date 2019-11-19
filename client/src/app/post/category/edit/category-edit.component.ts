@@ -17,8 +17,7 @@ export class CategoryEditComponent implements OnInit {
     category: Category;
     categoryForm = this.fb.group({
         id: [''],
-        name: ['', Validators.required],
-        posts: ['']
+        name: ['', Validators.required]
     });
 
     constructor(
@@ -40,7 +39,7 @@ export class CategoryEditComponent implements OnInit {
                     category => {
                         if (category) {
                             this.category = category;
-                            this.categoryForm.setValue(this.category);
+                            this.categoryForm.patchValue({ id: this.category.id, name: this.category.name});
                         } else {
                             this.router.navigateByUrl('/404', { skipLocationChange: true });
                         }

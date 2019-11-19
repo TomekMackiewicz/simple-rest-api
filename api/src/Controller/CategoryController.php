@@ -94,6 +94,7 @@ class CategoryController extends AbstractFOSRestController
         $form = $this->createForm(CategoryType::class, $category);
         $form->submit($request->request->all());
         if ($form->isSubmitted() && $form->isValid()) {
+            $category->setDateCreated(new \DateTime());
             $this->em->persist($category);
             $this->em->flush();
 
@@ -125,6 +126,7 @@ class CategoryController extends AbstractFOSRestController
         $form = $this->createForm(CategoryType::class, $category);
         $form->submit($data);
         if ($form->isSubmitted() && $form->isValid()) {
+            $category->setDateEdited(new \DateTime());
             $this->em->persist($category);
             $this->em->flush();
 

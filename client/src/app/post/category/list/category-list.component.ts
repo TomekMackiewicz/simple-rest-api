@@ -16,7 +16,7 @@ import { handleError } from '../../../common/functions/error.functions';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoryListComponent implements AfterViewInit {
-    displayedColumns: string[] = ['select', 'name', 'actions'];
+    displayedColumns: string[] = ['select', 'name', 'dateCreated', 'dateEdited', 'actions'];
     expandedElement: Category | null;
     data: Category[] = [];
     selection = new SelectionModel<Category>(true, []);
