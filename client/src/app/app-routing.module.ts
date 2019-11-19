@@ -8,7 +8,7 @@ import { PostComponent } from './post/post.component';
 import { CategoryListComponent } from './post/category/list/category-list.component';
 import { CategoryAddComponent } from './post/category/add/category-add.component';
 import { CategoryEditComponent } from './post/category/edit/category-edit.component';
-import { NotfoundComponent } from './notfound/notfound.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
     {
         path: 'login',
@@ -77,7 +77,7 @@ const routes: Routes = [
     },
     { 
         path: '**', 
-        component: NotfoundComponent 
+        component: NotFoundComponent 
     }
 ];
 
