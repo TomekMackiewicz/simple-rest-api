@@ -10,6 +10,33 @@ main {
     padding: 16px;
 }
 
+table {
+    width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+    table {
+        display: inline-block;
+        overflow-x: auto;
+
+    }
+
+    th:not(.mat-column-select):not(.mat-column-actions), td:not(.mat-column-select):not(.mat-column-actions) {
+        overflow: hidden;
+        min-width: 200px; 
+        text-overflow: ellipsis;
+    }
+
+    .mat-column-select {
+        width: 50px;
+        min-width: 50px;
+    }
+
+    .mat-column-actions {
+        width: 150px;
+    }
+}
+
 .dark-toolbar {
     background: #424242;
     color: #fff;
@@ -35,10 +62,6 @@ mat-sidenav {
 .nav-chevron {
     display: inline-flex;
     vertical-align: middle;    
-}
-
-table {
-    width: 100%;
 }
 
 .progress-overlay {

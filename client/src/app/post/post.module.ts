@@ -23,17 +23,26 @@ import {
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTooltipModule
 } from '@angular/material';
 import { CrudModule } from '../common/crud/crud.module';
 
 import { PostComponent } from './post.component';
+import { CategoryListComponent } from './category/list/category-list.component';
+import { CategoryAddComponent } from './category/add/category-add.component';
+import { CategoryEditComponent } from './category/edit/category-edit.component';
 
 import { ApplicationPipesModule } from '../pipes/application-pipes.module';
 
 @NgModule({
     declarations: [
-        PostComponent
+        PostComponent,
+        CategoryListComponent,
+        CategoryAddComponent,
+        CategoryEditComponent
     ],
     imports: [
         BrowserModule,
@@ -57,6 +66,9 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
         MatSortModule,
         MatInputModule,
         MatSnackBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTooltipModule,
         ApplicationPipesModule,
         CrudModule,
         TranslateModule.forRoot({
