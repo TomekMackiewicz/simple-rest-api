@@ -1,7 +1,7 @@
 <mat-sidenav-container *ngIf="isLoggedIn">
     <mat-sidenav class="dark-toolbar" #sidenav [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()">
         <mat-toolbar class="dark-toolbar">
-            DP
+            Simple REST API
         </mat-toolbar>
         <mat-nav-list>
             <app-navigation *ngFor="let item of navItems" [item]="item">
@@ -11,12 +11,13 @@
     <mat-sidenav-content>
         <mat-toolbar class="dark-toolbar">
             <button mat-button (click)="sidenav.toggle()">
-                <mat-icon>menu</mat-icon>
+                <mat-icon *ngIf="sidenav.opened">menu_open</mat-icon>
+                <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
             </button>
             <span class="fill-space"></span>
-            <button mat-button>Session expires in: 
-<!--                <app-session-tracker></app-session-tracker>-->
-            </button>
+<!--            <button mat-button>Session expires in: 
+                <app-session-tracker></app-session-tracker>
+            </button>-->
             <button mat-icon-button (click)="useLanguage('en')">en</button>
             <button mat-icon-button (click)="useLanguage('pl')">pl</button>            
             <button mat-icon-button [matMenuTriggerFor]="userMenu">

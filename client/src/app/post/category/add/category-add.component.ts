@@ -40,6 +40,10 @@ export class CategoryAddComponent {
         );
     }
 
+    cancel() {
+        this.router.navigate(['/admin/category']);
+    }
+
     openSnackBar(message: string, state: string): void {
         this.snackBar.open(message, 'Close', {
             duration: 5000,

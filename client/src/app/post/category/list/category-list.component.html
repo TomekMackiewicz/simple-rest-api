@@ -9,8 +9,8 @@
         <div class="actions-toolbar">
             <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" fxLayout.gt-md="row" fxLayout.lt-lg="column" fxLayoutAlign="start center" fxLayoutGap="16px">
                 <mat-form-field appearance="standard">
-                    <mat-label>{{ 'name' | translate | capitalizeFirst }}</mat-label>
-                    <input matInput formControlName="name" placeholder="{{ 'name' | translate | capitalizeFirst }}">
+                    <mat-label>{{ 'filter.name' | translate | capitalizeFirst }}</mat-label>
+                    <input matInput formControlName="name" placeholder="{{ 'filter.name' | translate | capitalizeFirst }}">
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutGap="16px">
                     <button mat-stroked-button type="submit" color="primary">
