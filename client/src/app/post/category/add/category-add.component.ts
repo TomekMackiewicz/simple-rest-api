@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from '../category.service';
-import { AlertService } from '../../../common/services/alert.service';
+import { UiService } from '../../../common/services/ui.service';
 import { handleError } from '../../../common/functions/error.functions';
 
 @Component({
@@ -19,7 +19,7 @@ export class CategoryAddComponent {
     constructor(
         private router: Router,
         private categoryService: CategoryService,
-        private alertService: AlertService,
+        private uiService: UiService,
         private fb: FormBuilder,
         private ref: ChangeDetectorRef
     ) { }
@@ -27,13 +27,13 @@ export class CategoryAddComponent {
     addCategory() {
         return this.categoryService.addCategory(this.categoryForm.value).subscribe(
             success => {
-                this.alertService.openSnackBar(success, 'success-notification-overlay');
+                this.uiService.openSnackBar(success, 'success-notification-overlay');
                 this.router.navigate(['/admin/category']);
             },
             error => {
                 let errors = handleError(error, this.categoryForm);
                 if (errors !== null && typeof errors.message !== 'undefined') {
-                    this.alertService.openSnackBar(errors.message, 'error-notification-overlay');
+                    this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
                 }
                 this.ref.detectChanges();
             }

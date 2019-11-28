@@ -7,7 +7,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
-import { AlertService } from '../../../common/services/alert.service';
+import { UiService } from '../../../common/services/ui.service';
 import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-dialog.component';
 import { handleError } from '../../../common/functions/error.functions';
 
@@ -35,7 +35,7 @@ export class CategoryListComponent implements AfterViewInit {
         private router: Router,
         private dialog: MatDialog,
         private categoryService: CategoryService,
-        private alertService: AlertService,
+        private uiService: UiService,
         private fb: FormBuilder,
         private ref: ChangeDetectorRef
     ) {}
@@ -84,8 +84,8 @@ export class CategoryListComponent implements AfterViewInit {
     delete(id?: number) {
         let ids: number[] = id ? [id] : this.selection.selected.map(({ id }) => id);
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = this.isLargeScreen() ? '33%' : '100%';
-        dialogConfig.minWidth = this.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.width = this.uiService.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.minWidth = this.uiService.isLargeScreen() ? '33%' : '100%';
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
@@ -99,13 +99,13 @@ export class CategoryListComponent implements AfterViewInit {
                         success => {
                             this.getCategories();
                             this.selection.clear();
-                            this.alertService.openSnackBar(success, 'success-notification-overlay');
+                            this.uiService.openSnackBar(success, 'success-notification-overlay');
                             this.ref.detectChanges();
                         },
                         error => {
                             let errors = handleError(error);
                             if (errors !== null && typeof errors.message !== 'undefined') {
-                                this.alertService.openSnackBar(errors.message, 'error-notification-overlay');
+                                this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
                             }
                             this.ref.detectChanges();
                         }
@@ -114,12 +114,6 @@ export class CategoryListComponent implements AfterViewInit {
             }
         );
     } 
-
-    // TODO: DRY!
-    isLargeScreen() {
-        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        return width > 720 ? true : false;
-    }
 
     isAllSelected() {
         const numSelected = this.selection.selected.length;

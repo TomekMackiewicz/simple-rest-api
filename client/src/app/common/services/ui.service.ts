@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 @Injectable({
     providedIn: 'root'
 })
-export class AlertService {
+export class UiService {
 
     constructor(
         private snackBar: MatSnackBar
@@ -18,6 +18,11 @@ export class AlertService {
         });
     }
 
+    isLargeScreen() {
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        console.log(width > 720 ? true : false);
+        return width > 720 ? true : false;
+    }
 }
 
 
