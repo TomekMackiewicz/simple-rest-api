@@ -4,9 +4,10 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder } from '@angular/forms';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
-import { MatPaginator, MatSort, MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
+import { AlertService } from '../../../common/services/alert.service';
 import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-dialog.component';
 import { handleError } from '../../../common/functions/error.functions';
 
@@ -34,9 +35,9 @@ export class CategoryListComponent implements AfterViewInit {
         private router: Router,
         private dialog: MatDialog,
         private categoryService: CategoryService,
+        private alertService: AlertService,
         private fb: FormBuilder,
-        private ref: ChangeDetectorRef,
-        private snackBar: MatSnackBar
+        private ref: ChangeDetectorRef
     ) {}
 
     ngAfterViewInit() {
@@ -98,13 +99,13 @@ export class CategoryListComponent implements AfterViewInit {
                         success => {
                             this.getCategories();
                             this.selection.clear();
-                            this.openSnackBar(success, 'success-notification-overlay');
+                            this.alertService.openSnackBar(success, 'success-notification-overlay');
                             this.ref.detectChanges();
                         },
                         error => {
                             let errors = handleError(error);
                             if (errors !== null && typeof errors.message !== 'undefined') {
-                                this.openSnackBar(errors.message, 'error-notification-overlay');
+                                this.alertService.openSnackBar(errors.message, 'error-notification-overlay');
                             }
                             this.ref.detectChanges();
                         }
@@ -112,14 +113,6 @@ export class CategoryListComponent implements AfterViewInit {
                 }
             }
         );
-    }
-
-    openSnackBar(message: string, state: string): void {
-        this.snackBar.open(message, 'Close', {
-            duration: 5000,
-            verticalPosition: 'top',
-            panelClass: [state]
-        });
     } 
 
     // TODO: DRY!

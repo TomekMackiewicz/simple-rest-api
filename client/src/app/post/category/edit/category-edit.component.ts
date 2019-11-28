@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from "@angular/material";
 import { CategoryService } from '../category.service';
+import { AlertService } from '../../../common/services/alert.service';
 import { Category } from '../category';
 import { handleError } from '../../../common/functions/error.functions';
 
@@ -24,15 +24,15 @@ export class CategoryEditComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private categoryService: CategoryService,
+        private alertService: AlertService,
         private fb: FormBuilder,
-        private snackBar: MatSnackBar,
         private ref: ChangeDetectorRef
     ) { }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             if (isNaN(params['id'])) {
-                this.openSnackBar('error.type.nan', 'error-notification-overlay');
+                this.alertService.openSnackBar('error.type.nan', 'error-notification-overlay');
             } else if (params['id'] !== undefined) {
                 const id = +params['id'];
                 this.categoryService.getCategory(id).subscribe(
@@ -45,11 +45,11 @@ export class CategoryEditComponent implements OnInit {
                         }
                     },
                     error => {
-                        this.openSnackBar('errors.not-found', 'error-notification-overlay');
+                        this.alertService.openSnackBar('errors.not-found', 'error-notification-overlay');
                     }
                 );
             } else {
-                this.openSnackBar('error.undefined', 'error-notification-overlay');
+                this.alertService.openSnackBar('error.undefined', 'error-notification-overlay');
             }
         });
     }
@@ -57,13 +57,13 @@ export class CategoryEditComponent implements OnInit {
     updateCategory() {
         return this.categoryService.updateCategory(this.categoryForm.value).subscribe(
             success => {
-                this.openSnackBar(success, 'success-notification-overlay');
+                this.alertService.openSnackBar(success, 'success-notification-overlay');
                 this.router.navigate(['/admin/category']);
             },
             error => {
                 let errors = handleError(error, this.categoryForm);
                 if (errors !== null && typeof errors.message !== 'undefined') {
-                    this.openSnackBar(errors.message, 'error-notification-overlay');
+                    this.alertService.openSnackBar(errors.message, 'error-notification-overlay');
                 }
                 this.ref.detectChanges();
             }
@@ -74,11 +74,4 @@ export class CategoryEditComponent implements OnInit {
         this.router.navigate(['/admin/category']);
     }
 
-    openSnackBar(message: string, state: string): void {
-        this.snackBar.open(message, 'Close', {
-            duration: 5000,
-            verticalPosition: 'top',
-            panelClass: [state]
-        });
-    } 
 }
