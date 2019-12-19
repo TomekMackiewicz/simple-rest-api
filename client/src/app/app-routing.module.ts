@@ -4,7 +4,7 @@ import { AuthGuard } from './common/guards/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EducationStatusListComponent } from './user-trait/education-status/education-status-list.component';
-import { PostComponent } from './post/post.component';
+import { PostListComponent } from './post/list/post-list.component';
 import { CategoryListComponent } from './post/category/list/category-list.component';
 import { CategoryAddComponent } from './post/category/add/category-add.component';
 import { CategoryEditComponent } from './post/category/edit/category-edit.component';
@@ -28,11 +28,16 @@ const routes: Routes = [
             },
             {
                 path: 'post', 
-                component: PostComponent,
-                canActivate: [AuthGuard],
-                data: {
-                    expectedRole: 'ROLE_ADMIN'
-                }             
+                children: [
+                    {
+                        path: '', 
+                        component: PostListComponent,
+                        canActivate: [AuthGuard],
+                        data: {
+                            expectedRole: 'ROLE_ADMIN'
+                        }             
+                    } 
+                ]           
             },
             {
                 path: 'category', 

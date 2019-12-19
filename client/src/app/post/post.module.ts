@@ -30,7 +30,7 @@ import {
 } from '@angular/material';
 import { CrudModule } from '../common/crud/crud.module';
 
-import { PostComponent } from './post.component';
+import { PostListComponent } from './list/post-list.component';
 import { CategoryListComponent } from './category/list/category-list.component';
 import { CategoryAddComponent } from './category/add/category-add.component';
 import { CategoryEditComponent } from './category/edit/category-edit.component';
@@ -39,7 +39,7 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
 
 @NgModule({
     declarations: [
-        PostComponent,
+        PostListComponent,
         CategoryListComponent,
         CategoryAddComponent,
         CategoryEditComponent
