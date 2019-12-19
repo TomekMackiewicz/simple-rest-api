@@ -20,7 +20,6 @@ export class UiService {
 
     isLargeScreen() {
         const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        console.log(width > 720 ? true : false);
         return width > 720 ? true : false;
     }
 }
