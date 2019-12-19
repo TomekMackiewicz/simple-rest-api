@@ -152,6 +152,7 @@ mat-sidenav {
 .default-notification-overlay {
     border-left: 4px solid;
     padding: 22px 16px 14px 16px !important;
+    max-width: 99vw !important;
 }
 
 .success-notification-overlay,
