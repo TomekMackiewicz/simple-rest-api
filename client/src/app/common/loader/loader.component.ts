@@ -30,9 +30,9 @@ export class LoaderComponent {
                 case event instanceof NavigationEnd:
                 case event instanceof NavigationCancel:
                 case event instanceof NavigationError: {
-                    setTimeout(() => { 
+//                    setTimeout(() => { 
                         this.routeChanged = false; 
-                    }, 200);
+//                    }, 200);
                     break;
                 }
                 default: {

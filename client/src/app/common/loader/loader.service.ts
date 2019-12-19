@@ -10,8 +10,8 @@ export class LoaderService {
     }
 
     hide() {
-        setTimeout(() => { 
+//        setTimeout(() => { 
             this.isLoading.next(false);
-        }, 200);
+//        }, 200);
     }
 }
