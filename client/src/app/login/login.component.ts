@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AuthenticationService } from '../common/services/authentication.service';
 import { User } from '../user/model/user';
-import { AlertService } from '../common/services/alert.service';
+import { UiService } from '../common/services/ui.service';
 import { handleError } from '../common/functions/error.functions';
 
 @Component({
@@ -15,7 +15,7 @@ export class LoginComponent {
     constructor(
         private authenticationService: AuthenticationService,
         private ref: ChangeDetectorRef,
-        private alertService: AlertService
+        private uiService: UiService
     ) {}
 
     login() {
@@ -24,7 +24,7 @@ export class LoginComponent {
             (error: any) => {
                 let errors = handleError(error);
                 if (errors !== null && typeof errors.message !== 'undefined') {
-                    this.alertService.openSnackBar(errors.message, 'error-notification-overlay');
+                    this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
                 }
                 this.ref.detectChanges();
             }

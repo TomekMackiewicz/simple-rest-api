@@ -6,7 +6,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { 
     MatSidenavModule, 
     MatCheckboxModule, 
@@ -26,11 +27,13 @@ import {
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
 } from '@angular/material';
 import { CrudModule } from '../common/crud/crud.module';
 
 import { PostListComponent } from './list/post-list.component';
+import { PostAddComponent } from './add/post-add.component';
 import { CategoryListComponent } from './category/list/category-list.component';
 import { CategoryAddComponent } from './category/add/category-add.component';
 import { CategoryEditComponent } from './category/edit/category-edit.component';
@@ -40,6 +43,7 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
 @NgModule({
     declarations: [
         PostListComponent,
+        PostAddComponent,
         CategoryListComponent,
         CategoryAddComponent,
         CategoryEditComponent
@@ -69,8 +73,10 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
         MatDatepickerModule,
         MatNativeDateModule,
         MatTooltipModule,
+        MatSelectModule,
         ApplicationPipesModule,
         CrudModule,
+        CKEditorModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

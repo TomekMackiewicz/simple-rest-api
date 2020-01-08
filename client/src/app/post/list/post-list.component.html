@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title fxLayout="row" fxLayoutGap="16px" fxLayoutAlign=" center">
-            <span>{{ 'category' | translate | capitalizeFirst }}</span>
+            <span>{{ 'post' | translate | capitalizeFirst }}</span>
             <button mat-flat-button color="primary" (click)="add()">New</button>
         </mat-card-title>
     </mat-card-header>
@@ -9,8 +9,12 @@
         <div class="actions-toolbar">
             <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" fxLayout.gt-md="row" fxLayout.lt-lg="column" fxLayoutAlign="start center" fxLayoutGap="16px">
                 <mat-form-field appearance="standard">
-                    <mat-label>{{ 'filter.name' | translate | capitalizeFirst }}</mat-label>
-                    <input matInput formControlName="name" placeholder="{{ 'filter.name' | translate | capitalizeFirst }}">
+                    <mat-label>{{ 'filter.title' | translate | capitalizeFirst }}</mat-label>
+                    <input matInput formControlName="title" placeholder="{{ 'filter.title' | translate | capitalizeFirst }}">
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>{{ 'filter.author' | translate | capitalizeFirst }}</mat-label>
+                    <input matInput formControlName="author" placeholder="{{ 'filter.author' | translate | capitalizeFirst }}">
                 </mat-form-field>
                 <div fxLayout="row" fxLayoutGap="16px">
                     <button mat-stroked-button type="submit" color="primary">
@@ -22,7 +26,7 @@
                 </div>
             </form>
         </div>
-        <table mat-table multiTemplateDataRows [dataSource]="data" matSort matSortActive="name" matSortDisableClear matSortDirection="desc" class="table-responsive">
+        <table mat-table multiTemplateDataRows [dataSource]="data" matSort matSortActive="title" matSortDisableClear matSortDirection="desc" class="table-responsive">
             <ng-container matColumnDef="select" sticky>
                 <th mat-header-cell *matHeaderCellDef>
                     <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
@@ -32,11 +36,31 @@
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"></mat-checkbox>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="name">
+            <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef>
-                    {{ 'name' | translate | capitalizeFirst }}
+                    {{ 'title' | translate | capitalizeFirst }}
                 </th>
-                <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+                <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+            </ng-container>
+            <ng-container matColumnDef="slug">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'slug' | translate | capitalizeFirst }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.slug }}</td>
+            </ng-container>
+            <ng-container matColumnDef="author">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'author' | translate | capitalizeFirst }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.author.username }}</td>
+            </ng-container>
+            <ng-container matColumnDef="categories">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'categories' | translate | capitalizeFirst }}
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <span *ngFor="let category of row.categories; let isLast=last">{{ category.name }}{{isLast ? '' : ', '}}</span>
+                </td>
             </ng-container>
             <ng-container matColumnDef="dateCreated">
                 <th mat-header-cell *matHeaderCellDef>

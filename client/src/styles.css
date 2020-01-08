@@ -194,3 +194,7 @@ mat-sidenav {
     color: yellow;
     float: left;
 }
+
+.ck-editor__editable_inline {
+    min-height: 500px;
+}

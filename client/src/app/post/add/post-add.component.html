@@ -1,0 +1,45 @@
+<mat-card fxFlex="100" fxLayout="column" fxLayoutGap="16px">
+    <mat-card-title>
+        {{ 'post.new' | translate | capitalizeFirst }}
+    </mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="postForm" (ngSubmit)="addPost()" fxLayout="column" fxLayoutAlign="none">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'title' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'title' | translate | capitalizeFirst }}" formControlName="title" required>
+                <mat-error *ngIf="postForm.get('title').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="postForm.get('title').hasError('validation.unique')">
+                    {{ 'validation.unique' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'slug' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'slug' | translate | capitalizeFirst }}" formControlName="slug" required>
+                <mat-error *ngIf="postForm.get('slug').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="postForm.get('slug').hasError('validation.unique')">
+                    {{ 'validation.unique' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'categories' | translate | capitalizeFirst }}</mat-label>
+                <mat-select formControlName="categories" multiple>
+                    <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name | translate | capitalizeFirst }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <ckeditor [editor]="Editor" tagName="textarea" formControlName="body"></ckeditor>
+            <div fxLayout="row">
+                <button mat-flat-button color="primary" type="submit" [disabled]="!postForm.valid">
+                    {{ 'add' | translate | capitalizeFirst }}
+                </button>
+                <span class="fill-space"></span>
+                <button mat-flat-button type="button" (click)="cancel()">
+                    {{ 'cancel' | translate | capitalizeFirst }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatQuillModule } from '@webacad/ng-mat-quill';
 import { 
     MatSidenavModule, 
     MatCheckboxModule, 
@@ -26,14 +25,10 @@ import {
 } from '@angular/material';
 import { ApplicationPipesModule } from '../../pipes/application-pipes.module';
 
-import { AddDialogComponent } from '../../common/add-dialog/add-dialog.component';
-import { EditDialogComponent } from '../../common/edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
     declarations: [
-        AddDialogComponent,
-        EditDialogComponent,
         ConfirmDialogComponent
     ],
     imports: [
@@ -57,7 +52,6 @@ import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dial
         MatSortModule,
         MatInputModule,
         MatSnackBarModule,
-        MatQuillModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -67,7 +61,7 @@ import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dial
         })
     ],
     providers: [],
-    entryComponents: [AddDialogComponent, EditDialogComponent, ConfirmDialogComponent]
+    entryComponents: [ConfirmDialogComponent]
 })
 export class CrudModule { }
 

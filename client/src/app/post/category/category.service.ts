@@ -21,7 +21,7 @@ export class CategoryService {
             .pipe(catchError(prepareError));
     }
 
-    getCategories(sort: string, order: string, page: number, size: number, filters: any): Observable<Categories> { 
+    getCategories(sort: string = '', order: string = '', page: number = 0, size: number = 0, filters: any = []): Observable<Categories> { 
         let params = new HttpParams()
             .set('sort', sort)
             .set('order', order)

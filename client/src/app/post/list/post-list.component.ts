@@ -5,26 +5,27 @@ import { FormBuilder } from '@angular/forms';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
-import { Category } from '../category';
-import { CategoryService } from '../category.service';
-import { UiService } from '../../../common/services/ui.service';
-import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-dialog.component';
-import { handleError } from '../../../common/functions/error.functions';
+import { Post } from '../post';
+import { PostService } from '../post.service';
+import { UiService } from '../../common/services/ui.service';
+import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
+import { handleError } from '../../common/functions/error.functions';
 
 @Component({
-    selector: 'app-category-list',
-    templateUrl: './category-list.component.html',
+    selector: 'app-post-list',
+    templateUrl: './post-list.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CategoryListComponent implements AfterViewInit {
-    displayedColumns: string[] = ['select', 'name', 'dateCreated', 'dateEdited', 'actions'];
-    expandedElement: Category | null;
-    data: Category[] = [];
-    selection = new SelectionModel<Category>(true, []);
+export class PostListComponent implements AfterViewInit {
+    displayedColumns: string[] = ['select', 'title', 'slug', 'author', 'categories', 'dateCreated', 'dateEdited', 'actions'];
+    expandedElement: Post | null;
+    data: Post[] = [];
+    selection = new SelectionModel<Post>(true, []);
     resultsLength = 0;
     isRateLimitReached = false;
     filterForm = this.fb.group({
-        name: ['']
+        title: [''],
+        author: ['']
     });
     filterPanelOpenState = true;
 
@@ -34,7 +35,7 @@ export class CategoryListComponent implements AfterViewInit {
     constructor(
         private router: Router,
         private dialog: MatDialog,
-        private categoryService: CategoryService,
+        private postService: PostService,
         private uiService: UiService,
         private fb: FormBuilder,
         private ref: ChangeDetectorRef
@@ -42,15 +43,15 @@ export class CategoryListComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-        this.getCategories();
+        this.getPosts();
         this.ref.detectChanges();
     }
 
-    getCategories() {
+    getPosts() {
         merge(this.sort.sortChange, this.paginator.page).pipe(
             startWith({}),
             switchMap(() => {
-                return this.categoryService.getCategories(
+                return this.postService.getPosts(
                     this.sort.active, 
                     this.sort.direction, 
                     this.paginator.pageIndex+1, 
@@ -61,7 +62,7 @@ export class CategoryListComponent implements AfterViewInit {
             map(data => {
                 this.isRateLimitReached = false;
                 this.resultsLength = data.count;
-                return data.categories;
+                return data.posts;
             }),
             catchError(() => {
                 this.isRateLimitReached = true;
@@ -74,11 +75,11 @@ export class CategoryListComponent implements AfterViewInit {
     }
     
     add() {
-        this.router.navigate(['/admin/category/add']);
+        this.router.navigate(['/admin/post/add']);
     }
     
     edit(id: number) {
-        this.router.navigate(['/admin/category/edit/'+id]);
+        this.router.navigate(['/admin/post/edit/'+id]);
     }
     
     delete(id?: number) {
@@ -95,9 +96,9 @@ export class CategoryListComponent implements AfterViewInit {
         dialogRef.afterClosed().subscribe(
             data => {
                 if (data === true) {
-                    this.categoryService.deleteCategories(ids).subscribe(
+                    this.postService.deletePosts(ids).subscribe(
                         success => {
-                            this.getCategories();
+                            this.getPosts();
                             this.selection.clear();
                             this.uiService.openSnackBar(success, 'success-notification-overlay');
                             this.ref.detectChanges();
@@ -129,14 +130,14 @@ export class CategoryListComponent implements AfterViewInit {
 
     applyFilter() {
         //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0); // TODO
-        this.getCategories();
+        this.getPosts();
         this.ref.detectChanges();
     }
 
     resetFilter() {
         this.filterForm.reset();
         //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0); // TODO
-        this.getCategories();
+        this.getPosts();
         this.ref.detectChanges();
     }
 }

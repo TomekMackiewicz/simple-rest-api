@@ -19,7 +19,6 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 
 import { DashboardModule } from './dashboard/dashboard.module';
-import { EducationStatusModule } from './user-trait/education-status/education-status.module';
 import { PostModule } from './post/post.module';
 
 import { AppComponent } from './app.component';
@@ -67,7 +66,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
         MatFormFieldModule,
         MatInputModule,
         DashboardModule,
-        EducationStatusModule,
         PostModule,
         ApplicationPipesModule,
         TranslateModule.forRoot({

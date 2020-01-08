@@ -19,16 +19,5 @@ export const NAV_ITEMS = [
                 route: 'admin/category',
             }
         ]
-    },
-    {
-        displayName: 'user traits',
-        iconName: 'fingerprint',
-        children: [
-            {
-                displayName: 'education status',
-                iconName: 'school',
-                route: 'admin/education-status/list',
-            }
-        ]
-    },     
+    }     
 ];

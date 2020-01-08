@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './common/guards/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { EducationStatusListComponent } from './user-trait/education-status/education-status-list.component';
 import { PostListComponent } from './post/list/post-list.component';
+import { PostAddComponent } from './post/add/post-add.component';
 import { CategoryListComponent } from './post/category/list/category-list.component';
 import { CategoryAddComponent } from './post/category/add/category-add.component';
 import { CategoryEditComponent } from './post/category/edit/category-edit.component';
@@ -32,6 +32,14 @@ const routes: Routes = [
                     {
                         path: '', 
                         component: PostListComponent,
+                        canActivate: [AuthGuard],
+                        data: {
+                            expectedRole: 'ROLE_ADMIN'
+                        }             
+                    },
+                    {
+                        path: 'add', 
+                        component: PostAddComponent,
                         canActivate: [AuthGuard],
                         data: {
                             expectedRole: 'ROLE_ADMIN'
@@ -67,16 +75,7 @@ const routes: Routes = [
                         }             
                     }
                 ]             
-            },
-            {
-                path: 'education-status', 
-                children: [
-                    {
-                        path: 'list', 
-                        component: EducationStatusListComponent                
-                    }
-                ]                
-            },
+            }
 
         ]
     },
