@@ -16,8 +16,8 @@ export class PostService {
         private httpClient: HttpClient
     ) {}
 
-    getPost(id: number, path: string): Observable<Post> {     
-        return this.httpClient.get<Post>(environment.admin_url+path+'/'+id)
+    getPost(id: number): Observable<Post> {     
+        return this.httpClient.get<Post>(environment.admin_url+'/post/'+id)
             .pipe(catchError(prepareError));
     }
 
@@ -37,7 +37,7 @@ export class PostService {
             .pipe(catchError(prepareError));
     }
 
-    updatePost(post: Post, path: string): Observable<any> {
+    updatePost(post: Post): Observable<any> {
         return this.httpClient.patch<any>(environment.admin_url+'/post/'+post.id, post, {headers: HEADERS})
             .pipe(catchError(prepareError));
     }

@@ -1,9 +1,10 @@
 <mat-card fxFlex="100" fxLayout="column" fxLayoutGap="16px">
     <mat-card-title>
-        {{ 'post.new' | translate | capitalizeFirst }}
+        {{ 'post.edit' | translate | capitalizeFirst }}
     </mat-card-title>
-    <mat-card-content>
-        <form [formGroup]="postForm" (ngSubmit)="addPost()" fxLayout="column" fxLayoutAlign="none">
+    <mat-card-content>        
+        <form [formGroup]="postForm" (ngSubmit)="updatePost()" fxLayout="column" fxLayoutAlign="none">
+            <input type="hidden" formControlName="id">
             <mat-form-field appearance="outline">
                 <mat-label>{{ 'title' | translate | capitalizeFirst }}</mat-label>
                 <input matInput placeholder="{{ 'title' | translate | capitalizeFirst }}" formControlName="title" required>
@@ -33,7 +34,7 @@
             <ckeditor [editor]="editor" tagName="textarea" formControlName="body"></ckeditor>
             <div fxLayout="row">
                 <button mat-flat-button color="primary" type="submit" [disabled]="!postForm.valid">
-                    {{ 'add' | translate | capitalizeFirst }}
+                    {{ 'edit' | translate | capitalizeFirst }}
                 </button>
                 <span class="fill-space"></span>
                 <button mat-flat-button type="button" (click)="cancel()">

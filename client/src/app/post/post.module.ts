@@ -34,6 +34,7 @@ import { CrudModule } from '../common/crud/crud.module';
 
 import { PostListComponent } from './list/post-list.component';
 import { PostAddComponent } from './add/post-add.component';
+import { PostEditComponent } from './edit/post-edit.component';
 import { CategoryListComponent } from './category/list/category-list.component';
 import { CategoryAddComponent } from './category/add/category-add.component';
 import { CategoryEditComponent } from './category/edit/category-edit.component';
@@ -44,6 +45,7 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
     declarations: [
         PostListComponent,
         PostAddComponent,
+        PostEditComponent,
         CategoryListComponent,
         CategoryAddComponent,
         CategoryEditComponent

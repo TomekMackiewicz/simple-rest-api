@@ -121,23 +121,25 @@ class PostController extends AbstractFOSRestController
      */
     public function patchAction(Request $request, int $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $author = $this->getUser();
         $data = $request->request->all();        
         $post = $this->repository->find($id);
+
         if (!$post) {
-            return $this->handleView(
-                $this->view(null, Response::HTTP_NO_CONTENT)
-            );
+            return $this->handleView($this->view(null, Response::HTTP_NO_CONTENT));
         }
-        $form = $this->createForm(PostType::class, $post);
+
+        $form = $this->createForm(PostType::class, $post, ['categories' => $data['categories']]);
         $form->submit($data);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $post->setAuthor($author);
             $post->setDateEdited(new \DateTime());
             $this->em->persist($post);
             $this->em->flush();
 
-            return $this->handleView(
-                $this->view('post.edited', Response::HTTP_OK)
-            );
+            return $this->handleView($this->view('post.edited', Response::HTTP_OK));
         }
 
         return $this->handleView(

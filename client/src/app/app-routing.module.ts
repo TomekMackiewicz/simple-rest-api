@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PostListComponent } from './post/list/post-list.component';
 import { PostAddComponent } from './post/add/post-add.component';
+import { PostEditComponent } from './post/edit/post-edit.component';
 import { CategoryListComponent } from './post/category/list/category-list.component';
 import { CategoryAddComponent } from './post/category/add/category-add.component';
 import { CategoryEditComponent } from './post/category/edit/category-edit.component';
@@ -40,6 +41,14 @@ const routes: Routes = [
                     {
                         path: 'add', 
                         component: PostAddComponent,
+                        canActivate: [AuthGuard],
+                        data: {
+                            expectedRole: 'ROLE_ADMIN'
+                        }             
+                    },
+                    {
+                        path: 'edit/:id', 
+                        component: PostEditComponent,
                         canActivate: [AuthGuard],
                         data: {
                             expectedRole: 'ROLE_ADMIN'
