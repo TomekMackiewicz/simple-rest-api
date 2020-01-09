@@ -7,9 +7,9 @@ export function prepareError(errorResponse: HttpErrorResponse) {
     // First check for form errors
     if (typeof errorResponse.error.form !== 'undefined' && Object.keys(errorResponse.error.form).length > 0) {
         let errorData = errorResponse.error.form.children;  
-        errors.formErrors = [];        
+        errors.formErrors = [];
         for (let key in errorData) {
-            if (errorData[key].errors.length > 0) {
+            if (typeof errorData[key].errors !== 'undefined' && errorData[key].errors.length > 0) {
                 errors.formErrors[key] = [];
                 for (let key2 in errorData[key].errors) {
                     errors.formErrors[key].push(errorData[key].errors[key2])
@@ -43,9 +43,11 @@ export function handleError(errors: any, form?: any)
     // Form errors
     if (typeof errors.formErrors !== 'undefined' && Object.keys(errors.formErrors).length > 0) {
         Object.entries(errors.formErrors).forEach(([key, value]) => {
-            Object.entries(value).forEach(([key2, value2]) => { // TODO: rename
-                form.controls[key].setErrors({[value2]: true});
-            });
+            if (value !== null) {
+                Object.entries(value).forEach(([key2, value2]) => { // TODO: rename
+                    form.controls[key].setErrors({[value2]: true});
+                });
+            }
         });
 
         return null;

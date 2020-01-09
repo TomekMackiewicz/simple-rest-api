@@ -13,6 +13,12 @@
                 <mat-error *ngIf="postForm.get('title').hasError('validation.unique')">
                     {{ 'validation.unique' | translate | capitalizeFirst }}
                 </mat-error>
+                <mat-error *ngIf="postForm.get('title').hasError('validation.min_length')">
+                    {{ 'validation.min_length' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="postForm.get('title').hasError('validation.max_length')">
+                    {{ 'validation.max_length' | translate | capitalizeFirst }}
+                </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>{{ 'slug' | translate | capitalizeFirst }}</mat-label>
@@ -22,6 +28,9 @@
                 </mat-error>
                 <mat-error *ngIf="postForm.get('slug').hasError('validation.unique')">
                     {{ 'validation.unique' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="postForm.get('slug').hasError('validation.regex')">
+                    {{ 'validation.regex' | translate | capitalizeFirst }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">

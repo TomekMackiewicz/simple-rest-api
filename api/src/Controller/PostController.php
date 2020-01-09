@@ -94,7 +94,8 @@ class PostController extends AbstractFOSRestController
         $author = $this->getUser();
         $data = $request->request->all();      
         $post = new Post();
-        $form = $this->createForm(PostType::class, $post, ['categories' => $data['categories']]);
+        $categories = isset($data['categories']) ? $data['categories'] : null;
+        $form = $this->createForm(PostType::class, $post, ['categories' => $categories]);
         $form->submit($data);
  
         if ($form->isSubmitted() && $form->isValid()) {
@@ -125,12 +126,13 @@ class PostController extends AbstractFOSRestController
         $author = $this->getUser();
         $data = $request->request->all();        
         $post = $this->repository->find($id);
+        $categories = isset($data['categories']) ? $data['categories'] : null;
 
         if (!$post) {
             return $this->handleView($this->view(null, Response::HTTP_NO_CONTENT));
         }
 
-        $form = $this->createForm(PostType::class, $post, ['categories' => $data['categories']]);
+        $form = $this->createForm(PostType::class, $post, ['categories' => $categories]);
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {

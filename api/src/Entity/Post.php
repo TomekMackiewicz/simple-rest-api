@@ -61,7 +61,6 @@ class Post
     /**
      * @var string
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message = "validation.not_blank")
      */
     private $body;
 
