@@ -26,11 +26,11 @@
             <mat-menu #userMenu="matMenu">
                 <button mat-menu-item routerLink="/admin/profile" routerLinkActive="active">
                     <mat-icon>person_outline</mat-icon>
-                    <span>Profile</span>
+                    <span>{{ 'profile' | translate | capitalizeFirst }}</span>
                 </button>
                 <button mat-menu-item routerLink="/logout" routerLinkActive="active">
                     <mat-icon>exit_to_app</mat-icon>
-                    <span>Logout</span>
+                    <span>{{ 'logout' | translate | capitalizeFirst }}</span>
                 </button>
             </mat-menu>           
         </mat-toolbar>
