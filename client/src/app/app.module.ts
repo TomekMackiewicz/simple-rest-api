@@ -25,6 +25,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './menu-list-item/navigation.component';
 import { LoaderComponent } from './common/loader/loader.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 import { AuthGuard } from './common/guards/auth.guard';
 
@@ -46,6 +47,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         NavigationComponent,
         LoaderComponent,
         LoginComponent,
+        RegisterComponent,
         NotFoundComponent
     ],
     imports: [

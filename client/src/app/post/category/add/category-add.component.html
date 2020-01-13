@@ -1,7 +1,9 @@
 <mat-card fxFlex.gt-sm="40" fxFlex.sm="100" fxFlexOffset.gt-sm="30" fxLayout="column" fxLayoutGap="16px">
-    <mat-card-title>
-        {{ 'category.new' | translate | capitalizeFirst }}
-    </mat-card-title>
+<!--    <mat-card-header>-->
+        <mat-card-title>
+            {{ 'category.new' | translate | capitalizeFirst }}
+        </mat-card-title>
+<!--    </mat-card-header>-->
     <mat-card-content>
         <form [formGroup]="categoryForm" (ngSubmit)="addCategory()" fxLayout="column" fxLayoutAlign="none">
             <mat-form-field appearance="outline">

@@ -1,0 +1,152 @@
+<mat-card fxFlex.gt-sm="40" fxFlex.sm="100" fxFlexOffset.gt-sm="30" fxLayout="column" fxLayoutGap="16px">
+<!--    <mat-card-header>-->
+        <mat-card-title>
+            {{ 'register' | translate | capitalizeFirst }}
+        </mat-card-title>
+<!--    </mat-card-header>-->
+    <mat-card-content>
+        <form [formGroup]="registrationForm" (ngSubmit)="register()" fxLayout="column" fxLayoutAlign="none">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'email' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'email' | translate | capitalizeFirst }}" formControlName="email" required>
+                <mat-error *ngIf="registrationForm.get('email').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('email').hasError('validation.unique')">
+                    {{ 'validation.unique' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('email').hasError('validation.max_length')">
+                    {{ 'validation.max_length' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('email').hasError('validation.regex.email')">
+                    {{ 'validation.regex.email' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'username' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'username' | translate | capitalizeFirst }}" formControlName="username" required>
+                <mat-error *ngIf="registrationForm.get('username').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('username').hasError('validation.unique')">
+                    {{ 'validation.unique' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('username').hasError('validation.min_length')">
+                    {{ 'validation.min_length' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('username').hasError('validation.max_length')">
+                    {{ 'validation.max_length' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'password' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'password' | translate | capitalizeFirst }}" formControlName="password" required>
+                <mat-error *ngIf="registrationForm.get('password').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('password').hasError('validation.min_length')">
+                    {{ 'validation.min_length' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('password').hasError('validation.passwords.mismatch')">
+                    {{ 'validation.passwords.mismatch' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field> 
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'confirmPassword' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'confirmPassword' | translate | capitalizeFirst }}" formControlName="confirmPassword" required>
+                <mat-error *ngIf="registrationForm.get('confirmPassword').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('confirmPassword').hasError('validation.min_length')">
+                    {{ 'validation.min_length' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <div fxLayout="row">
+                <button mat-flat-button color="primary" type="submit" [disabled]="!registrationForm.valid">
+                    {{ 'register' | translate | capitalizeFirst }}
+                </button>
+                <span class="fill-space"></span>
+                <button mat-flat-button type="button" (click)="cancel()">
+                    {{ 'cancel' | translate | capitalizeFirst }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+<!--<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>{{ 'ui.register' | translate }}</h2>
+            <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !validation.email }">
+                    <label for="email">{{ 'user.email' | translate }}</label>
+                    <input type="email" class="form-control" name="email" 
+                           [(ngModel)]="model.email" #email="ngModel" email required 
+                    />
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div class="help-block" *ngIf="email.errors.required">
+                            {{ 'form.validation.email.required' | translate }}
+                        </div>
+                        <div class="help-block" *ngIf="email.errors?.email"> 
+                            {{ 'form.validation.email.invalid' | translate }}
+                        </div>                        
+                    </div>
+                    <div *ngIf="!validation.email" class="help-block">{{ validation.emailMsg | translate }}</div>
+                </div>                  
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !validation.username }">
+                    <label for="username">{{ 'user.username' | translate }}</label>
+                    <input type="text" class="form-control" name="username" 
+                           [(ngModel)]="model.username" #username="ngModel" 
+                           required minlength="5" 
+                    />
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                        <div class="help-block" *ngIf="username.errors.required">
+                            {{ 'form.validation.username.required' | translate }}
+                        </div>
+                        <div class="help-block" *ngIf="username.errors.minlength">
+                            {{ 'form.validation.username.too_short' | translate }}
+                        </div>
+                        <div class="help-block" *ngIf="username.errors.patternValidator">
+                            {{ 'form.validation.username.regex' | translate }}
+                        </div>
+                    </div>
+                    <div *ngIf="!validation.username" class="help-block">{{ validation.usernameMsg | translate }}</div>
+                </div>         
+                <div class="form-group">
+                    <label for="password">{{ 'form.password' | translate }}</label>
+                    <input type="password" class="form-control" name="password" 
+                           [(ngModel)]="model.password" #password="ngModel" required minlength="6" 
+                           patternValidator validateEqual="confirmPassword" reverse="true" 
+                    />
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                        <div class="help-block" *ngIf="password.errors.required">
+                            {{ 'form.validation.password.required' | translate }}
+                        </div>
+                        <div class="help-block" *ngIf="password.errors.minlength">
+                            {{ 'form.validation.password.too_short' | translate }}
+                        </div>
+                        <div class="help-block" *ngIf="password.errors.patternValidator">
+                            {{ 'form.validation.password.regex' | translate }}
+                        </div>                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">{{ 'form.password_confirm' | translate }}</label>
+                    <input type="password" class="form-control" name="confirmPassword" 
+                           [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" 
+                           required validateEqual="password" 
+                    />
+                    <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                        <div class="help-block">
+                            {{ 'form.password_mismatch' | translate }}
+                        </div>
+                    </div>                  
+                </div>                  
+                <div class="form-group">
+                    <button class="btn btn-primary">{{ 'ui.register' | translate }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>-->

@@ -9,11 +9,17 @@ import { PostEditComponent } from './post/edit/post-edit.component';
 import { CategoryListComponent } from './post/category/list/category-list.component';
 import { CategoryAddComponent } from './post/category/add/category-add.component';
 import { CategoryEditComponent } from './post/category/edit/category-edit.component';
+import { RegisterComponent } from './register/register.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
         canActivate: [AuthGuard]
     },
     { 

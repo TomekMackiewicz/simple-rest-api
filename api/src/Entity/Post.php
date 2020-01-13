@@ -35,7 +35,7 @@ class Post
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="validation.not_blank")
      * @Assert\Length(
      *   min=3,
@@ -48,7 +48,7 @@ class Post
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
      * @Assert\NotBlank(message = "validation.not_blank")
      * @Assert\Regex(
      *   pattern = "/^[a-z0-9]+(?:-[a-z0-9]+)*$/",
@@ -60,7 +60,7 @@ class Post
 
     /**
      * @var string
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="body", type="text", nullable=true)
      */
     private $body;
 

@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
         var expectedRole = route.data.expectedRole;
         
         // Skip check for login page
-        if (state.url === '/login') {
+        if (state.url === '/login' || state.url === '/register') {
             this.isLoggedIn(false);
             return true;
         }

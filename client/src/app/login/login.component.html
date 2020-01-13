@@ -1,36 +1,35 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-    <mat-card fxFlex="30">
-        <mat-card-header>
-            <mat-icon mat-card-avatar>lock_open</mat-icon>
-            <mat-card-title>                
-                {{ 'ui.login' | translate }}
-            </mat-card-title>           
-        </mat-card-header>
-        <mat-card-content>
-            <form name="form" fxLayout="column" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-                <mat-form-field appearance="outline">
-                    <mat-label>{{ 'form.username_or_email' | translate }}</mat-label>
-                    <input matInput type="text" name="username"
-                           [(ngModel)]="user.username" #username="ngModel" required>
-                    <mat-error *ngIf="f.submitted && !username.valid">
-                        {{ 'form.validation.username_or_email.required' | translate }}
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>{{ 'form.password' | translate }}</mat-label>
-                    <input matInput type="password" name="password"
-                           [(ngModel)]="user.password" #password="ngModel" required>
-                    <mat-error *ngIf="f.submitted && !password.valid">
-                        {{ 'form.validation.password.required' | translate }}
-                    </mat-error>
-                </mat-form-field>
-                <div fxLayout="row">
-                    <button mat-raised-button>{{ 'ui.login' | translate }}</button>
-                    <button mat-button type="button" routerLink="/reset-password" routerLinkActive="active">
-                        {{ 'form.password.forgot' | translate }}
-                    </button>                 
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
-</div>
+<mat-card fxFlex.gt-sm="30" fxFlex.sm="100" fxFlexOffset.gt-sm="35" fxLayout="column" fxLayoutGap="16px">
+    <mat-card-header>
+        <mat-icon mat-card-avatar>exit_to_app</mat-icon>
+        <mat-card-title>                
+            {{ 'login' | translate | capitalizeFirst }}
+        </mat-card-title>           
+    </mat-card-header>
+    <mat-card-content>
+        <form name="form" fxLayout="column" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'username_or_email' | translate | capitalizeFirst }}</mat-label>
+                <input matInput type="text" name="username"
+                       [(ngModel)]="user.username" #username="ngModel" required>
+                <mat-error *ngIf="f.submitted && !username.valid">
+                    {{ 'validation.username_or_email.required' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'password' | translate | capitalizeFirst }}</mat-label>
+                <input matInput type="password" name="password"
+                       [(ngModel)]="user.password" #password="ngModel" required>
+                <mat-error *ngIf="f.submitted && !password.valid">
+                    {{ 'validation.password.required' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <div fxLayout="row">
+                <button mat-flat-button color="primary">{{ 'login' | translate | capitalizeFirst }}</button>
+                <span class="fill-space"></span>
+                <button mat-button type="button" routerLink="/reset-password" routerLinkActive="active">
+                    {{ 'password.forgot' | translate | capitalizeFirst }}
+                </button>                 
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>  

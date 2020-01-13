@@ -1,9 +1,18 @@
 {
+    "about": "about",
     "category": "category",
     "categories": "categories",
+    "contact": "contact",
     "dashboard": "dashboard",
+    "login": "login",
     "logout": "logout",
+    "password": "password",
+    "password.forgot": "forgot password?",
     "post": "post",
     "posts": "posts",
-    "profile": "profile"
+    "profile": "profile",
+    "register": "register",
+    "username_or_email": "username or email",
+    "validation.password.required": "password is required",
+    "validation.username_or_email.required": "user name or email is required"
 }

@@ -43,14 +43,14 @@
 
 <div fxLayout="column" *ngIf="!isLoggedIn">
     <mat-toolbar>
-        <a mat-button routerLink="/about" routerLinkActive="active">About</a>
-        <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
+        <a mat-button routerLink="/about" routerLinkActive="active">{{ 'about' | translate | capitalizeFirst }}</a>
+        <a mat-button routerLink="/contact" routerLinkActive="active">{{ 'contact' | translate | capitalizeFirst }}</a>
         <span class="fill-space"></span>                
         <a mat-button routerLink="/login" routerLinkActive="active">
-            {{ 'ui.login' }}
+            {{ 'login' | translate | capitalizeFirst }}
         </a>
         <a mat-button routerLink="/register" routerLinkActive="active">
-            {{ 'ui.register' }}
+            {{ 'register' | translate | capitalizeFirst }}
         </a>
         <button mat-icon-button (click)="useLanguage('en')">en</button>
         <button mat-icon-button (click)="useLanguage('pl')">pl</button>

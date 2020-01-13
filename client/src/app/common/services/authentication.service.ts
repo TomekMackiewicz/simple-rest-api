@@ -1,9 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import * as decode from 'jwt-decode';
 import { Router } from '@angular/router';
+import { prepareError } from '../../common/functions/error.functions';
 import { environment } from '../../../environments/environment';
+import { UserRegistration } from '../../user/model/user';
 
 @Injectable()
 export class AuthenticationService {
@@ -54,5 +57,16 @@ export class AuthenticationService {
         localStorage.removeItem('userRole');
         this.getUsername('');
         this.router.navigate(['/login']);
+    }
+
+    register(user: UserRegistration) {
+        return this.http.post(environment.base_url+'/users/register', { 
+            email: user.email, 
+            username: user.username, 
+            plainPassword: {
+                first: user.password,
+                second: user.confirmPassword
+            }
+        }).pipe(catchError(prepareError));
     }
 }

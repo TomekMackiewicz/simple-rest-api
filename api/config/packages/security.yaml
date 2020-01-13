@@ -20,6 +20,11 @@ security:
                 check_path:               /api/v1/login_check
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        register:
+            pattern: ^/api/v1/users/register
+            anonymous: true
+
         api:
             pattern:   ^/api/v1
             stateless: true
@@ -29,5 +34,6 @@ security:
 
     access_control:
         - { path: ^/api/v1/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/users/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/admin, role: ROLE_ADMIN }
         - { path: ^/api/v1/user, role: ROLE_USER }

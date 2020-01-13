@@ -5,3 +5,10 @@ export class User {
     password: string = '';
     roles: Array<string> = []
 }
+
+export class UserRegistration {
+    username: string = '';
+    email: string = '';
+    password: string = '';
+    confirmPassword: string = '';
+}

@@ -8,3 +8,5 @@ fos_user:
     registration:
         form:
             type: App\Form\UserType
+            # Disable default FOS User Bundle validation
+            validation_groups: [ null, Default ] 
