@@ -37,9 +37,12 @@ export class CategoryEditComponent implements OnInit {
                 const id = +params['id'];
                 this.categoryService.getCategory(id).subscribe(
                     category => {
-                        if (category) {
+                        if (category && 'id' in category) {
                             this.category = category;
-                            this.categoryForm.patchValue({ id: this.category.id, name: this.category.name});
+                            this.categoryForm.patchValue({ 
+                                id: this.category.id, 
+                                name: ('name' in this.category) ? this.category.name : ''
+                            });
                         } else {
                             this.router.navigateByUrl('/404', { skipLocationChange: true });
                         }

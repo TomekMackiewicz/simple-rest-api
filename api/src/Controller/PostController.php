@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Service\FormErrorService;
 
 /**
  * @Route("/api/v1/admin/post")
@@ -27,11 +28,13 @@ class PostController extends AbstractFOSRestController
      * @var Doctrine\ORM\EntityManagerInterface 
      */
     private $em;
+    private $formErrorService;
     
-    public function __construct(EntityManagerInterface $entityManager) 
+    public function __construct(EntityManagerInterface $entityManager, FormErrorService $formErrorService) 
     {
         $this->em = $entityManager;
         $this->repository = $this->em->getRepository(Post::class);
+        $this->formErrorService = $formErrorService;
     }
 
     /**
@@ -108,9 +111,10 @@ class PostController extends AbstractFOSRestController
                 $this->view('post.added', Response::HTTP_CREATED)
             );
         }
+        $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
 
         return $this->handleView(
-            $this->view($form->getErrors(true), Response::HTTP_BAD_REQUEST)
+            $this->view($errors, Response::HTTP_BAD_REQUEST)
         );
     }
 
@@ -143,9 +147,10 @@ class PostController extends AbstractFOSRestController
 
             return $this->handleView($this->view('post.edited', Response::HTTP_OK));
         }
+        $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
 
         return $this->handleView(
-            $this->view($form->getErrors(true), Response::HTTP_BAD_REQUEST)
+            $this->view($errors, Response::HTTP_BAD_REQUEST)
         );
     }
 

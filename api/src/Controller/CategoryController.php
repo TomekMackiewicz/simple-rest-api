@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Service\FormErrorService;
 
 /**
  * @Route("/api/v1/admin/category")
@@ -27,11 +28,13 @@ class CategoryController extends AbstractFOSRestController
      * @var Doctrine\ORM\EntityManagerInterface 
      */
     private $em;
+    private $formErrorService;
     
-    public function __construct(EntityManagerInterface $entityManager) 
+    public function __construct(EntityManagerInterface $entityManager, FormErrorService $formErrorService) 
     {
         $this->em = $entityManager;
         $this->repository = $this->em->getRepository(Category::class);
+        $this->formErrorService = $formErrorService;
     }
 
     /**
@@ -102,9 +105,10 @@ class CategoryController extends AbstractFOSRestController
                 $this->view('category.added', Response::HTTP_CREATED)
             );
         }
+        $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
 
         return $this->handleView(
-            $this->view($form->getErrors(true), Response::HTTP_BAD_REQUEST)
+            $this->view($errors, Response::HTTP_BAD_REQUEST)
         );
     }
 
@@ -134,9 +138,10 @@ class CategoryController extends AbstractFOSRestController
                 $this->view('category.edited', Response::HTTP_OK)
             );
         }
-
+        $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
+        
         return $this->handleView(
-            $this->view($form->getErrors(true), Response::HTTP_BAD_REQUEST)
+            $this->view($errors, Response::HTTP_BAD_REQUEST)
         );
     }
 

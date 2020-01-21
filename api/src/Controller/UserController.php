@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
+use App\Service\FormErrorService;
 
 /**
  * @Route("/api/v1/users")
@@ -25,17 +26,20 @@ class UserController extends AbstractFOSRestController
     private $userManager;
     private $dispatcher;
     private $repository;
+    private $formErrorService;
     
     public function __construct(
         FormFactory $formFactory, 
         UserManagerInterface $userManager, 
         EventDispatcherInterface $dispatcher, 
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        FormErrorService $formErrorService
     ) {
         $this->formFactory = $formFactory;
         $this->userManager = $userManager;
         $this->dispatcher = $dispatcher;
         $this->repository = $entityManager->getRepository(User::class);
+        $this->formErrorService = $formErrorService;
     }
 
     /**
@@ -87,8 +91,10 @@ class UserController extends AbstractFOSRestController
         $form->submit($request->request->all());
         
         if (!$form->isValid()) {
+            $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
+
             return $this->handleView(
-                $this->view($form->getErrors(true), Response::HTTP_BAD_REQUEST)
+                $this->view($errors, Response::HTTP_BAD_REQUEST)
             );
         }
 

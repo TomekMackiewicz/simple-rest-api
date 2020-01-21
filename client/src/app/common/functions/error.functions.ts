@@ -4,22 +4,10 @@ import { throwError } from 'rxjs';
 export function prepareError(errorResponse: HttpErrorResponse) {
     var errors: any = {};
     var msg: string;
-    // First check for form errors
-    if (typeof errorResponse.error.form !== 'undefined' && Object.keys(errorResponse.error.form).length > 0) {
-        let errorData = errorResponse.error.form.children;  
-        errors.formErrors = [];
-        for (let key in errorData) {
-            if (typeof errorData[key].errors !== 'undefined' && errorData[key].errors.length > 0) {
-                errors.formErrors[key] = [];
-                for (let key2 in errorData[key].errors) {
-                    errors.formErrors[key].push(errorData[key].errors[key2])
-                }
-            } else {
-                errors.formErrors[key] = null;
-            }
-        }
 
-        return throwError(errors);
+    // First check form errors
+    if (typeof errorResponse.error.formErrors !== 'undefined') {
+        return throwError(errorResponse.error);
     }
 
     if (errorResponse.error instanceof ErrorEvent) {
@@ -41,11 +29,13 @@ export function handleError(errors: any, form?: any)
     }
 
     // Form errors
-    if (typeof errors.formErrors !== 'undefined' && Object.keys(errors.formErrors).length > 0) {
+    if (typeof errors.formErrors !== 'undefined') {
         Object.entries(errors.formErrors).forEach(([key, value]) => {
             if (value !== null) {
-                Object.entries(value).forEach(([key2, value2]) => { // TODO: rename
-                    form.controls[key].setErrors({[value2]: true});
+                Object.entries(value).forEach(([errorKey, errorMessage]) => {
+                    if (typeof form.controls[key] !== 'undefined') {
+                        form.controls[key].setErrors({[errorMessage]: true});
+                    }
                 });
             }
         });

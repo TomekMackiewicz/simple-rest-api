@@ -17,7 +17,7 @@ export class RegisterComponent {
     registrationForm = this.fb.group({
         email: ['', Validators.required],
         username: ['', Validators.required],
-        password: ['', Validators.required],
+        first: ['', Validators.required],
         confirmPassword: ['', Validators.required],
     });
 
@@ -46,5 +46,5 @@ export class RegisterComponent {
 
     cancel() {
         this.router.navigate(['/login']);
-    }        
+    }
 }

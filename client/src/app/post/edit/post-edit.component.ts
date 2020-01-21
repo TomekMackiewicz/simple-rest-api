@@ -54,14 +54,14 @@ export class PostEditComponent implements OnInit {
                 const id = +params['id'];
                 this.postService.getPost(id).subscribe(
                     post => {
-                        if (post) {
+                        if (post && 'id' in post) {
                             this.post = post;
                             this.postForm.patchValue({ 
                                 id: this.post.id, 
-                                title: this.post.title, 
-                                slug: this.post.slug, 
-                                body: this.post.body, 
-                                categories: this.post.categories.map(({ id }) => id)
+                                title: ('title' in this.post) ? this.post.title : '', 
+                                slug: ('slug' in this.post) ? this.post.slug : '', 
+                                body: ('body' in this.post) ? this.post.body : '', 
+                                categories: ('categories' in this.post) ? this.post.categories.map(({ id }) => id) : []
                             });
                         } else {
                             this.router.navigateByUrl('/404', { skipLocationChange: true });
