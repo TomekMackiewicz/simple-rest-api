@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../common/services/authentication.service';
-import { UiService } from '../common/services/ui.service';
-import { handleError } from '../common/functions/error.functions';
+import { AuthenticationService } from '../../common/services/authentication.service';
+import { UiService } from '../../common/services/ui.service';
+import { handleError } from '../../common/functions/error.functions';
 
 @Component({
     selector: 'register',

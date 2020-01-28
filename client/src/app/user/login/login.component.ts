@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { AuthenticationService } from '../common/services/authentication.service';
-import { User } from '../user/model/user';
-import { UiService } from '../common/services/ui.service';
-import { handleError } from '../common/functions/error.functions';
+import { AuthenticationService } from '../../common/services/authentication.service';
+import { User } from '../model/user';
+import { UiService } from '../../common/services/ui.service';
+import { handleError } from '../../common/functions/error.functions';
 
 @Component({
     selector: 'login',

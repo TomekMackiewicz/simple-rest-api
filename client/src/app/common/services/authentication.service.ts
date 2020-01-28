@@ -1,12 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as decode from 'jwt-decode';
 import { Router } from '@angular/router';
 import { prepareError } from '../../common/functions/error.functions';
 import { environment } from '../../../environments/environment';
 import { UserRegistration } from '../../user/model/user';
+import { HEADERS } from '../../const/http';
+import { User } from '../../user/model/user';
 
 @Injectable()
 export class AuthenticationService {
@@ -20,12 +22,12 @@ export class AuthenticationService {
     }
         
     constructor(
-        private http: HttpClient,
+        private httpClient: HttpClient,
         private router: Router           
     ) {};
        
     login(username: string, password: string) { 
-        return this.http.post<any>(environment.base_url+'/login_check', {
+        return this.httpClient.post<any>(environment.base_url+'/login_check', {
             username: username, 
             password: password
         }).subscribe(
@@ -60,13 +62,25 @@ export class AuthenticationService {
     }
 
     register(user: UserRegistration) {
-        return this.http.post(environment.base_url+'/users/register', { 
+        return this.httpClient.post(environment.base_url+'/users/register', { 
             email: user.email, 
             username: user.username, 
             plainPassword: {
                 first: user.password,
                 second: user.confirmPassword
             }
+        }).pipe(catchError(prepareError));
+    }
+
+    getUser(id: number): Observable<User> {
+        return this.httpClient.get<User>(environment.base_url+'/users/'+id, {headers: HEADERS})
+            .pipe(catchError(prepareError));
+    }
+
+    updateUser(user: User) {
+        return this.httpClient.patch<any>(environment.base_url+'/users/'+user.id, { 
+            username: user.username,
+            email: user.email
         }).pipe(catchError(prepareError));
     }
 }

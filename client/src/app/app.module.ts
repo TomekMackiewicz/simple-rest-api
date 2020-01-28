@@ -20,12 +20,11 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PostModule } from './post/post.module';
+import { UserModule } from './user/user.module';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './menu-list-item/navigation.component';
 import { LoaderComponent } from './common/loader/loader.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 
 import { AuthGuard } from './common/guards/auth.guard';
 
@@ -46,8 +45,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
         AppComponent,
         NavigationComponent,
         LoaderComponent,
-        LoginComponent,
-        RegisterComponent,
         NotFoundComponent
     ],
     imports: [
@@ -69,6 +66,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         MatInputModule,
         DashboardModule,
         PostModule,
+        UserModule,
         ApplicationPipesModule,
         TranslateModule.forRoot({
             loader: {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './common/guards/auth.guard';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './user/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PostListComponent } from './post/list/post-list.component';
 import { PostAddComponent } from './post/add/post-add.component';
@@ -9,7 +9,8 @@ import { PostEditComponent } from './post/edit/post-edit.component';
 import { CategoryListComponent } from './post/category/list/category-list.component';
 import { CategoryAddComponent } from './post/category/add/category-add.component';
 import { CategoryEditComponent } from './post/category/edit/category-edit.component';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './user/register/register.component';
+import { ProfileComponent } from './user/profile/profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
     {
@@ -21,6 +22,19 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'user',
+        children: [
+            {
+                path: 'profile',
+                component: ProfileComponent,
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'ROLE_USER'
+                }                
+            }
+        ]
     },
     { 
         path: 'admin',

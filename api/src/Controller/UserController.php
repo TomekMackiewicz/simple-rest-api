@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
+use App\Form\UserUpdateType;
 use App\Service\FormErrorService;
 
 /**
@@ -102,6 +103,40 @@ class UserController extends AbstractFOSRestController
 
         return $this->handleView(
             $this->view('user.registered', Response::HTTP_CREATED)
+        );
+    }
+
+    /**
+     * @Rest\Patch("/{id}")
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function patchAction(Request $request, int $id)
+    {
+        $data = $request->request->all();
+        $user = $this->repository->find($id);
+        if (!$user) {
+            return $this->handleView(
+                $this->view(null, Response::HTTP_NO_CONTENT)
+            );
+        }
+
+        $form = $this->createForm(UserUpdateType::class, $user);
+        $form->submit($data, false);
+
+        if (!$form->isValid()) {
+            $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
+
+            return $this->handleView(
+                $this->view($errors, Response::HTTP_BAD_REQUEST)
+            );
+        }
+
+        $this->userManager->updateUser($user);
+
+        return $this->handleView(
+            $this->view('user.updated', Response::HTTP_CREATED)
         );
     }
 }

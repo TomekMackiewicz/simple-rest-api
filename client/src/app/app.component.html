@@ -5,8 +5,8 @@
         </mat-toolbar>
         <mat-nav-list>
             <app-navigation *ngFor="let item of navItems" [item]="item">
-            </app-navigation>           
-        </mat-nav-list>       
+            </app-navigation>
+        </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar class="dark-toolbar">
@@ -24,7 +24,7 @@
                 <mat-icon>person_outline</mat-icon>
             </button>
             <mat-menu #userMenu="matMenu">
-                <button mat-menu-item routerLink="/admin/profile" routerLinkActive="active">
+                <button mat-menu-item routerLink="/user/profile" routerLinkActive="active">
                     <mat-icon>person_outline</mat-icon>
                     <span>{{ 'profile' | translate | capitalizeFirst }}</span>
                 </button>

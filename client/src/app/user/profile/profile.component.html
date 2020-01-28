@@ -1,0 +1,39 @@
+<mat-card fxFlex.gt-sm="40" fxFlex.sm="100" fxFlexOffset.gt-sm="30" fxLayout="column" fxLayoutGap="16px">
+    <mat-card-title>
+        {{ 'profile' | translate | capitalizeFirst }}
+    </mat-card-title>
+    <mat-card-content>        
+        <form [formGroup]="userProfileForm" (ngSubmit)="updateUser()" fxLayout="column" fxLayoutAlign="none">
+            <input type="hidden" formControlName="id">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'username' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'username' | translate | capitalizeFirst }}" formControlName="username" required>
+                <mat-error *ngIf="userProfileForm.get('username').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="userProfileForm.get('username').hasError('validation.unique')">
+                    {{ 'validation.unique' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'email' | translate | capitalizeFirst }}</mat-label>
+                <input matInput placeholder="{{ 'email' | translate | capitalizeFirst }}" formControlName="email" required>
+                <mat-error *ngIf="userProfileForm.get('email').hasError('required')">
+                    {{ 'validation.required' | translate | capitalizeFirst }}
+                </mat-error>
+                <mat-error *ngIf="userProfileForm.get('email').hasError('validation.unique')">
+                    {{ 'validation.unique' | translate | capitalizeFirst }}
+                </mat-error>
+            </mat-form-field>
+            <div fxLayout="row">
+                <button mat-flat-button color="primary" type="submit" [disabled]="!userProfileForm.valid">
+                    {{ 'update' | translate | capitalizeFirst }}
+                </button>
+                <span class="fill-space"></span>
+                <button mat-flat-button type="button" (click)="cancel()">
+                    {{ 'cancel' | translate | capitalizeFirst }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

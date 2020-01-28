@@ -14,11 +14,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="users")
  * @UniqueEntity(
  *   fields={"username"},
- *   message="validation.unique"
+ *   message="validation.unique",
+ *   groups = {"Default", "Edit"}
  * )
  * @UniqueEntity(
  *   fields={"email"},
- *   message="validation.unique"
+ *   message="validation.unique",
+ *   groups = {"Default", "Edit"}
  * ) 
  */
 class User extends BaseUser
@@ -80,7 +82,8 @@ class User extends BaseUser
      * @Assert\NotBlank(message="validation.not_blank")
      * @Assert\Length(
      *   min=6,
-     *   minMessage="validation.min_length"
+     *   minMessage="validation.min_length",
+     *   groups = {"Default"}
      * )
      */
     protected $plainPassword;
