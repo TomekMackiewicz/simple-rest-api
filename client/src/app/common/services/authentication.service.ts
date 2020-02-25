@@ -68,7 +68,7 @@ export class AuthenticationService {
             email: user.email, 
             username: user.username, 
             plainPassword: {
-                first: user.password,
+                first: user.first, // TODO: Can we change symfony's form field to something more meaningful?
                 second: user.confirmPassword
             }
         }).pipe(catchError(prepareError));

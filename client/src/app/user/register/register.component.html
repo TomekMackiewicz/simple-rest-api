@@ -48,7 +48,7 @@
                     {{ 'validation.min_length' | translate | capitalizeFirst }}
                 </mat-error>
                 <mat-error *ngIf="registrationForm.get('first').hasError('validation.password.mismatch')">
-                    {{ 'validation.passwords.mismatch' | translate | capitalizeFirst }}
+                    {{ 'validation.password.mismatch' | translate | capitalizeFirst }}
                 </mat-error>
             </mat-form-field> 
             <mat-form-field appearance="outline">

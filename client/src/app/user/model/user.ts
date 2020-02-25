@@ -10,7 +10,7 @@ export class User {
 export class UserRegistration {
     username: string = '';
     email: string = '';
-    password: string = '';
+    first: string = '';
     confirmPassword: string = '';
 }
 
