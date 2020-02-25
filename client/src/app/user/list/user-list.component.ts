@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MatPaginator, MatSort } from '@angular/material';
-import { User } from '../model/user';
+import { User, USER_ROLES } from '../model/user';
 import { AuthenticationService } from '../../common/services/authentication.service';
 import { UiService } from '../../common/services/ui.service';
 import { handleError } from '../../common/functions/error.functions';
@@ -15,7 +15,7 @@ import { handleError } from '../../common/functions/error.functions';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements AfterViewInit {
-    displayedColumns: string[] = ['select', 'username', 'email', 'enabled'];
+    displayedColumns: string[] = ['select', 'username', 'email', 'enabled', 'role'];
     expandedElement: User | null;
     data: User[] = [];
     selection = new SelectionModel<User>(true, []);
@@ -25,6 +25,10 @@ export class UserListComponent implements AfterViewInit {
         username: ['']
     });
     filterPanelOpenState = true;
+    userRoleForm = this.fb.group({
+        role: ['']
+    });
+    userRoles = USER_ROLES;
 
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -85,7 +89,25 @@ export class UserListComponent implements AfterViewInit {
                 this.ref.detectChanges();
             }
         );
-    } 
+    }
+
+    changeUserRole(event: any, user: User) {
+        user.roles = [event.value];
+        return this.userService.updateUser(user).subscribe(
+            success => {
+                this.getUsers();
+                this.selection.clear();
+                this.uiService.openSnackBar(success, 'success-notification-overlay');
+            },
+            error => {
+                let errors = handleError(error);
+                if (errors !== null && typeof errors.message !== 'undefined') {
+                    this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+                }
+                this.ref.detectChanges();
+            }
+        );
+    }
 
     isAllSelected() {
         const numSelected = this.selection.selected.length;

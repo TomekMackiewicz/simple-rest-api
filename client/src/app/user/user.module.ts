@@ -18,7 +18,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatExpansionModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatRadioModule,
+    MatSelectModule
 } from '@angular/material';
 import { CrudModule } from '../common/crud/crud.module';
 
@@ -54,6 +56,8 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
         MatPaginatorModule,
         MatExpansionModule,
         MatToolbarModule,
+        MatRadioModule,
+        MatSelectModule,
         ApplicationPipesModule,
         CrudModule,
         TranslateModule.forRoot({

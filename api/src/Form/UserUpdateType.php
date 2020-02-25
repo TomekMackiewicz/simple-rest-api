@@ -20,6 +20,7 @@ class UserUpdateType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('username', null)
+            ->add('roles', null)
             ->add('enabled', null);
     }
 
@@ -42,7 +43,8 @@ class UserUpdateType extends AbstractType
             'data_class' => User::class,
             'csrf_token_id' => 'registration',
             'csrf_protection' => false,
-            'validation_groups' => ['Edit']
+            'validation_groups' => ['Edit'],
+            'allow_extra_fields' => true
         ]);
     }
 }

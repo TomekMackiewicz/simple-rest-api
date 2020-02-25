@@ -18,3 +18,14 @@ export interface Users {
     users: User[];
     count: number;
 }
+
+interface userRoles {
+    value: string;
+    label: string;
+}
+
+export const USER_ROLES: userRoles[] = [
+    {value: 'ROLE_USER', label: 'User'},
+    {value: 'ROLE_ADMIN', label: 'Admin'},
+    {value: 'ROLE_SUPER_ADMIN', label: 'Super admin'}
+];

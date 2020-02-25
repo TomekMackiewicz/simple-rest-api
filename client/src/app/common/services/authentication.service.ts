@@ -94,7 +94,7 @@ export class AuthenticationService {
         return this.httpClient.patch<any>(environment.base_url+'/users/'+user.id, { 
             username: user.username,
             email: user.email,
-            //roles: user.roles,
+            roles: user.roles,
             enabled: user.enabled
         }).pipe(catchError(prepareError));
     }
