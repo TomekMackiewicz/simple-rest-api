@@ -21,7 +21,7 @@
                 </div>
             </form>
         </div>
-        <table mat-table multiTemplateDataRows [dataSource]="data" matSort matSortActive="username" matSortDisableClear matSortDirection="desc" class="table-responsive">
+        <table mat-table multiTemplateDataRows [dataSource]="data" matSort matSortActive="username" matSortDisableClear matSortDirection="asc" class="table-responsive">
             <ng-container matColumnDef="select" sticky>
                 <th mat-header-cell *matHeaderCellDef>
                     <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">

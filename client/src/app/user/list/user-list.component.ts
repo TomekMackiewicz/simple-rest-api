@@ -68,9 +68,20 @@ export class UserListComponent implements AfterViewInit {
                 return observableOf([]);
             })
         ).subscribe(data => {
-            this.data = data;
+            this.data = this.prepareData(data);
             this.ref.detectChanges();
         });
+    }
+    
+    // Dirty fix for FOS User empty array for user role
+    prepareData(data: Array<User>) {
+        for (let elem of data) {
+            if (elem.roles[0] === undefined) {
+                elem.roles[0] = 'ROLE_USER';
+            }
+        }
+       
+        return data;
     }
     
     switchStatus(user: User) {
