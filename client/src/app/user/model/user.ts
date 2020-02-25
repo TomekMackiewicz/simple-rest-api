@@ -4,7 +4,7 @@ export class User {
     email: string = '';
     password: string = '';
     roles: Array<string> = [];
-    enabled: number;
+    enabled: boolean;
 }
 
 export class UserRegistration {

@@ -3,7 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder } from '@angular/forms';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
-import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { User } from '../model/user';
 import { AuthenticationService } from '../../common/services/authentication.service';
 import { UiService } from '../../common/services/ui.service';
@@ -69,8 +69,22 @@ export class UserListComponent implements AfterViewInit {
         });
     }
     
-    switchStatus(id: number) {
-        //this.router.navigate(['/admin/user/edit/'+id]);
+    switchStatus(user: User) {
+        user.enabled = user.enabled === true ? false : true;
+        return this.userService.updateUser(user).subscribe(
+            success => {
+                this.getUsers();
+                this.selection.clear();
+                this.uiService.openSnackBar(success, 'success-notification-overlay');
+            },
+            error => {
+                let errors = handleError(error);
+                if (errors !== null && typeof errors.message !== 'undefined') {
+                    this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+                }
+                this.ref.detectChanges();
+            }
+        );
     } 
 
     isAllSelected() {
