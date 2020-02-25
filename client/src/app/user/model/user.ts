@@ -3,7 +3,8 @@ export class User {
     username: string = '';
     email: string = '';
     password: string = '';
-    roles: Array<string> = []
+    roles: Array<string> = [];
+    enabled: number;
 }
 
 export class UserRegistration {
@@ -11,4 +12,9 @@ export class UserRegistration {
     email: string = '';
     password: string = '';
     confirmPassword: string = '';
+}
+
+export interface Users {
+    users: User[];
+    count: number;
 }

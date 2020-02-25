@@ -8,12 +8,6 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
-/**
- * @method User|null find($id, $lockMode = null, $lockVersion = null)
- * @method User|null findOneBy(array $criteria, array $orderBy = null)
- * @method User[]    findAll()
- * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -21,32 +15,49 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Users for pagination
+     * 
+     * @param int $size
+     * @param string $sort
+     * @param string $order
+     * @param int $offset
+     * @param array $filters
+     * @return User[]
+     */
+    public function findUsers(int $size, string $sort, string $order, int $offset, array $filters)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')->from('App:User', 'u');
+        
+        if (!empty($filters) && $filters['username']) {
+            $qb->andWhere('c.username LIKE :username')
+                ->setParameter(":username", '%'.$filters['username'].'%');
+        }
 
-    /*
-    public function findOneBySomeField($value): ?User
+        if (!empty($sort) && !empty($order)) {
+           $qb->orderBy('u.'.$sort, $order);
+        }
+               
+        if (!empty($size)) {
+           $qb->setMaxResults($size); 
+        }
+        
+        if (!empty($offset)) {
+           $qb->setFirstResult($offset);
+        }            
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    /**
+     * @return integer
+     */
+    public function countUsers()
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('count(u.id)')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleScalarResult();        
     }
-    */
 }

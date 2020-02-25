@@ -12,13 +12,20 @@ import {
     MatIconModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatToolbarModule
 } from '@angular/material';
 import { CrudModule } from '../common/crud/crud.module';
 
-import { LoginComponent } from '../user/login/login.component';
-import { RegisterComponent } from '../user/register/register.component';
-import { ProfileComponent } from '../user/profile/profile.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserListComponent } from './list/user-list.component';
 
 import { ApplicationPipesModule } from '../pipes/application-pipes.module';
 
@@ -26,7 +33,8 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
     declarations: [
         LoginComponent,
         RegisterComponent,
-        ProfileComponent
+        ProfileComponent,
+        UserListComponent
     ],
     imports: [
         BrowserModule,
@@ -40,6 +48,12 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
         MatCardModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSortModule,
+        MatCheckboxModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatExpansionModule,
+        MatToolbarModule,
         ApplicationPipesModule,
         CrudModule,
         TranslateModule.forRoot({

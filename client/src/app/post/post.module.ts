@@ -9,13 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { 
-    MatSidenavModule, 
-    MatCheckboxModule, 
-    MatToolbarModule, 
+    MatCheckboxModule,
     MatButtonModule, 
-    MatIconModule, 
-    MatMenuModule,
-    MatListModule,
+    MatIconModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -56,11 +52,7 @@ import { ApplicationPipesModule } from '../pipes/application-pipes.module';
         ReactiveFormsModule,
         HttpClientModule,
         FlexLayoutModule,
-        MatSidenavModule,
         MatCheckboxModule,
-        MatToolbarModule,
-        MatMenuModule,
-        MatListModule,
         MatIconModule,
         MatButtonModule,
         MatDialogModule,

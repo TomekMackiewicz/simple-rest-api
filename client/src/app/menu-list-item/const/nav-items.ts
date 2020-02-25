@@ -19,5 +19,16 @@ export const NAV_ITEMS = [
                 route: 'admin/category',
             }
         ]
+    },
+    {
+        displayName: 'users',
+        iconName: 'people',
+        children: [
+            {
+                displayName: 'users',
+                iconName: 'people',
+                route: 'admin/users',
+            }
+        ]
     }     
 ];

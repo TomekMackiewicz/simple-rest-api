@@ -1,5 +1,7 @@
+// TODO: rename to user service, move to user folder
+
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as decode from 'jwt-decode';
@@ -8,7 +10,7 @@ import { prepareError } from '../../common/functions/error.functions';
 import { environment } from '../../../environments/environment';
 import { UserRegistration } from '../../user/model/user';
 import { HEADERS } from '../../const/http';
-import { User } from '../../user/model/user';
+import { User, Users } from '../../user/model/user';
 
 @Injectable()
 export class AuthenticationService {
@@ -75,6 +77,17 @@ export class AuthenticationService {
     getUser(id: number): Observable<User> {
         return this.httpClient.get<User>(environment.base_url+'/users/'+id, {headers: HEADERS})
             .pipe(catchError(prepareError));
+    }
+
+    getUsers(sort: string = '', order: string = '', page: number = 0, size: number = 0, filters: any = []): Observable<Users> { 
+        let params = new HttpParams()
+            .set('sort', sort)
+            .set('order', order)
+            .set('page', page.toString())
+            .set('size', size.toString())
+            .set('filters', JSON.stringify(filters));
+        return this.httpClient.get<Users>(environment.base_url+'/users', {headers: HEADERS, params: params})
+            .pipe(catchError(prepareError));   
     }
 
     updateUser(user: User) {

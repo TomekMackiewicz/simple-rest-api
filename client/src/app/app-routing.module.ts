@@ -11,6 +11,7 @@ import { CategoryAddComponent } from './post/category/add/category-add.component
 import { CategoryEditComponent } from './post/category/edit/category-edit.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { UserListComponent } from './user/list/user-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
     {
@@ -104,8 +105,15 @@ const routes: Routes = [
                         }             
                     }
                 ]             
+            },
+            {
+                path: 'users',
+                component: UserListComponent,
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'ROLE_ADMIN'
+                }                
             }
-
         ]
     },
     { 

@@ -62,18 +62,31 @@ class UserController extends AbstractFOSRestController
 
     /**
      * @Rest\Get("")
+     * @param Request
      * @return Response
      */
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
-        $users = $this->repository->findAll();
+        $page = (int) $request->query->get('page');
+        $size = (int) $request->query->get('size');
+        $sort = $request->query->get('sort');
+        $order = $request->query->get('order');
+        $offset = (int) ($page-1) * $size;
+        $filters = json_decode($request->query->get('filters'), true);
+        $users = $this->repository->findUsers($size, $sort, $order, $offset, $filters);
+ 
         if (!$users) {
             return $this->handleView(
                 $this->view(null, Response::HTTP_NO_CONTENT)
             );
         }
 
-        return $this->handleView($this->view($users, Response::HTTP_OK));
+        $response['users'] = $users;
+        $response['count'] = $this->repository->countUsers();
+
+        return $this->handleView(
+            $this->view($response, Response::HTTP_OK)
+        );
     }
 
     /**
@@ -83,11 +96,11 @@ class UserController extends AbstractFOSRestController
      * @param Request $request
      * @return JsonResponse
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request) // TODO: post action!
     {         
         $user = $this->userManager->createUser();
         $user->setEnabled(true);
-        $form = $this->formFactory->createForm(['csrf_protection' => false]);
+        $form = $this->formFactory->createForm(['csrf_protection' => false]); // TODO: user type
         $form->setData($user);
         $form->submit($request->request->all());
         
