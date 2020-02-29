@@ -26,6 +26,7 @@
     <li>From api folder run <code>php bin/console doctrine:database:create</code></li>
     <li>Run <code>php bin/console doctrine:schema:update --force</code> to update db schema</li>
     <li>Create user with admin privileges (as explained here: https://symfony.com/doc/master/bundles/FOSUserBundle/command_line_tools.html)</li>
+    <li>Prepare default configuration values: <code>php bin/console doctrine:fixtures:load</code></li>
     <li>Create folder <code>jwt</code> in api/config and paste ssh keys pair
     (how to generate private and public ssh keys: https://github.com/lexik/LexikJWTAuthenticationBundle/blob/master/Resources/doc/index.md#installation)</li>
     <li>From api dir run Symfony server: <code>php bin/console server:start</code></li>
