@@ -12,6 +12,7 @@ import { CategoryEditComponent } from './post/category/edit/category-edit.compon
 import { RegisterComponent } from './user/register/register.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { UserListComponent } from './user/list/user-list.component';
+import { SettingComponent } from './setting/setting.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
     {
@@ -111,7 +112,15 @@ const routes: Routes = [
                 component: UserListComponent,
                 canActivate: [AuthGuard],
                 data: {
-                    expectedRole: 'ROLE_ADMIN'
+                    expectedRole: 'ROLE_SUPER_ADMIN'
+                }                
+            },
+            {
+                path: 'settings',
+                component: SettingComponent,
+                canActivate: [AuthGuard],
+                data: {
+                    expectedRole: 'ROLE_SUPER_ADMIN'
                 }                
             }
         ]

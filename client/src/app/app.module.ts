@@ -21,6 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PostModule } from './post/post.module';
 import { UserModule } from './user/user.module';
+import { SettingModule } from './setting/setting.module';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './menu-list-item/navigation.component';
@@ -67,6 +68,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         DashboardModule,
         PostModule,
         UserModule,
+        SettingModule,
         ApplicationPipesModule,
         TranslateModule.forRoot({
             loader: {

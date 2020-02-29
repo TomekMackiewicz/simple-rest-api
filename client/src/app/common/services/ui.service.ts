@@ -11,8 +11,9 @@ export class UiService {
     ) {}
 
     openSnackBar(message: string, state: string): void {
+        var settings = JSON.parse(localStorage.getItem("settings"));
         this.snackBar.open(message, 'Close', {
-            duration: 5000,
+            duration: settings.notification_time_active.value*1000,
             verticalPosition: 'top',
             panelClass: [state]
         });

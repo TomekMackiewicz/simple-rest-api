@@ -11,6 +11,7 @@ import { environment } from '../../../environments/environment';
 import { UserRegistration } from '../../user/model/user';
 import { HEADERS } from '../../const/http';
 import { User, Users } from '../../user/model/user';
+import { SettingService } from '../../setting/setting.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -25,7 +26,8 @@ export class AuthenticationService {
         
     constructor(
         private httpClient: HttpClient,
-        private router: Router           
+        private router: Router,
+        private settingService: SettingService           
     ) {};
        
     login(username: string, password: string) { 
@@ -35,7 +37,15 @@ export class AuthenticationService {
         }).subscribe(
             data => {
                 var token: any = decode(data.token);
-                if (token) {             
+                if (token) {
+                    this.settingService.getSettings().subscribe(
+                        (settings: any) => {
+                            localStorage.setItem('settings', JSON.stringify(settings));
+                        },
+                        error => {
+                            console.log(error); // TODO - handle error
+                        }
+                    );
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('currentUsername', token.username); // TODO: set user object
                     localStorage.setItem('userId', token.userId);
@@ -59,6 +69,7 @@ export class AuthenticationService {
         localStorage.removeItem('currentUsername');
         localStorage.removeItem('userId');
         localStorage.removeItem('userRole');
+        localStorage.removeItem('settings');
         this.getUsername('');
         this.router.navigate(['/login']);
     }

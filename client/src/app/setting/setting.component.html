@@ -1,0 +1,49 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <span>{{ 'settings' | translate | capitalizeFirst }}</span>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-toolbar>
+            <mat-icon mat-list-icon class="route-icon">people</mat-icon> 
+            {{ 'users' | translate | capitalizeFirst }}
+        </mat-toolbar>
+        <div class="sub-toolbar-item">
+            <form [formGroup]="userStartActiveForm">
+                <mat-checkbox [checked]="settings.user_start_active?.value == '1'" 
+                              labelPosition="before" 
+                              (change)="updateSetting($event.checked, 'VALID', settings.user_start_active)">
+                    {{ 'user.start.active' | translate | capitalizeFirst }}
+                </mat-checkbox>
+            </form>
+        </div>
+        <mat-toolbar>            
+            <mat-icon mat-list-icon class="route-icon">notifications_active</mat-icon>
+            {{ 'notifications' | translate | capitalizeFirst }}
+        </mat-toolbar>
+        <div class="sub-toolbar-item"> 
+            <form [formGroup]="notificationTimeActiveForm" 
+                  (ngSubmit)="updateSetting(notificationTimeActiveForm.value.value, notificationTimeActiveForm.status, settings.notification_time_active)">
+                <mat-form-field appearance="standard">
+                    <mat-label>{{ 'notifications.time.active' | translate | capitalizeFirst }}</mat-label>
+                    <input matInput [value]="settings.notification_time_active?.value" formControlName="value" required>
+                    <mat-hint>{{ 'notifications.time.hint' | translate | capitalizeFirst }}</mat-hint>
+                    <mat-error *ngIf="notificationTimeActiveForm.get('value').hasError('required')">
+                        {{ 'validation.required' | translate | capitalizeFirst }}
+                    </mat-error>
+                    <mat-error *ngIf="notificationTimeActiveForm.get('value').hasError('pattern')">
+                        {{ 'validation.regex.digit' | translate | capitalizeFirst }}
+                    </mat-error>
+                </mat-form-field>
+                <button mat-button color="primary" 
+                        type="submit" 
+                        [disabled]="!notificationTimeActiveForm.valid" 
+                        matTooltip="{{ 'update' | translate | capitalizeFirst }}" 
+                        matTooltipPosition="right">
+                    <mat-icon mat-list-icon class="route-icon">update</mat-icon>
+                </button>
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>

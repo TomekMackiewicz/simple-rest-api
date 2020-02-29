@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
 use App\Form\UserUpdateType;
 use App\Service\FormErrorService;
+use App\Service\SettingService;
 
 /**
  * @Route("/api/v1/users")
@@ -28,19 +29,22 @@ class UserController extends AbstractFOSRestController
     private $dispatcher;
     private $repository;
     private $formErrorService;
+    private $settingService;
     
     public function __construct(
         FormFactory $formFactory, 
         UserManagerInterface $userManager, 
         EventDispatcherInterface $dispatcher, 
         EntityManagerInterface $entityManager,
-        FormErrorService $formErrorService
+        FormErrorService $formErrorService,
+        SettingService $settingService   
     ) {
         $this->formFactory = $formFactory;
         $this->userManager = $userManager;
         $this->dispatcher = $dispatcher;
         $this->repository = $entityManager->getRepository(User::class);
         $this->formErrorService = $formErrorService;
+        $this->settingService = $settingService;
     }
 
     /**
@@ -98,8 +102,9 @@ class UserController extends AbstractFOSRestController
      */
     public function registerAction(Request $request) // TODO: post action!
     {         
+        $settings = $this->settingService->getSettings();
         $user = $this->userManager->createUser();
-        $user->setEnabled(true);
+        $user->setEnabled($settings['user_start_active']->getValue());
         $form = $this->formFactory->createForm(['csrf_protection' => false]); // TODO: user type
         $form->setData($user);
         $form->submit($request->request->all());

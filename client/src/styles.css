@@ -86,15 +86,15 @@ mat-sidenav {
     cursor: pointer;
 }
 
-.mat-list-base .mat-list-item {
+.mat-list-base .sidenav-list-item {
     color: #fff;
 }
 
-.mat-list-base .mat-list-item:hover {
+.mat-list-base .sidenav-list-item:hover {
     background: #000 !important;
 }
 
-.submenu-item > .mat-list-item {
+.submenu-item > .sidenav-list-item {
     font-size: 14px;
     height: 36px !important;
 }
@@ -197,4 +197,8 @@ mat-sidenav {
 
 .ck-editor__editable_inline {
     min-height: 500px;
+}
+
+.sub-toolbar-item {
+    padding: 16px;
 }

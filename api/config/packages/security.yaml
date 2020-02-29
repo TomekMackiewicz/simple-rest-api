@@ -36,4 +36,5 @@ security:
         - { path: ^/api/v1/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/users/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/admin, role: ROLE_ADMIN }
-        - { path: ^/api/v1/user, role: ROLE_USER }
+        - { path: ^/api/v1/user, role: ROLE_USER } # TODO: in User controller !
+        - { path: ^/api/v1/settings, role: IS_AUTHENTICATED_ANONYMOUSLY }

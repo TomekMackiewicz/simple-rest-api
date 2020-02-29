@@ -30,5 +30,10 @@ export const NAV_ITEMS = [
                 route: 'admin/users',
             }
         ]
+    },
+    {
+        displayName: 'settings',
+        iconName: 'settings',
+        route: 'admin/settings'
     }     
 ];
