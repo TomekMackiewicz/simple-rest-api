@@ -37,7 +37,10 @@ export class SettingComponent implements OnInit {
                 this.ref.detectChanges();
             },
             error => {
-                console.log(error); // TODO - handle error
+                let errors = handleError(error);
+                if (errors !== null && typeof errors.message !== 'undefined') {
+                    this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+                }
             }
         );
     }

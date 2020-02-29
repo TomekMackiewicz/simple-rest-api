@@ -64,7 +64,11 @@ export class PostListComponent implements AfterViewInit {
                 this.resultsLength = data.count;
                 return data.posts;
             }),
-            catchError(() => {
+            catchError((error) => {
+                let errors = handleError(error);
+                if (errors !== null && typeof errors.message !== 'undefined') {
+                    this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+                }
                 this.isRateLimitReached = true;
                 return observableOf([]);
             })
