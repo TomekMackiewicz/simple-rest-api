@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
 use App\Form\UserUpdateType;
 use App\Service\FormErrorService;
@@ -98,14 +97,14 @@ class UserController extends AbstractFOSRestController
      * 
      * @Route("/register", methods={"POST"})
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
-    public function registerAction(Request $request) // TODO: post action!
+    public function postAction(Request $request)
     {         
         $settings = $this->settingService->getSettings();
         $user = $this->userManager->createUser();
         $user->setEnabled($settings['user_start_active']->getValue());
-        $form = $this->formFactory->createForm(['csrf_protection' => false]); // TODO: user type
+        $form = $this->formFactory->createForm(['csrf_protection' => false]);
         $form->setData($user);
         $form->submit($request->request->all());
         

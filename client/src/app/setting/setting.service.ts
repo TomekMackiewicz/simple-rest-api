@@ -17,17 +17,17 @@ export class SettingService {
     ) {}
 
     getSetting(name: string): Observable<Setting> {     
-        return this.httpClient.get<Setting>(environment.base_url+'/setting/'+name)
+        return this.httpClient.get<Setting>(environment.admin_url+'/setting/'+name)
             .pipe(catchError(prepareError));
     }
 
     getSettings(): Observable<Setting> {     
-        return this.httpClient.get<Setting>(environment.base_url+'/setting/')
+        return this.httpClient.get<Setting>(environment.admin_url+'/setting/')
             .pipe(catchError(prepareError));
     }
 
     updateSetting(setting: Setting): Observable<any> {
-        return this.httpClient.patch<any>(environment.base_url+'/setting/'+setting.name, setting, { headers: HEADERS })
+        return this.httpClient.patch<any>(environment.admin_url+'/setting/'+setting.name, setting, { headers: HEADERS })
             .pipe(catchError(prepareError));
     }
 

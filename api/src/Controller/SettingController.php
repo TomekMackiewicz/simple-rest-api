@@ -15,7 +15,7 @@ use App\Form\SettingType;
 use App\Service\FormErrorService;
 
 /**
- * @Route("/api/v1/setting")
+ * @Route("/api/v1/admin/setting")
  */
 class SettingController extends AbstractFOSRestController
 {

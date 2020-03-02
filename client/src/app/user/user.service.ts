@@ -1,5 +1,3 @@
-// TODO: rename to user service, move to user folder
-
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -74,17 +72,6 @@ export class UserService {
         this.router.navigate(['/login']);
     }
 
-    register(user: UserRegistration) {
-        return this.httpClient.post(environment.base_url+'/user/register', { 
-            email: user.email, 
-            username: user.username, 
-            plainPassword: {
-                first: user.first, // TODO: Can we change symfony's form field to something more meaningful?
-                second: user.confirmPassword
-            }
-        }).pipe(catchError(prepareError));
-    }
-
     getUser(id: number): Observable<User> {
         return this.httpClient.get<User>(environment.base_url+'/user/'+id, {headers: HEADERS})
             .pipe(catchError(prepareError));
@@ -99,6 +86,17 @@ export class UserService {
             .set('filters', JSON.stringify(filters));
         return this.httpClient.get<Users>(environment.base_url+'/user', {headers: HEADERS, params: params})
             .pipe(catchError(prepareError));   
+    }
+
+    register(user: UserRegistration) {
+        return this.httpClient.post(environment.base_url+'/user/register', { 
+            email: user.email, 
+            username: user.username, 
+            plainPassword: {
+                first: user.first, // TODO: Can we change symfony's form field to something more meaningful?
+                second: user.confirmPassword
+            }
+        }).pipe(catchError(prepareError));
     }
 
     updateUser(user: User) {
