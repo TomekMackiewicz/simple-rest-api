@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../common/services/authentication.service';
+import { UserService } from '../user.service';
 import { UiService } from '../../common/services/ui.service';
 import { handleError } from '../../common/functions/error.functions';
 
@@ -24,12 +24,12 @@ export class RegisterComponent {
     constructor(
         private router: Router,
         private fb: FormBuilder,
-        private authenticationService: AuthenticationService,
+        private userService: UserService,
         private uiService: UiService,
         private ref: ChangeDetectorRef) {}
 
     register() {
-        this.authenticationService.register(this.registrationForm.value).subscribe(
+        this.userService.register(this.registrationForm.value).subscribe(
             (success: string) => {
                 this.uiService.openSnackBar(success, 'success-notification-overlay');
                 this.router.navigate(['/login']);

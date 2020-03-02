@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { AuthenticationService } from '../../common/services/authentication.service';
+import { UserService } from '../user.service';
 import { User } from '../model/user';
 import { UiService } from '../../common/services/ui.service';
 import { handleError } from '../../common/functions/error.functions';
@@ -13,14 +13,14 @@ export class LoginComponent {
     user: User = new User();
     
     constructor(
-        private authenticationService: AuthenticationService,
+        private userService: UserService,
         private ref: ChangeDetectorRef,
         private uiService: UiService
     ) {}
 
     login() {
-        this.authenticationService.login(this.user.username, this.user.password);
-        this.authenticationService.loginError.subscribe(
+        this.userService.login(this.user.username, this.user.password);
+        this.userService.loginError.subscribe(
             (error: any) => {
                 let errors = handleError(error);
                 if (errors !== null && typeof errors.message !== 'undefined') {

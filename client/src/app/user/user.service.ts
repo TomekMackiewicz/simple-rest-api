@@ -6,15 +6,15 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as decode from 'jwt-decode';
 import { Router } from '@angular/router';
-import { prepareError } from '../../common/functions/error.functions';
-import { environment } from '../../../environments/environment';
-import { UserRegistration } from '../../user/model/user';
-import { HEADERS } from '../../const/http';
-import { User, Users } from '../../user/model/user';
-import { SettingService } from '../../setting/setting.service';
+import { prepareError } from '../common/functions/error.functions';
+import { environment } from '../../environments/environment';
+import { UserRegistration } from '../user/model/user';
+import { HEADERS } from '../const/http';
+import { User, Users } from '../user/model/user';
+import { SettingService } from '../setting/setting.service';
 
 @Injectable()
-export class AuthenticationService {
+export class UserService {
 
     currentUsername: BehaviorSubject<string> = new BehaviorSubject<string>('');
     admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

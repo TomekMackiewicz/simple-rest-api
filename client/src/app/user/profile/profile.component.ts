@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../common/services/authentication.service';
+import { UserService } from '../user.service';
 import { UiService } from '../../common/services/ui.service';
 import { User } from '../model/user';
 import { handleError } from '../../common/functions/error.functions';
@@ -24,12 +24,12 @@ export class ProfileComponent implements OnInit {
         private router: Router,
         private fb: FormBuilder,
         private ref: ChangeDetectorRef,
-        private authenticationService: AuthenticationService,
+        private userService: UserService,
         private uiService: UiService
     ) {}
 
     ngOnInit(): void {
-        this.authenticationService.getUser(parseInt(localStorage.getItem('userId'))).subscribe(
+        this.userService.getUser(parseInt(localStorage.getItem('userId'))).subscribe(
             (data: User) => {
                 this.user = data;
                 this.userProfileForm.patchValue({ 
@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
     }
 
     updateUser() {
-        return this.authenticationService.updateUser(this.userProfileForm.value).subscribe(
+        return this.userService.updateUser(this.userProfileForm.value).subscribe(
             success => {
                 this.uiService.openSnackBar(success, 'success-notification-overlay');
             },

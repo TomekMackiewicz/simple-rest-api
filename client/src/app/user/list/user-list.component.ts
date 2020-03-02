@@ -5,7 +5,7 @@ import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
 import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { User, USER_ROLES } from '../model/user';
-import { AuthenticationService } from '../../common/services/authentication.service';
+import { UserService } from '../user.service';
 import { UiService } from '../../common/services/ui.service';
 import { handleError } from '../../common/functions/error.functions';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
@@ -35,7 +35,7 @@ export class UserListComponent implements AfterViewInit {
     @ViewChild(MatSort, {static: false}) sort: MatSort;
 
     constructor(
-        private userService: AuthenticationService,
+        private userService: UserService,
         private uiService: UiService,
         private dialog: MatDialog,
         private fb: FormBuilder,

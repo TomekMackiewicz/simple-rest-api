@@ -31,7 +31,7 @@ import { AuthGuard } from './common/guards/auth.guard';
 
 import { NavService } from './menu-list-item/nav.service';
 import { LoaderService } from './common/loader/loader.service';
-import { AuthenticationService } from './common/services/authentication.service';
+import { UserService } from './user/user.service';
 
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { TokenInterceptor } from './interceptors/token.interceptor';
@@ -83,7 +83,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         AuthGuard,
         TokenInterceptor,
         NavService,
-        AuthenticationService, 
+        UserService, 
         LoaderService,
         CapitalizeFirstPipe,
         { 
