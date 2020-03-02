@@ -39,6 +39,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ApplicationPipesModule } from './pipes/application-pipes.module';
+import { CapitalizeFirstPipe } from './pipes/capitalize-first.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -84,6 +85,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         NavService,
         AuthenticationService, 
         LoaderService,
+        CapitalizeFirstPipe,
         { 
             provide: HTTP_INTERCEPTORS, 
             useClass: LoaderInterceptor, 

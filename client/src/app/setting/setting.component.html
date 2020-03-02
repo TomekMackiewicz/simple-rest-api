@@ -14,7 +14,7 @@
                 <mat-checkbox [checked]="settings.user_start_active?.value == '1'" 
                               labelPosition="before" 
                               (change)="updateSetting($event.checked, 'VALID', settings.user_start_active)">
-                    {{ 'user.start.active' | translate | capitalizeFirst }}
+                    {{ 'settings.user.start.active' | translate | capitalizeFirst }}
                 </mat-checkbox>
             </form>
         </div>
@@ -26,9 +26,9 @@
             <form [formGroup]="notificationTimeActiveForm" 
                   (ngSubmit)="updateSetting(notificationTimeActiveForm.value.value, notificationTimeActiveForm.status, settings.notification_time_active)">
                 <mat-form-field appearance="standard">
-                    <mat-label>{{ 'notifications.time.active' | translate | capitalizeFirst }}</mat-label>
+                    <mat-label>{{ 'settings.notifications.time.active' | translate | capitalizeFirst }}</mat-label>
                     <input matInput [value]="settings.notification_time_active?.value" formControlName="value" required>
-                    <mat-hint>{{ 'notifications.time.hint' | translate | capitalizeFirst }}</mat-hint>
+                    <mat-hint>{{ 'settings.notifications.time.hint' | translate | capitalizeFirst }}</mat-hint>
                     <mat-error *ngIf="notificationTimeActiveForm.get('value').hasError('required')">
                         {{ 'validation.required' | translate | capitalizeFirst }}
                     </mat-error>
