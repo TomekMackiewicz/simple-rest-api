@@ -54,6 +54,7 @@
     "username": "nazwa użytkownika",
     "username_or_email": "nazwa użytkownika lub email",
     "users": "użytkownicy",
+    "users.deleted": "użytkownik / użytkownicy zostali usunięci",
     "validation.required": "pole jest wymagane",
     "validation.password.required": "hasło jest wymagane",
     "validation.regex.digit": "dozwolone są tylko cyfry",

@@ -19,16 +19,16 @@ export class AuthenticationService {
     currentUsername: BehaviorSubject<string> = new BehaviorSubject<string>('');
     admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     loginError: EventEmitter<any> = new EventEmitter();
-    
-    getUsername(value: string) {
-        this.currentUsername.next(value);
-    }
         
     constructor(
         private httpClient: HttpClient,
         private router: Router,
         private settingService: SettingService           
     ) {};
+
+    getUsername(value: string) {
+        this.currentUsername.next(value);
+    }
        
     login(username: string, password: string) { 
         return this.httpClient.post<any>(environment.base_url+'/login_check', {
@@ -108,5 +108,10 @@ export class AuthenticationService {
             roles: user.roles,
             enabled: user.enabled
         }).pipe(catchError(prepareError));
+    }
+
+    deleteUsers(ids: Array<number>): Observable<string> {           
+        return this.httpClient.request<string>('delete', environment.base_url+'/users', { body: ids })
+            .pipe(catchError(prepareError));
     }
 }

@@ -157,4 +157,27 @@ class UserController extends AbstractFOSRestController
             $this->view('user.updated', Response::HTTP_CREATED)
         );
     }
+
+    /**
+     * @Rest\Delete("")
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAction(Request $request)
+    {
+        $users = $this->repository->findUsersByIds($request->request->all());
+        if (!$users) {
+            return $this->handleView(
+                $this->view(null, Response::HTTP_NO_CONTENT)
+            );
+        }
+
+        foreach ($users as $user) {
+            $this->userManager->deleteUser($user);
+        }
+
+        return $this->handleView(
+            $this->view('users.deleted', Response::HTTP_OK)
+        );
+    }
 }

@@ -3,11 +3,12 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder } from '@angular/forms';
 import { merge, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators'
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { User, USER_ROLES } from '../model/user';
 import { AuthenticationService } from '../../common/services/authentication.service';
 import { UiService } from '../../common/services/ui.service';
 import { handleError } from '../../common/functions/error.functions';
+import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'app-user-list',
@@ -15,7 +16,7 @@ import { handleError } from '../../common/functions/error.functions';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements AfterViewInit {
-    displayedColumns: string[] = ['select', 'username', 'email', 'enabled', 'role'];
+    displayedColumns: string[] = ['select', 'username', 'email', 'enabled', 'role', 'actions'];
     expandedElement: User | null;
     data: User[] = [];
     selection = new SelectionModel<User>(true, []);
@@ -36,6 +37,7 @@ export class UserListComponent implements AfterViewInit {
     constructor(
         private userService: AuthenticationService,
         private uiService: UiService,
+        private dialog: MatDialog,
         private fb: FormBuilder,
         private ref: ChangeDetectorRef
     ) {}
@@ -123,6 +125,40 @@ export class UserListComponent implements AfterViewInit {
             }
         );
     }
+
+    delete(id?: number) {
+        let ids: number[] = id ? [id] : this.selection.selected.map(({ id }) => id);
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = this.uiService.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.minWidth = this.uiService.isLargeScreen() ? '33%' : '100%';
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            title: 'delete.confirm.title'
+        };        
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+            data => {
+                if (data === true) {
+                    this.userService.deleteUsers(ids).subscribe(
+                        success => {
+                            this.getUsers();
+                            this.selection.clear();
+                            this.uiService.openSnackBar(success, 'success-notification-overlay');
+                            this.ref.detectChanges();
+                        },
+                        error => {
+                            let errors = handleError(error);
+                            if (errors !== null && typeof errors.message !== 'undefined') {
+                                this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+                            }
+                            this.ref.detectChanges();
+                        }
+                    );
+                }
+            }
+        );
+    } 
 
     isAllSelected() {
         const numSelected = this.selection.selected.length;

@@ -60,4 +60,18 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();        
     }
+
+    /**
+     * Find users with given id's
+     * @param array $ids
+     * @return array
+     */
+    public function findUsersByIds(array $ids)
+    {
+        return $this->createQueryBuilder('u')
+            ->where("u.id IN(:ids)")
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();
+    }
 }
