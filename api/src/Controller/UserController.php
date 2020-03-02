@@ -20,7 +20,7 @@ use App\Service\FormErrorService;
 use App\Service\SettingService;
 
 /**
- * @Route("/api/v1/users")
+ * @Route("/api/v1/user")
  */
 class UserController extends AbstractFOSRestController
 {

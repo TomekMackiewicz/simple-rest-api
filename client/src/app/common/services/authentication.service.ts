@@ -75,7 +75,7 @@ export class AuthenticationService {
     }
 
     register(user: UserRegistration) {
-        return this.httpClient.post(environment.base_url+'/users/register', { 
+        return this.httpClient.post(environment.base_url+'/user/register', { 
             email: user.email, 
             username: user.username, 
             plainPassword: {
@@ -86,7 +86,7 @@ export class AuthenticationService {
     }
 
     getUser(id: number): Observable<User> {
-        return this.httpClient.get<User>(environment.base_url+'/users/'+id, {headers: HEADERS})
+        return this.httpClient.get<User>(environment.base_url+'/user/'+id, {headers: HEADERS})
             .pipe(catchError(prepareError));
     }
 
@@ -97,12 +97,12 @@ export class AuthenticationService {
             .set('page', page.toString())
             .set('size', size.toString())
             .set('filters', JSON.stringify(filters));
-        return this.httpClient.get<Users>(environment.base_url+'/users', {headers: HEADERS, params: params})
+        return this.httpClient.get<Users>(environment.base_url+'/user', {headers: HEADERS, params: params})
             .pipe(catchError(prepareError));   
     }
 
     updateUser(user: User) {
-        return this.httpClient.patch<any>(environment.base_url+'/users/'+user.id, { 
+        return this.httpClient.patch<any>(environment.base_url+'/user/'+user.id, { 
             username: user.username,
             email: user.email,
             roles: user.roles,
@@ -111,7 +111,7 @@ export class AuthenticationService {
     }
 
     deleteUsers(ids: Array<number>): Observable<string> {           
-        return this.httpClient.request<string>('delete', environment.base_url+'/users', { body: ids })
+        return this.httpClient.request<string>('delete', environment.base_url+'/user', { body: ids })
             .pipe(catchError(prepareError));
     }
 }
